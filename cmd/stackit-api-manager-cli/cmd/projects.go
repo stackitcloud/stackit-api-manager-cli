@@ -57,7 +57,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		c := newAPIClient()
 
-		base64Encoded, err := client.EncodeOpenAPISpecFile(openAPISpecFilePath)
+		base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
 		if err != nil {
 			log.Fatal(err)
 		}
