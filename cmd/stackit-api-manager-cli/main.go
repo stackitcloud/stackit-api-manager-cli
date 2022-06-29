@@ -5,8 +5,6 @@ import (
 	"os"
 
 	"github.com/stackitcloud/stackit-api-manager-cli/cmd/stackit-api-manager-cli/cmd"
-	"github.com/stackitcloud/stackit-api-manager-cli/internal/log"
-	"go.uber.org/zap"
 
 	// This controls the maxprocs environment variable in container runtimes.
 	// see https://martin.baillie.id/wrote/gotchas-in-the-go-network-packages-defaults/#bonus-gomaxprocs-containers-and-the-cfs
@@ -21,15 +19,6 @@ func main() {
 }
 
 func run() error {
-	logger, err := log.NewAtLevel(os.Getenv("LOG_LEVEL"))
-	if err != nil {
-		return err
-	}
-
-	defer logger.Sync()
-
-	logger.Info("Hello world!", zap.String("location", "world"))
-
 	cmd.Execute()
 
 	return nil
