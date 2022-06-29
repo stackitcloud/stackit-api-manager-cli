@@ -8,6 +8,7 @@ import (
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
 
+//nolint:gochecknoglobals // CLI command
 var (
 	serverURL           string
 	authToken           string
@@ -29,7 +30,7 @@ func newMetadata() *client.Metadata {
 }
 
 // projectsCmd represents the projects command
-var projectsCmd = &cobra.Command{
+var projectsCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "projects",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -44,7 +45,7 @@ to quickly create a Cobra application.`,
 }
 
 // publishCmd represents the publish command
-var publishCmd = &cobra.Command{
+var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "publish",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -77,7 +78,7 @@ to quickly create a Cobra application.`,
 }
 
 // retireCmd represents the retire command
-var retireCmd = &cobra.Command{
+var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "retire",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
@@ -98,7 +99,7 @@ to quickly create a Cobra application.`,
 	},
 }
 
-func init() {
+func init() { //nolint:gochecknoinits // cobra CLI
 	rootCmd.AddCommand(projectsCmd)
 	projectsCmd.AddCommand(publishCmd)
 	projectsCmd.AddCommand(retireCmd)

@@ -22,7 +22,15 @@ type ProjectRetire struct {
 	Metadata *Metadata `json:"metadata"`
 }
 
-type ProjectResponse struct {
+type ProjectPublishResponse struct {
+	Code    *int    `json:"code"`
+	Message *string `json:"message"`
+	Details *[]struct {
+		Type *string `json:"@type"`
+	} `json:"details"`
+}
+
+type ProjectRetireResponse struct {
 	Code    *int    `json:"code"`
 	Message *string `json:"message"`
 	Details *[]struct {
