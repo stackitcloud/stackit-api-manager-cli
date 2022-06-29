@@ -1,9 +1,20 @@
 package client
 
 import (
+	"context"
 	"errors"
 	"io"
 	"net/http"
+)
+
+type contextKey string
+
+func (c contextKey) String() string {
+	return "auth " + string(c)
+}
+
+const (
+	ContextAccessToken = contextKey("accesstoken")
 )
 
 var (
@@ -11,20 +22,25 @@ var (
 )
 
 type Client struct {
-	URL   *string
-	Token *string
+	url *string
+	ctx context.Context
 }
 
 // NewClient for API Manager interaction
 func NewClient(url, token string) *Client {
+	ctx := context.WithValue(context.Background(), ContextAccessToken, token)
 	return &Client{
-		URL:   &url,
-		Token: &token,
+		url: &url,
+		ctx: ctx,
 	}
 }
 
 func (c *Client) doRequest(req *http.Request) ([]byte, *http.Response, error) {
-	req.Header.Set("token", *c.Token) // todo add real auth
+	// AccessToken Authentication
+	if auth, ok := c.ctx.Value(ContextAccessToken).(string); ok {
+		req.Header.Add("Authorization", "Bearer "+auth)
+	}
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
