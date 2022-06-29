@@ -14,7 +14,7 @@ var (
 	projectID           string
 	identifier          string
 	stage               string
-	OpenAPISpecFilePath string
+	openAPISpecFilePath string
 )
 
 func newAPIClient() *client.Client {
@@ -56,7 +56,7 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		c := newAPIClient()
 
-		base64Encoded, err := client.EncodeOpenAPISpecFile(OpenAPISpecFilePath)
+		base64Encoded, err := client.EncodeOpenAPISpecFile(openAPISpecFilePath)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -125,6 +125,6 @@ func init() {
 	// is called directly, e.g.:
 
 	// publishCmd flags
-	publishCmd.Flags().StringVarP(&OpenAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
+	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	publishCmd.MarkFlagRequired("oas")
 }
