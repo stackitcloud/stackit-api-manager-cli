@@ -13,16 +13,16 @@ type Spec struct {
 	OpenAPI *OpenAPI `json:"openApi"`
 }
 
-type PublishAPIEndpoint struct {
+type ProjectPublish struct {
 	Metadata *Metadata `json:"metadata"`
 	Spec     *Spec     `json:"spec"`
 }
 
-type RetireAPIEndpoint struct {
+type ProjectRetire struct {
 	Metadata *Metadata `json:"metadata"`
 }
 
-type Response struct {
+type ProjectResponse struct {
 	Code    *int    `json:"code"`
 	Message *string `json:"message"`
 	Details *[]struct {

@@ -2,10 +2,13 @@ package client
 
 import (
 	"bytes"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 )
 
 type Client struct {
@@ -20,10 +23,18 @@ func NewClient(url, token string) *Client {
 	}
 }
 
-func (c *Client) PublishAPIEndpoint(projectID string, publishAPIEndpoint *PublishAPIEndpoint) (*Response, *http.Response, error) {
+func EncodeOpenAPISpecFile(file string) (string, error) {
+	oas, err := os.ReadFile(file)
+	if err != nil {
+		return "", err
+	}
+	return base64.StdEncoding.EncodeToString(oas), nil
+}
+
+func (c *Client) ProjectPublish(projectID string, projectPublish *ProjectPublish) (*ProjectResponse, *http.Response, error) {
 	url := fmt.Sprintf("%s/v1/projects/%s/publish", *c.URL, projectID)
-	fmt.Println(url)
-	j, err := json.Marshal(publishAPIEndpoint)
+	log.Println(url)
+	j, err := json.Marshal(projectPublish)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -37,15 +48,15 @@ func (c *Client) PublishAPIEndpoint(projectID string, publishAPIEndpoint *Publis
 		return nil, resp, err
 	}
 
-	var response Response
+	var response ProjectResponse
 	err = json.Unmarshal(body, &response)
 	return &response, resp, err
 }
 
-func (c *Client) RetireAPIEndpoint(projectID string, retireAPIEndpoint *RetireAPIEndpoint) (*Response, *http.Response, error) {
+func (c *Client) ProjectRetire(projectID string, projectRetire *ProjectRetire) (*ProjectResponse, *http.Response, error) {
 	url := fmt.Sprintf("%s/v1/projects/%s/retire", *c.URL, projectID)
 	fmt.Println(url)
-	j, err := json.Marshal(retireAPIEndpoint)
+	j, err := json.Marshal(projectRetire)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -59,7 +70,7 @@ func (c *Client) RetireAPIEndpoint(projectID string, retireAPIEndpoint *RetireAP
 		return nil, resp, err
 	}
 
-	var response Response
+	var response ProjectResponse
 	err = json.Unmarshal(body, &response)
 	return &response, resp, err
 }
