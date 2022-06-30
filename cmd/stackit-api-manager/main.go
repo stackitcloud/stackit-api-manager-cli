@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/stackitcloud/stackit-api-manager-cli/cmd/stackit/cmd"
+	"github.com/stackitcloud/stackit-api-manager-cli/cmd/stackit-api-manager/cmd"
 )
 
 func main() {

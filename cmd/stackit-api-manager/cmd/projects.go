@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/spf13/cobra"
@@ -29,31 +28,14 @@ func newMetadata() *client.Metadata {
 	}
 }
 
-// projectsCmd represents the projects command
 var projectsCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "projects",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("projects called")
-	},
+	Short: "Manage your Stackit API Gateway projects",
 }
 
-// publishCmd represents the publish command
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "publish",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Publish a OpenAPI Spec to a Stackit API Gateway project",
 	Run: func(cmd *cobra.Command, args []string) {
 		c := newAPIClient()
 
@@ -77,16 +59,9 @@ to quickly create a Cobra application.`,
 	},
 }
 
-// retireCmd represents the retire command
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "retire",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Retire a OpenAPI Spec from a Stackit API Gateway project",
 	Run: func(cmd *cobra.Command, args []string) {
 		c := newAPIClient()
 		resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
