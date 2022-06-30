@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 )
@@ -73,6 +74,7 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 
 	body, resp, err := c.doRequest(req)
 	if err != nil {
+		log.Printf("HTTP request error: %s %s\n", resp.Status, err)
 		return nil, resp, err
 	}
 
@@ -98,6 +100,7 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 
 	body, resp, err := c.doRequest(req)
 	if err != nil {
+		log.Printf("HTTP request error: %s %s\n", resp.Status, err)
 		return nil, resp, err
 	}
 
