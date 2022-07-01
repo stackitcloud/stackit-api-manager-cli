@@ -37,59 +37,63 @@ var projectCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "publish",
 	Short: "Publish a OpenAPI Spec to a Stackit API Gateway project",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		c := newAPIClient()
+	RunE:  publishCmdRunE,
+}
 
-		base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
-		if err != nil {
-			return err
-		}
+func publishCmdRunE(cmd *cobra.Command, args []string) error {
+	c := newAPIClient()
 
-		resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
-			Metadata: newMetadata(),
-			Spec: &client.Spec{
-				OpenAPI: &client.OpenAPI{
-					Base64Encoded: &base64Encoded,
-				},
+	base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
+	if err != nil {
+		return err
+	}
+
+	resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
+		Metadata: newMetadata(),
+		Spec: &client.Spec{
+			OpenAPI: &client.OpenAPI{
+				Base64Encoded: &base64Encoded,
 			},
-		})
+		},
+	})
 
-		j, errJSON := json.Marshal(*resp)
-		if errJSON != nil {
-			err = multierror.Append(err, errJSON)
-		} else {
-			cmd.Println(string(j))
-		}
+	j, errJSON := json.Marshal(*resp)
+	if errJSON != nil {
+		err = multierror.Append(err, errJSON)
+	} else {
+		cmd.Println(string(j))
+	}
 
-		if err != nil {
-			return err
-		}
+	if err != nil {
+		return err
+	}
 
-		return nil
-	},
+	return nil
 }
 
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "retire",
 	Short: "Retire a OpenAPI Spec from a Stackit API Gateway project",
-	RunE: func(cmd *cobra.Command, args []string) error {
-		c := newAPIClient()
-		resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
-			Metadata: newMetadata(),
-		})
+	RunE:  retireCmdRunE,
+}
 
-		j, errJSON := json.Marshal(*resp)
-		if errJSON != nil {
-			err = multierror.Append(err, errJSON)
-		} else {
-			cmd.Println(string(j))
-		}
+func retireCmdRunE(cmd *cobra.Command, args []string) error {
+	c := newAPIClient()
+	resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
+		Metadata: newMetadata(),
+	})
 
-		if err != nil {
-			return err
-		}
-		return nil
-	},
+	j, errJSON := json.Marshal(*resp)
+	if errJSON != nil {
+		err = multierror.Append(err, errJSON)
+	} else {
+		cmd.Println(string(j))
+	}
+
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func init() { //nolint:gochecknoinits // cobra CLI

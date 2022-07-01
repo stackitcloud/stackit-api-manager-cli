@@ -29,13 +29,13 @@ func mockClient(t *testing.T) *Client {
 	return NewClient(mockServerURL, "some-token")
 }
 
-func mockJSONHTTPResponse(t *testing.T, path string, body interface{}) {
-	jsonResponse, err := httpmock.NewJsonResponder(200, body)
+func (m *mockResponses) mockJSONHTTPResponse(t *testing.T) {
+	jsonResponse, err := httpmock.NewJsonResponder(200, m.body)
 	if err != nil {
 		t.Error(err)
 	}
 
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s%s", mockServerURL, path), jsonResponse)
+	httpmock.RegisterResponder("POST", fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
 }
 
 func TestNewClient(t *testing.T) {

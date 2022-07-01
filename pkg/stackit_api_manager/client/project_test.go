@@ -101,7 +101,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
-				mockJSONHTTPResponse(t, mockResponse.path, mockResponse.body)
+				mockResponse.mockJSONHTTPResponse(t)
 			}
 			got, _, err := c.ProjectPublish(tt.args.projectID, tt.args.projectPublish)
 			if (err != nil) != tt.wantErr {
@@ -166,7 +166,7 @@ func TestClient_ProjectRetire(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
-				mockJSONHTTPResponse(t, mockResponse.path, mockResponse.body)
+				mockResponse.mockJSONHTTPResponse(t)
 			}
 			got, _, err := c.ProjectRetire(tt.args.projectID, tt.args.projectRetire)
 			if (err != nil) != tt.wantErr {
