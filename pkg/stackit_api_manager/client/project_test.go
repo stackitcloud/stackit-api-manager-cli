@@ -93,6 +93,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 				projectID:      "some-project-id",
 				projectPublish: &ProjectPublish{},
 			},
+			want:    &ProjectPublishResponse{},
 			wantErr: true,
 		},
 	}
@@ -157,6 +158,7 @@ func TestClient_ProjectRetire(t *testing.T) {
 				projectID:     "some-project-id",
 				projectRetire: &ProjectRetire{},
 			},
+			want:    &ProjectRetireResponse{},
 			wantErr: true,
 		},
 	}
