@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
@@ -41,7 +39,7 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 
 		base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
 		if err != nil {
-			log.Fatal(err)
+			cmd.PrintErr(err)
 		}
 
 		resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
@@ -52,9 +50,9 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 				},
 			},
 		})
-		log.Println("Response:", resp)
+		cmd.Println(resp)
 		if err != nil {
-			log.Fatal(err)
+			cmd.PrintErr(err)
 		}
 	},
 }
@@ -67,9 +65,9 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 		resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
 			Metadata: newMetadata(),
 		})
-		log.Println("Response:", resp)
+		cmd.Println(resp)
 		if err != nil {
-			log.Fatal(err)
+			cmd.PrintErr(err)
 		}
 	},
 }
