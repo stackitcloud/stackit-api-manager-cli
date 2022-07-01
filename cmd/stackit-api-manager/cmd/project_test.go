@@ -57,7 +57,7 @@ func Test_newAPIClient(t *testing.T) {
 	}{
 		{
 			name: "success",
-			want: client.NewClient("", ""),
+			want: client.NewClient(defaultBaseUrl, ""),
 		},
 	}
 	for _, tt := range tests {
