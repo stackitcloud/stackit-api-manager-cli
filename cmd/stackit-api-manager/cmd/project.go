@@ -108,7 +108,7 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	// projectsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// projectsCmd flags
-	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", "", "Server base URL like https://example.com")
+	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", "https://prd.api-mgmt.eu01.stackit.cloud", "Server base URL")
 	projectCmd.MarkPersistentFlagRequired("url")
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
 	projectCmd.MarkPersistentFlagRequired("token")
