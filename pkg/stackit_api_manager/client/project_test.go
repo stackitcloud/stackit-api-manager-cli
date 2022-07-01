@@ -96,7 +96,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 			wantErr: true,
 		},
 	}
-	for _, tt := range tests {
+	for _, tt := range tests { //nolint:dupl // tests
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
@@ -160,7 +160,7 @@ func TestClient_ProjectRetire(t *testing.T) {
 			wantErr: true,
 		},
 	}
-	for _, tt := range tests {
+	for _, tt := range tests { //nolint:dupl // tests
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
