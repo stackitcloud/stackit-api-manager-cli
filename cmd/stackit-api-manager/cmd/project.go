@@ -10,7 +10,7 @@ import (
 
 //nolint:gochecknoglobals // CLI command
 var (
-	serverURL           string
+	serverBaseURL       string
 	authToken           string
 	projectID           string
 	identifier          string
@@ -19,7 +19,7 @@ var (
 )
 
 func newAPIClient() *client.Client {
-	return client.NewClient(serverURL, authToken)
+	return client.NewClient(serverBaseURL, authToken)
 }
 
 func newMetadata() *client.Metadata {
@@ -104,7 +104,7 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	// projectsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// projectsCmd flags
-	projectCmd.PersistentFlags().StringVarP(&serverURL, "url", "u", "", "Server base URL like https://example.com")
+	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", "", "Server base URL like https://example.com")
 	projectCmd.MarkPersistentFlagRequired("url")
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
 	projectCmd.MarkPersistentFlagRequired("token")

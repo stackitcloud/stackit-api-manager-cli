@@ -22,16 +22,16 @@ var (
 )
 
 type Client struct {
-	url *string
-	ctx context.Context
+	baseURL *string
+	ctx     context.Context
 }
 
 // NewClient for API Manager interaction
-func NewClient(url, token string) *Client {
+func NewClient(baseURL, token string) *Client {
 	ctx := context.WithValue(context.Background(), ContextAccessToken, token)
 	return &Client{
-		url: &url,
-		ctx: ctx,
+		baseURL: &baseURL,
+		ctx:     ctx,
 	}
 }
 
