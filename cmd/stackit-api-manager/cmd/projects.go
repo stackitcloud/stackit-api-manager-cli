@@ -34,12 +34,12 @@ var projectsCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "publish",
 	Short: "Publish a OpenAPI Spec to a Stackit API Gateway project",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		c := newAPIClient()
 
 		base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
 		if err != nil {
-			cmd.PrintErr(err)
+			return err
 		}
 
 		resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
@@ -50,25 +50,28 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 				},
 			},
 		})
-		cmd.Println(resp)
 		if err != nil {
-			cmd.PrintErr(err)
+			return err
 		}
+		cmd.Println(resp)
+
+		return nil
 	},
 }
 
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "retire",
 	Short: "Retire a OpenAPI Spec from a Stackit API Gateway project",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		c := newAPIClient()
 		resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
 			Metadata: newMetadata(),
 		})
-		cmd.Println(resp)
 		if err != nil {
-			cmd.PrintErr(err)
+			return err
 		}
+		cmd.Println(resp)
+		return nil
 	},
 }
 
