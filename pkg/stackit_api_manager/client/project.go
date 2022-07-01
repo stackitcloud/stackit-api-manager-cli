@@ -100,10 +100,10 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 
 	var response ProjectRetireResponse
 	body, resp, err := c.doRequest(req)
+
 	errResponse := json.Unmarshal(body, &response)
 	if errResponse != nil {
 		err = multierror.Append(err, errResponse)
 	}
-
-	return &response, resp, errResponse
+	return &response, resp, err
 }

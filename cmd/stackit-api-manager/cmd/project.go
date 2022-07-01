@@ -54,9 +54,9 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 			},
 		})
 
-		j, errJson := json.Marshal(*resp)
-		if errJson != nil {
-			err = multierror.Append(err, errJson)
+		j, errJSON := json.Marshal(*resp)
+		if errJSON != nil {
+			err = multierror.Append(err, errJSON)
 		} else {
 			cmd.Println(string(j))
 		}
