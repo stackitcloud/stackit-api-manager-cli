@@ -19,7 +19,7 @@ var (
 )
 
 const (
-	defaultBaseUrl = "https://prd.api-mgmt.eu01.stackit.cloud"
+	defaultBaseURL = "https://prd.api-mgmt.eu01.stackit.cloud"
 )
 
 func newAPIClient() *client.Client {
@@ -112,7 +112,7 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	// projectsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// projectsCmd flags
-	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", defaultBaseUrl, "Server base URL")
+	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", defaultBaseURL, "Server base URL")
 	projectCmd.MarkPersistentFlagRequired("url")
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
 	projectCmd.MarkPersistentFlagRequired("token")
