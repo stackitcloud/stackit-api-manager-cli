@@ -1,6 +1,9 @@
 package cmd
 
 import (
+	"encoding/json"
+	"errors"
+
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
@@ -26,9 +29,9 @@ func newMetadata() *client.Metadata {
 	}
 }
 
-var projectsCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "projects",
-	Short: "Manage your Stackit API Gateway projects",
+var projectCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
+	Use:   "project",
+	Short: "Manage your Stackit API Gateway project",
 }
 
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
@@ -50,10 +53,17 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 				},
 			},
 		})
+
+		j, errJson := json.Marshal(*resp)
+		if errJson != nil {
+			err = errors.New(err.Error() + errJson.Error())
+		} else {
+			cmd.Println(string(j))
+		}
+
 		if err != nil {
 			return err
 		}
-		cmd.Println(resp)
 
 		return nil
 	},
@@ -67,18 +77,25 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 		resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
 			Metadata: newMetadata(),
 		})
+
+		j, errJson := json.Marshal(*resp)
+		if errJson != nil {
+			err = errors.New(err.Error() + errJson.Error())
+		} else {
+			cmd.Println(string(j))
+		}
+
 		if err != nil {
 			return err
 		}
-		cmd.Println(resp)
 		return nil
 	},
 }
 
 func init() { //nolint:gochecknoinits // cobra CLI
-	rootCmd.AddCommand(projectsCmd)
-	projectsCmd.AddCommand(publishCmd)
-	projectsCmd.AddCommand(retireCmd)
+	rootCmd.AddCommand(projectCmd)
+	projectCmd.AddCommand(publishCmd)
+	projectCmd.AddCommand(retireCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -87,16 +104,16 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	// projectsCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// projectsCmd flags
-	projectsCmd.PersistentFlags().StringVarP(&serverURL, "url", "u", "", "Server base URL like https://example.com")
-	projectsCmd.MarkPersistentFlagRequired("url")
-	projectsCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
-	projectsCmd.MarkPersistentFlagRequired("token")
-	projectsCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
-	projectsCmd.MarkPersistentFlagRequired("project")
-	projectsCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
-	projectsCmd.MarkPersistentFlagRequired("identifier")
-	projectsCmd.PersistentFlags().StringVarP(&stage, "stage", "s", "", "Project Stage")
-	projectsCmd.MarkPersistentFlagRequired("stage")
+	projectCmd.PersistentFlags().StringVarP(&serverURL, "url", "u", "", "Server base URL like https://example.com")
+	projectCmd.MarkPersistentFlagRequired("url")
+	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
+	projectCmd.MarkPersistentFlagRequired("token")
+	projectCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
+	projectCmd.MarkPersistentFlagRequired("project")
+	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
+	projectCmd.MarkPersistentFlagRequired("identifier")
+	projectCmd.PersistentFlags().StringVarP(&stage, "stage", "s", "", "Project Stage")
+	projectCmd.MarkPersistentFlagRequired("stage")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

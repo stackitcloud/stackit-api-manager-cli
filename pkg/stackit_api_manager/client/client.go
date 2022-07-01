@@ -53,7 +53,7 @@ func (c *Client) doRequest(req *http.Request) ([]byte, *http.Response, error) {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, resp, errInvalidRequest
+		return body, resp, errInvalidRequest
 	}
 
 	return body, resp, nil

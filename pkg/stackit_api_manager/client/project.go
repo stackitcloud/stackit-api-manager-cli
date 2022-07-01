@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -71,13 +72,13 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 		return nil, nil, err
 	}
 
-	body, resp, err := c.doRequest(req)
-	if err != nil {
-		return nil, resp, err
-	}
-
 	var response ProjectPublishResponse
-	err = json.Unmarshal(body, &response)
+	body, resp, err := c.doRequest(req)
+
+	errResponse := json.Unmarshal(body, &response)
+	if errResponse != nil {
+		err = errors.New(err.Error() + errResponse.Error())
+	}
 	return &response, resp, err
 }
 
@@ -96,12 +97,12 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 		return nil, nil, err
 	}
 
+	var response ProjectRetireResponse
 	body, resp, err := c.doRequest(req)
-	if err != nil {
-		return nil, resp, err
+	errResponse := json.Unmarshal(body, &response)
+	if errResponse != nil {
+		err = errors.New(err.Error() + errResponse.Error())
 	}
 
-	var response ProjectRetireResponse
-	err = json.Unmarshal(body, &response)
-	return &response, resp, err
+	return &response, resp, errResponse
 }
