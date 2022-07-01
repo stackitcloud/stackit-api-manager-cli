@@ -2,6 +2,7 @@ package client
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -35,4 +36,37 @@ func mockJSONHTTPResponse(t *testing.T, path string, body interface{}) {
 	}
 
 	httpmock.RegisterResponder("POST", fmt.Sprintf("%s%s", mockServerURL, path), jsonResponse)
+}
+
+func TestNewClient(t *testing.T) {
+	type args struct {
+		baseURL string
+		token   string
+	}
+	tests := []struct {
+		name string
+		args args
+		want *Client
+	}{
+		{
+			name: "success",
+			args: args{
+				baseURL: mockServerURL,
+				token:   "some-token",
+			},
+			want: NewClient(mockServerURL, "some-token"),
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := NewClient(tt.args.baseURL, tt.args.token)
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("NewClient() = %v, want %v", got, tt.want)
+			}
+			token, _ := got.ctx.Value(ContextAccessToken).(string)
+			if !reflect.DeepEqual(token, tt.args.token) {
+				t.Errorf("NewClient() token = %v, want %v", token, tt.args.token)
+			}
+		})
+	}
 }
