@@ -2,8 +2,8 @@ package cmd
 
 import (
 	"encoding/json"
-	"errors"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
@@ -56,7 +56,7 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 
 		j, errJson := json.Marshal(*resp)
 		if errJson != nil {
-			err = errors.New(err.Error() + errJson.Error())
+			err = multierror.Append(err, errJson)
 		} else {
 			cmd.Println(string(j))
 		}
@@ -78,9 +78,9 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 			Metadata: newMetadata(),
 		})
 
-		j, errJson := json.Marshal(*resp)
-		if errJson != nil {
-			err = errors.New(err.Error() + errJson.Error())
+		j, errJSON := json.Marshal(*resp)
+		if errJSON != nil {
+			err = multierror.Append(err, errJSON)
 		} else {
 			cmd.Println(string(j))
 		}

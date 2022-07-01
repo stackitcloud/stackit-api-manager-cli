@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
+
+	"github.com/hashicorp/go-multierror"
 )
 
 type Metadata struct {
@@ -77,7 +78,7 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 
 	errResponse := json.Unmarshal(body, &response)
 	if errResponse != nil {
-		err = errors.New(err.Error() + errResponse.Error())
+		err = multierror.Append(err, errResponse)
 	}
 	return &response, resp, err
 }
@@ -101,7 +102,7 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 	body, resp, err := c.doRequest(req)
 	errResponse := json.Unmarshal(body, &response)
 	if errResponse != nil {
-		err = errors.New(err.Error() + errResponse.Error())
+		err = multierror.Append(err, errResponse)
 	}
 
 	return &response, resp, errResponse
