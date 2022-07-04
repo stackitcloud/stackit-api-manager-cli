@@ -12,41 +12,41 @@ import (
 )
 
 type Metadata struct {
-	Identifier *string `json:"identifier"`
-	Stage      *string `json:"stage"`
+	Identifier *string `json:"identifier,omitempty"`
+	Stage      *string `json:"stage,omitempty"`
 }
 
 type OpenAPI struct {
-	Base64Encoded *string `json:"base64Encoded"`
+	Base64Encoded *string `json:"base64Encoded,omitempty"`
 }
 
 type Spec struct {
-	OpenAPI *OpenAPI `json:"openApi"`
+	OpenAPI *OpenAPI `json:"openApi,omitempty"`
 }
 
 type ProjectPublish struct {
-	Metadata *Metadata `json:"metadata"`
-	Spec     *Spec     `json:"spec"`
+	Metadata *Metadata `json:"metadata,omitempty"`
+	Spec     *Spec     `json:"spec,omitempty"`
 }
 
 type ProjectRetire struct {
-	Metadata *Metadata `json:"metadata"`
+	Metadata *Metadata `json:"metadata,omitempty"`
 }
 
 type ProjectPublishResponse struct {
-	Code    *int    `json:"code"`
-	Message *string `json:"message"`
-	Details *[]struct {
-		Type *string `json:"@type"`
-	} `json:"details"`
+	Code    *int    `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Details []*struct {
+		Type *string `json:"@type,omitempty"`
+	} `json:"details,omitempty"`
 }
 
 type ProjectRetireResponse struct {
-	Code    *int    `json:"code"`
-	Message *string `json:"message"`
-	Details *[]struct {
-		Type *string `json:"@type"`
-	} `json:"details"`
+	Code    *int    `json:"code,omitempty"`
+	Message *string `json:"message,omitempty"`
+	Details []*struct {
+		Type *string `json:"@type,omitempty"`
+	} `json:"details,omitempty"`
 }
 
 // EncodeBase64File to encode a file into base64 for uploading it via an API request
