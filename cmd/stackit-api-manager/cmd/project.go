@@ -60,6 +60,9 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 			},
 		},
 	})
+	if err != nil {
+		return err
+	}
 
 	j, errJSON := json.Marshal(*resp)
 	if errJSON != nil {
@@ -86,6 +89,9 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
 		Metadata: newMetadata(),
 	})
+	if err != nil {
+		return err
+	}
 
 	j, errJSON := json.Marshal(*resp)
 	if errJSON != nil {
