@@ -47,8 +47,8 @@ func (args *projectCmdArgs) setArgs() {
 	openAPISpecFilePath = args.openAPISpecFilePath
 }
 
-func stringPtn(value string) *string { return &value }
-func intPtn(value int) *int          { return &value }
+func stringPtr(value string) *string { return &value }
+func intPtr(value int) *int          { return &value }
 
 func Test_newAPIClient(t *testing.T) {
 	tests := []struct {
@@ -134,8 +134,8 @@ func Test_publishCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/publish",
 					statusCode: 200,
 					body: client.ProjectPublishResponse{
-						Code:    intPtn(200),
-						Message: stringPtn("Success"),
+						Code:    intPtr(200),
+						Message: stringPtr("Success"),
 					},
 				},
 			},
@@ -163,8 +163,8 @@ func Test_publishCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/publish",
 					statusCode: 400,
 					body: client.ProjectPublishResponse{
-						Code:    intPtn(400),
-						Message: stringPtn("Not Found"),
+						Code:    intPtr(400),
+						Message: stringPtr("Not Found"),
 					},
 				},
 			},
@@ -208,8 +208,8 @@ func Test_retireCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/retire",
 					statusCode: 200,
 					body: client.ProjectRetireResponse{
-						Code:    intPtn(200),
-						Message: stringPtn("Success"),
+						Code:    intPtr(200),
+						Message: stringPtr("Success"),
 					},
 				},
 			},
@@ -229,8 +229,8 @@ func Test_retireCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/retire",
 					statusCode: 400,
 					body: client.ProjectRetireResponse{
-						Code:    intPtn(400),
-						Message: stringPtn("Not Found"),
+						Code:    intPtr(400),
+						Message: stringPtr("Not Found"),
 					},
 				},
 			},

@@ -63,12 +63,12 @@ func TestClient_ProjectPublish(t *testing.T) {
 				projectID: "some-project-id",
 				projectPublish: &ProjectPublish{
 					Metadata: &Metadata{
-						Identifier: stringPtn("some-identifier"),
-						Stage:      stringPtn("some-stage"),
+						Identifier: stringPtr("some-identifier"),
+						Stage:      stringPtr("some-stage"),
 					},
 					Spec: &Spec{
 						OpenAPI: &OpenAPI{
-							Base64Encoded: stringPtn("aGVsbG86IGR1ZGV0dGUK"),
+							Base64Encoded: stringPtr("aGVsbG86IGR1ZGV0dGUK"),
 						},
 					},
 				},
@@ -77,14 +77,14 @@ func TestClient_ProjectPublish(t *testing.T) {
 				{
 					path: "/v1/projects/some-project-id/publish",
 					body: ProjectPublishResponse{
-						Code:    intPtn(200),
-						Message: stringPtn("Success"),
+						Code:    intPtr(200),
+						Message: stringPtr("Success"),
 					},
 				},
 			},
 			want: &ProjectPublishResponse{
-				Code:    intPtn(200),
-				Message: stringPtn("Success"),
+				Code:    intPtr(200),
+				Message: stringPtr("Success"),
 			},
 		},
 		{
@@ -133,8 +133,8 @@ func TestClient_ProjectRetire(t *testing.T) {
 				projectID: "some-project-id",
 				projectRetire: &ProjectRetire{
 					Metadata: &Metadata{
-						Identifier: stringPtn("some-identifier"),
-						Stage:      stringPtn("some-stage"),
+						Identifier: stringPtr("some-identifier"),
+						Stage:      stringPtr("some-stage"),
 					},
 				},
 			},
@@ -142,14 +142,14 @@ func TestClient_ProjectRetire(t *testing.T) {
 				{
 					path: "/v1/projects/some-project-id/retire",
 					body: ProjectPublishResponse{
-						Code:    intPtn(200),
-						Message: stringPtn("Success"),
+						Code:    intPtr(200),
+						Message: stringPtr("Success"),
 					},
 				},
 			},
 			want: &ProjectRetireResponse{
-				Code:    intPtn(200),
-				Message: stringPtn("Success"),
+				Code:    intPtr(200),
+				Message: stringPtr("Success"),
 			},
 		},
 		{

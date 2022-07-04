@@ -17,8 +17,8 @@ type mockResponses struct {
 	body interface{}
 }
 
-func stringPtn(value string) *string { return &value }
-func intPtn(value int) *int          { return &value }
+func stringPtr(value string) *string { return &value }
+func intPtr(value int) *int          { return &value }
 
 func mockClient(t *testing.T) *Client {
 	// start http mock server & reset when test is finished
