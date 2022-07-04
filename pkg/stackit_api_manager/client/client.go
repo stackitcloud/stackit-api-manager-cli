@@ -22,7 +22,7 @@ var (
 )
 
 type Client struct {
-	baseURL *string
+	baseURL string
 	ctx     context.Context
 }
 
@@ -30,7 +30,7 @@ type Client struct {
 func NewClient(baseURL, token string) *Client {
 	ctx := context.WithValue(context.Background(), ContextAccessToken, token)
 	return &Client{
-		baseURL: &baseURL,
+		baseURL: baseURL,
 		ctx:     ctx,
 	}
 }

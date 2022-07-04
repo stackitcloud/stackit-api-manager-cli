@@ -63,7 +63,7 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 	projectID string,
 	projectPublish *ProjectPublish,
 ) (*ProjectPublishResponse, *http.Response, error) {
-	url := fmt.Sprintf("%s/v1/projects/%s/publish", *c.baseURL, projectID)
+	url := fmt.Sprintf("%s/v1/projects/%s/publish", c.baseURL, projectID)
 	j, err := json.Marshal(projectPublish)
 	if err != nil {
 		return nil, nil, err
@@ -88,7 +88,7 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 	projectID string,
 	projectRetire *ProjectRetire,
 ) (*ProjectRetireResponse, *http.Response, error) {
-	url := fmt.Sprintf("%s/v1/projects/%s/retire", *c.baseURL, projectID)
+	url := fmt.Sprintf("%s/v1/projects/%s/retire", c.baseURL, projectID)
 	j, err := json.Marshal(projectRetire)
 	if err != nil {
 		return nil, nil, err
