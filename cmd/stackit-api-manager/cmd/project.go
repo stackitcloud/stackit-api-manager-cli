@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"encoding/json"
+	"errors"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
@@ -16,6 +17,7 @@ var (
 	identifier          string
 	stage               string
 	openAPISpecFilePath string
+	errRespIsNil        = errors.New("response is nil")
 )
 
 const (
@@ -63,6 +65,9 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+	if resp == nil {
+		return errRespIsNil
+	}
 
 	j, errJSON := json.Marshal(*resp)
 	if errJSON != nil {
@@ -91,6 +96,9 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	})
 	if err != nil {
 		return err
+	}
+	if resp == nil {
+		return errRespIsNil
 	}
 
 	j, errJSON := json.Marshal(*resp)
