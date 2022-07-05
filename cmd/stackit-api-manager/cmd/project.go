@@ -30,8 +30,8 @@ func newAPIClient() *client.Client {
 
 func newMetadata() *client.Metadata {
 	return &client.Metadata{
-		Identifier: &identifier,
-		Stage:      &stage,
+		Identifier: identifier,
+		Stage:      stage,
 	}
 }
 

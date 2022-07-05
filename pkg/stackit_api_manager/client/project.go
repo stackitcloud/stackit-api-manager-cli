@@ -12,8 +12,8 @@ import (
 )
 
 type Metadata struct {
-	Identifier *string `json:"identifier,omitempty"`
-	Stage      *string `json:"stage,omitempty"`
+	Identifier string `json:"identifier"`
+	Stage      string `json:"stage"`
 }
 
 type OpenAPI struct {
@@ -34,19 +34,19 @@ type ProjectRetire struct {
 }
 
 type ProjectPublishResponse struct {
-	Code    *int    `json:"code,omitempty"`
-	Message *string `json:"message,omitempty"`
-	Details []*struct {
-		Type *string `json:"@type,omitempty"`
-	} `json:"details,omitempty"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Details []struct {
+		Type string `json:"@type"`
+	} `json:"details"`
 }
 
 type ProjectRetireResponse struct {
-	Code    *int    `json:"code,omitempty"`
-	Message *string `json:"message,omitempty"`
-	Details []*struct {
-		Type *string `json:"@type,omitempty"`
-	} `json:"details,omitempty"`
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+	Details []struct {
+		Type string `json:"@type"`
+	} `json:"details"`
 }
 
 // EncodeBase64File to encode a file into base64 for uploading it via an API request

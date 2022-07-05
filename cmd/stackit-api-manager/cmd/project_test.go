@@ -47,9 +47,6 @@ func (args *projectCmdArgs) setArgs() {
 	openAPISpecFilePath = args.openAPISpecFilePath
 }
 
-func stringPtr(value string) *string { return &value }
-func intPtr(value int) *int          { return &value }
-
 func Test_newAPIClient(t *testing.T) {
 	tests := []struct {
 		name string
@@ -83,15 +80,15 @@ func Test_newMetadata(t *testing.T) {
 		{
 			name: "success with empty values",
 			want: &client.Metadata{
-				Identifier: &emptyString,
-				Stage:      &emptyString,
+				Identifier: emptyString,
+				Stage:      emptyString,
 			},
 		},
 		{
 			name: "success with test values",
 			want: &client.Metadata{
-				Identifier: &testIdentifier,
-				Stage:      &testStage,
+				Identifier: testIdentifier,
+				Stage:      testStage,
 			},
 			identifier: "identifier-test",
 			stage:      "stage-test",
@@ -134,8 +131,8 @@ func Test_publishCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/publish",
 					statusCode: 200,
 					body: client.ProjectPublishResponse{
-						Code:    intPtr(200),
-						Message: stringPtr("Success"),
+						Code:    200,
+						Message: "Success",
 					},
 				},
 			},
@@ -163,8 +160,8 @@ func Test_publishCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/publish",
 					statusCode: 400,
 					body: client.ProjectPublishResponse{
-						Code:    intPtr(400),
-						Message: stringPtr("Not Found"),
+						Code:    400,
+						Message: "Not Found",
 					},
 				},
 			},
@@ -208,8 +205,8 @@ func Test_retireCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/retire",
 					statusCode: 200,
 					body: client.ProjectRetireResponse{
-						Code:    intPtr(200),
-						Message: stringPtr("Success"),
+						Code:    200,
+						Message: "Success",
 					},
 				},
 			},
@@ -229,8 +226,8 @@ func Test_retireCmdRunE(t *testing.T) {
 					path:       "/v1/projects/some-project-id/retire",
 					statusCode: 400,
 					body: client.ProjectRetireResponse{
-						Code:    intPtr(400),
-						Message: stringPtr("Not Found"),
+						Code:    400,
+						Message: "Not Found",
 					},
 				},
 			},
