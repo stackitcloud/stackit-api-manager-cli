@@ -68,7 +68,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 					},
 					Spec: Spec{
 						OpenAPI: &OpenAPI{
-							Base64Encoded: stringPtr("aGVsbG86IGR1ZGV0dGUK"),
+							Base64Encoded: "aGVsbG86IGR1ZGV0dGUK",
 						},
 					},
 				},

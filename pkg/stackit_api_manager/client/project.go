@@ -17,7 +17,7 @@ type Metadata struct {
 }
 
 type OpenAPI struct {
-	Base64Encoded *string `json:"base64Encoded,omitempty"`
+	Base64Encoded string `json:"base64Encoded"`
 }
 
 type Spec struct {
@@ -25,12 +25,12 @@ type Spec struct {
 }
 
 type ProjectPublish struct {
-	Metadata Metadata `json:"metadata,omitempty"`
-	Spec     Spec     `json:"spec,omitempty"`
+	Metadata Metadata `json:"metadata"`
+	Spec     Spec     `json:"spec"`
 }
 
 type ProjectRetire struct {
-	Metadata Metadata `json:"metadata,omitempty"`
+	Metadata Metadata `json:"metadata"`
 }
 
 type ProjectPublishResponse struct {

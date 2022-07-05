@@ -67,31 +67,27 @@ func Test_newAPIClient(t *testing.T) {
 }
 
 func Test_newMetadata(t *testing.T) {
-	testIdentifier := "identifier-test"
-	testStage := "stage-test"
-	emptyString := ""
-
 	tests := []struct {
 		name       string
-		want       *client.Metadata
 		identifier string
 		stage      string
+		want       client.Metadata
 	}{
 		{
 			name: "success with empty values",
-			want: &client.Metadata{
-				Identifier: emptyString,
-				Stage:      emptyString,
+			want: client.Metadata{
+				Identifier: "",
+				Stage:      "",
 			},
 		},
 		{
-			name: "success with test values",
-			want: &client.Metadata{
-				Identifier: testIdentifier,
-				Stage:      testStage,
-			},
+			name:       "success with test values",
 			identifier: "identifier-test",
 			stage:      "stage-test",
+			want: client.Metadata{
+				Identifier: "identifier-test",
+				Stage:      "stage-test",
+			},
 		},
 	}
 	for _, tt := range tests {

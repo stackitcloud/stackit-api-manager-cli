@@ -58,7 +58,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		Metadata: newMetadata(),
 		Spec: client.Spec{
 			OpenAPI: &client.OpenAPI{
-				Base64Encoded: &base64Encoded,
+				Base64Encoded: base64Encoded,
 			},
 		},
 	})
