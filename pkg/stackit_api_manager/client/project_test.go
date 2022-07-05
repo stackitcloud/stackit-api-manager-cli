@@ -62,11 +62,11 @@ func TestClient_ProjectPublish(t *testing.T) {
 			args: args{
 				projectID: "some-project-id",
 				projectPublish: &ProjectPublish{
-					Metadata: &Metadata{
+					Metadata: Metadata{
 						Identifier: "some-identifier",
 						Stage:      "some-stage",
 					},
-					Spec: &Spec{
+					Spec: Spec{
 						OpenAPI: &OpenAPI{
 							Base64Encoded: stringPtr("aGVsbG86IGR1ZGV0dGUK"),
 						},
@@ -132,7 +132,7 @@ func TestClient_ProjectRetire(t *testing.T) {
 			args: args{
 				projectID: "some-project-id",
 				projectRetire: &ProjectRetire{
-					Metadata: &Metadata{
+					Metadata: Metadata{
 						Identifier: "some-identifier",
 						Stage:      "some-stage",
 					},

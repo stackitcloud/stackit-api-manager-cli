@@ -25,12 +25,12 @@ type Spec struct {
 }
 
 type ProjectPublish struct {
-	Metadata *Metadata `json:"metadata,omitempty"`
-	Spec     *Spec     `json:"spec,omitempty"`
+	Metadata Metadata `json:"metadata,omitempty"`
+	Spec     Spec     `json:"spec,omitempty"`
 }
 
 type ProjectRetire struct {
-	Metadata *Metadata `json:"metadata,omitempty"`
+	Metadata Metadata `json:"metadata,omitempty"`
 }
 
 type ProjectPublishResponse struct {

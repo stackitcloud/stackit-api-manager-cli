@@ -28,8 +28,8 @@ func newAPIClient() *client.Client {
 	return client.NewClient(serverBaseURL, authToken)
 }
 
-func newMetadata() *client.Metadata {
-	return &client.Metadata{
+func newMetadata() client.Metadata {
+	return client.Metadata{
 		Identifier: identifier,
 		Stage:      stage,
 	}
@@ -56,7 +56,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 
 	resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
 		Metadata: newMetadata(),
-		Spec: &client.Spec{
+		Spec: client.Spec{
 			OpenAPI: &client.OpenAPI{
 				Base64Encoded: &base64Encoded,
 			},
