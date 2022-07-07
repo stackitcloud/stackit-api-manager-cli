@@ -34,7 +34,7 @@ go install github.com/stackitcloud/stackit-api-manager-cli/cmd/gt@latest
 
 #### From the released binaries
 
-Download the desired version for your operating system and processor architecture from the [go-template releases page](https://github.com/stackitcloud/stackit-api-manager-cli/releases).
+Download the desired version for your operating system and processor architecture from the [STACKIT API Manager CLI](https://github.com/stackitcloud/stackit-api-manager-cli/releases).
 Make the file executable and place it in a directory available in your `$PATH`.
 
 ### Interact with STACKIT API Manager service
