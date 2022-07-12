@@ -22,7 +22,7 @@ RUN --mount=target=. \
     go build -ldflags="-w -s" -o /app/main ./cmd/stackit-api-manager-cli/*.go
 
 # Import the binary from build stage
-FROM gcr.io/distroless/static:nonroot@sha256:2556293984c5738fc75208cce52cf0a4762c709cf38e4bf8def65a61992da0ad as prd
+FROM gcr.io/distroless/static:nonroot@sha256:59d91a17dbdd8b785e61da81c9095b78099cad8d7757cc108f49e4fb564ef8b3 as prd
 COPY --from=build /app/main /
 # this is the numeric version of user nonroot:nonroot to check runAsNonRoot in kubernetes
 USER 65532:65532
