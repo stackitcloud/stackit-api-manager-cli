@@ -38,7 +38,7 @@ func NewClient(baseURL, token string) *Client {
 func (c *Client) doRequest(req *http.Request) ([]byte, *http.Response, error) {
 	// AccessToken Authentication
 	if auth, ok := c.ctx.Value(ContextAccessToken).(string); ok {
-		req.Header.Add("Authorization", "Bearer "+auth)
+		req.Header.Add("Authorization", auth)
 	}
 
 	client := &http.Client{}
