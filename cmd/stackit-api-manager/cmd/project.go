@@ -21,7 +21,7 @@ var (
 )
 
 const (
-	defaultBaseURL = "https://prd.api-mgmt.eu01.stackit.cloud"
+	defaultBaseURL = "https://api-manager.api.stackit.cloud"
 )
 
 func newAPIClient() *client.Client {
@@ -54,7 +54,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp, _, err := c.ProjectPublish(projectID, &client.ProjectPublish{
+	resp, _, err := c.ProjectPublish(projectID, identifier, &client.ProjectPublish{
 		Metadata: newMetadata(),
 		Spec: client.Spec{
 			OpenAPI: &client.OpenAPI{
@@ -91,7 +91,7 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
-	resp, _, err := c.ProjectRetire(projectID, &client.ProjectRetire{
+	resp, _, err := c.ProjectRetire(projectID, identifier, &client.ProjectRetire{
 		Metadata: newMetadata(),
 	})
 	if err != nil {

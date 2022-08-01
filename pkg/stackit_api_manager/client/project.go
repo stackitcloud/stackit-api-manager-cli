@@ -60,10 +60,11 @@ func EncodeBase64File(file string) (string, error) {
 
 // ProjectPublish a OpenAPI Spec file for a project
 func (c *Client) ProjectPublish( //nolint:dupl // API request
-	projectID string,
+	projectID,
+	identifier string,
 	projectPublish *ProjectPublish,
 ) (*ProjectPublishResponse, *http.Response, error) {
-	url := fmt.Sprintf("%s/v1/projects/%s/publish", c.baseURL, projectID)
+	url := fmt.Sprintf("%s/v1/projects/%s/api/%s", c.baseURL, projectID, identifier)
 	j, err := json.Marshal(projectPublish)
 	if err != nil {
 		return nil, nil, err
@@ -85,15 +86,16 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 
 // ProjectRetire a OpenAPI Spec file for a project
 func (c *Client) ProjectRetire( //nolint:dupl // API request
-	projectID string,
+	projectID,
+	identifier string,
 	projectRetire *ProjectRetire,
 ) (*ProjectRetireResponse, *http.Response, error) {
-	url := fmt.Sprintf("%s/v1/projects/%s/retire", c.baseURL, projectID)
+	url := fmt.Sprintf("%s/v1/projects/%s/api/%s", c.baseURL, projectID, identifier)
 	j, err := json.Marshal(projectRetire)
 	if err != nil {
 		return nil, nil, err
 	}
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(j))
+	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(j))
 	if err != nil {
 		return nil, nil, err
 	}

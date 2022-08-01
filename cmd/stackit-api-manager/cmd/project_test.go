@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"net/http"
 	"reflect"
 	"testing"
 
@@ -29,12 +30,12 @@ type mockResponses struct {
 	body       interface{}
 }
 
-func (m *mockResponses) mockJSONHTTPResponse(t *testing.T) {
+func (m *mockResponses) mockJSONHTTPResponse(t *testing.T, method string) {
 	jsonResponse, err := httpmock.NewJsonResponder(m.statusCode, m.body)
 	if err != nil {
 		t.Error(err)
 	}
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
+	httpmock.RegisterResponder(method, fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
 }
 
 // setArgs for project CMD CLI flags
@@ -124,7 +125,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path:       "/v1/projects/some-project-id/publish",
+					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 200,
 					body: client.ProjectPublishResponse{
 						Code:    200,
@@ -153,7 +154,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path:       "/v1/projects/some-project-id/publish",
+					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 400,
 					body: client.ProjectPublishResponse{
 						Code:    400,
@@ -168,7 +169,7 @@ func Test_publishCmdRunE(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
-				mockResponse.mockJSONHTTPResponse(t)
+				mockResponse.mockJSONHTTPResponse(t, http.MethodPost)
 			}
 			if err := publishCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("publishCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
@@ -198,7 +199,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path:       "/v1/projects/some-project-id/retire",
+					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 200,
 					body: client.ProjectRetireResponse{
 						Code:    200,
@@ -219,7 +220,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path:       "/v1/projects/some-project-id/retire",
+					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 400,
 					body: client.ProjectRetireResponse{
 						Code:    400,
@@ -234,7 +235,7 @@ func Test_retireCmdRunE(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
-				mockResponse.mockJSONHTTPResponse(t)
+				mockResponse.mockJSONHTTPResponse(t, http.MethodDelete)
 			}
 			if err := retireCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("retireCmdRunE() error = %v, wantErr %v", err, tt.wantErr)

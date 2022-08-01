@@ -1,6 +1,7 @@
 package client
 
 import (
+	"net/http"
 	"reflect"
 	"testing"
 )
@@ -47,8 +48,9 @@ func TestEncodeBase64File(t *testing.T) {
 
 func TestClient_ProjectPublish(t *testing.T) {
 	type args struct {
-		projectID      string
-		projectPublish *ProjectPublish
+		projectID         string
+		projectIdentifier string
+		projectPublish    *ProjectPublish
 	}
 	tests := []struct {
 		name          string
@@ -60,7 +62,8 @@ func TestClient_ProjectPublish(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				projectID: "some-project-id",
+				projectID:         "some-project-id",
+				projectIdentifier: "some-identifier",
 				projectPublish: &ProjectPublish{
 					Metadata: Metadata{
 						Identifier: "some-identifier",
@@ -75,7 +78,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path: "/v1/projects/some-project-id/publish",
+					path: "/v1/projects/some-project-id/api/some-identifier",
 					body: ProjectPublishResponse{
 						Code:    200,
 						Message: "Success",
@@ -101,9 +104,9 @@ func TestClient_ProjectPublish(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
-				mockResponse.mockJSONHTTPResponse(t)
+				mockResponse.mockJSONHTTPResponse(t, http.MethodPost)
 			}
-			got, _, err := c.ProjectPublish(tt.args.projectID, tt.args.projectPublish)
+			got, _, err := c.ProjectPublish(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectPublish)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.ProjectPublish() error = %v, wantErr %v", err, tt.wantErr)
 				return
@@ -117,8 +120,9 @@ func TestClient_ProjectPublish(t *testing.T) {
 
 func TestClient_ProjectRetire(t *testing.T) {
 	type args struct {
-		projectID     string
-		projectRetire *ProjectRetire
+		projectID         string
+		projectIdentifier string
+		projectRetire     *ProjectRetire
 	}
 	tests := []struct {
 		name          string
@@ -130,7 +134,8 @@ func TestClient_ProjectRetire(t *testing.T) {
 		{
 			name: "success",
 			args: args{
-				projectID: "some-project-id",
+				projectID:         "some-project-id",
+				projectIdentifier: "some-identifier",
 				projectRetire: &ProjectRetire{
 					Metadata: Metadata{
 						Identifier: "some-identifier",
@@ -140,8 +145,8 @@ func TestClient_ProjectRetire(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path: "/v1/projects/some-project-id/retire",
-					body: ProjectPublishResponse{
+					path: "/v1/projects/some-project-id/api/some-identifier",
+					body: ProjectRetireResponse{
 						Code:    200,
 						Message: "Success",
 					},
@@ -166,9 +171,9 @@ func TestClient_ProjectRetire(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
-				mockResponse.mockJSONHTTPResponse(t)
+				mockResponse.mockJSONHTTPResponse(t, http.MethodDelete)
 			}
-			got, _, err := c.ProjectRetire(tt.args.projectID, tt.args.projectRetire)
+			got, _, err := c.ProjectRetire(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectRetire)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.ProjectRetire() error = %v, wantErr %v", err, tt.wantErr)
 				return
