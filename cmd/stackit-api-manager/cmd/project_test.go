@@ -77,8 +77,7 @@ func Test_newMetadata(t *testing.T) {
 		{
 			name: "success with empty values",
 			want: client.Metadata{
-				Identifier: "",
-				Stage:      "",
+				Stage: "",
 			},
 		},
 		{
@@ -86,8 +85,7 @@ func Test_newMetadata(t *testing.T) {
 			identifier: "identifier-test",
 			stage:      "stage-test",
 			want: client.Metadata{
-				Identifier: "identifier-test",
-				Stage:      "stage-test",
+				Stage: "stage-test",
 			},
 		},
 	}

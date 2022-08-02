@@ -64,8 +64,7 @@ func TestClient_ProjectPublish(t *testing.T) {
 				projectIdentifier: "some-identifier",
 				projectPublish: &ProjectPublish{
 					Metadata: Metadata{
-						Identifier: "some-identifier",
-						Stage:      "some-stage",
+						Stage: "some-stage",
 					},
 					Spec: Spec{
 						OpenAPI: &OpenAPI{
@@ -124,8 +123,7 @@ func TestClient_ProjectRetire(t *testing.T) {
 				projectIdentifier: "some-identifier",
 				projectRetire: &ProjectRetire{
 					Metadata: Metadata{
-						Identifier: "some-identifier",
-						Stage:      "some-stage",
+						Stage: "some-stage",
 					},
 				},
 			},

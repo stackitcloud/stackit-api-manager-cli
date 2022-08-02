@@ -10,8 +10,7 @@ import (
 )
 
 type Metadata struct {
-	Identifier string `json:"identifier"`
-	Stage      string `json:"stage"`
+	Stage string `json:"stage"`
 }
 
 type OpenAPI struct {
