@@ -2,7 +2,6 @@ package client
 
 import (
 	"net/http"
-	"reflect"
 	"testing"
 )
 
@@ -56,7 +55,6 @@ func TestClient_ProjectPublish(t *testing.T) {
 		name          string
 		args          args
 		mockResponses []mockResponses
-		want          *ProjectPublishResponse
 		wantErr       bool
 	}{
 		{
@@ -78,16 +76,9 @@ func TestClient_ProjectPublish(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path: "/v1/projects/some-project-id/api/some-identifier",
-					body: ProjectPublishResponse{
-						Code:    200,
-						Message: "Success",
-					},
+					path:       "/v1/projects/some-project-id/api/some-identifier",
+					statusCode: 200,
 				},
-			},
-			want: &ProjectPublishResponse{
-				Code:    200,
-				Message: "Success",
 			},
 		},
 		{
@@ -96,23 +87,19 @@ func TestClient_ProjectPublish(t *testing.T) {
 				projectID:      "some-project-id",
 				projectPublish: &ProjectPublish{},
 			},
-			want:    &ProjectPublishResponse{},
 			wantErr: true,
 		},
 	}
-	for _, tt := range tests { //nolint:dupl // tests
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodPost)
 			}
-			got, _, err := c.ProjectPublish(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectPublish)
+			err := c.ProjectPublish(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectPublish)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.ProjectPublish() error = %v, wantErr %v", err, tt.wantErr)
 				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.ProjectPublish() got = %v, want %v", got, tt.want)
 			}
 		})
 	}
@@ -128,7 +115,6 @@ func TestClient_ProjectRetire(t *testing.T) {
 		name          string
 		args          args
 		mockResponses []mockResponses
-		want          *ProjectRetireResponse
 		wantErr       bool
 	}{
 		{
@@ -145,16 +131,9 @@ func TestClient_ProjectRetire(t *testing.T) {
 			},
 			mockResponses: []mockResponses{
 				{
-					path: "/v1/projects/some-project-id/api/some-identifier",
-					body: ProjectRetireResponse{
-						Code:    200,
-						Message: "Success",
-					},
+					path:       "/v1/projects/some-project-id/api/some-identifier",
+					statusCode: 200,
 				},
-			},
-			want: &ProjectRetireResponse{
-				Code:    200,
-				Message: "Success",
 			},
 		},
 		{
@@ -163,23 +142,19 @@ func TestClient_ProjectRetire(t *testing.T) {
 				projectID:     "some-project-id",
 				projectRetire: &ProjectRetire{},
 			},
-			want:    &ProjectRetireResponse{},
 			wantErr: true,
 		},
 	}
-	for _, tt := range tests { //nolint:dupl // tests
+	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			c := mockClient(t)
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodDelete)
 			}
-			got, _, err := c.ProjectRetire(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectRetire)
+			err := c.ProjectRetire(tt.args.projectID, tt.args.projectIdentifier, tt.args.projectRetire)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Client.ProjectRetire() error = %v, wantErr %v", err, tt.wantErr)
 				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("Client.ProjectRetire() got = %v, want %v", got, tt.want)
 			}
 		})
 	}

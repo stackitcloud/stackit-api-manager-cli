@@ -1,10 +1,8 @@
 package cmd
 
 import (
-	"encoding/json"
-	"errors"
+	"fmt"
 
-	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
@@ -17,7 +15,6 @@ var (
 	identifier          string
 	stage               string
 	openAPISpecFilePath string
-	errRespIsNil        = errors.New("response is nil")
 )
 
 const (
@@ -54,7 +51,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	resp, _, err := c.ProjectPublish(projectID, identifier, &client.ProjectPublish{
+	err = c.ProjectPublish(projectID, identifier, &client.ProjectPublish{
 		Metadata: newMetadata(),
 		Spec: client.Spec{
 			OpenAPI: &client.OpenAPI{
@@ -65,21 +62,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	if resp == nil {
-		return errRespIsNil
-	}
-
-	j, errJSON := json.Marshal(*resp)
-	if errJSON != nil {
-		err = multierror.Append(err, errJSON)
-	} else {
-		cmd.Println(string(j))
-	}
-
-	if err != nil {
-		return err
-	}
-
+	cmd.Println(fmt.Sprintf("API Gateway project %s published successfully with identifier %s", projectID, identifier))
 	return nil
 }
 
@@ -91,26 +74,14 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
-	resp, _, err := c.ProjectRetire(projectID, identifier, &client.ProjectRetire{
+	err := c.ProjectRetire(projectID, identifier, &client.ProjectRetire{
 		Metadata: newMetadata(),
 	})
 	if err != nil {
 		return err
 	}
-	if resp == nil {
-		return errRespIsNil
-	}
+	cmd.Println(fmt.Sprintf("API Gateway project %s retired successfully with identifier %s", projectID, identifier))
 
-	j, errJSON := json.Marshal(*resp)
-	if errJSON != nil {
-		err = multierror.Append(err, errJSON)
-	} else {
-		cmd.Println(string(j))
-	}
-
-	if err != nil {
-		return err
-	}
 	return nil
 }
 
@@ -129,7 +100,6 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", defaultBaseURL, "Server base URL")
 	projectCmd.MarkPersistentFlagRequired("url")
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
-	projectCmd.MarkPersistentFlagRequired("token")
 	projectCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
 	projectCmd.MarkPersistentFlagRequired("project")
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")

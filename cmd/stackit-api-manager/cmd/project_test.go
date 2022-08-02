@@ -127,10 +127,6 @@ func Test_publishCmdRunE(t *testing.T) {
 				{
 					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 200,
-					body: client.ProjectPublishResponse{
-						Code:    200,
-						Message: "Success",
-					},
 				},
 			},
 			wantErr: false,
@@ -156,10 +152,6 @@ func Test_publishCmdRunE(t *testing.T) {
 				{
 					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 400,
-					body: client.ProjectPublishResponse{
-						Code:    400,
-						Message: "Not Found",
-					},
 				},
 			},
 			wantErr: true,
@@ -201,10 +193,6 @@ func Test_retireCmdRunE(t *testing.T) {
 				{
 					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 200,
-					body: client.ProjectRetireResponse{
-						Code:    200,
-						Message: "Success",
-					},
 				},
 			},
 			wantErr: false,
@@ -222,10 +210,6 @@ func Test_retireCmdRunE(t *testing.T) {
 				{
 					path:       "/v1/projects/some-project-id/api/some-identifier",
 					statusCode: 400,
-					body: client.ProjectRetireResponse{
-						Code:    400,
-						Message: "Not Found",
-					},
 				},
 			},
 			wantErr: true,
