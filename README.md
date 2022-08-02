@@ -42,7 +42,7 @@ Make the file executable and place it in a directory available in your `$PATH`.
 Use the CLI to publish your OpenAPI Spec:
 
 ```bash
-stackit-api-manager-cli project \
+stackit-api-manager-cli project publish \
   ---identifier <YourIdentifier> \
   --project <YourProject> \
   --stage <YourStage> \
@@ -53,7 +53,7 @@ stackit-api-manager-cli project \
 Use the CLI to retire your OpenAPI Spec:
 
 ```bash
-stackit-api-manager-cli retire \
+stackit-api-manager-cli project retire \
   ---identifier <YourIdentifier> \
   --project <YourProject> \
   --stage <YourStage> \

@@ -13,8 +13,8 @@ const (
 )
 
 type mockResponses struct {
-	path string
-	body interface{}
+	path       string
+	statusCode int
 }
 
 func mockClient(t *testing.T) *Client {
@@ -26,13 +26,13 @@ func mockClient(t *testing.T) *Client {
 	return NewClient(mockServerURL, "some-token")
 }
 
-func (m *mockResponses) mockJSONHTTPResponse(t *testing.T) {
-	jsonResponse, err := httpmock.NewJsonResponder(200, m.body)
+func (m *mockResponses) mockJSONHTTPResponse(t *testing.T, method string) {
+	jsonResponse, err := httpmock.NewJsonResponder(m.statusCode, nil)
 	if err != nil {
 		t.Error(err)
 	}
 
-	httpmock.RegisterResponder("POST", fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
+	httpmock.RegisterResponder(method, fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
 }
 
 func TestNewClient(t *testing.T) {

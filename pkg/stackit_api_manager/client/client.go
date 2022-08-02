@@ -3,8 +3,10 @@ package client
 import (
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 type contextKey string
@@ -29,13 +31,14 @@ type Client struct {
 // NewClient for API Manager interaction
 func NewClient(baseURL, token string) *Client {
 	ctx := context.WithValue(context.Background(), ContextAccessToken, token)
+	baseURL = strings.TrimSuffix(baseURL, "/")
 	return &Client{
 		baseURL: baseURL,
 		ctx:     ctx,
 	}
 }
 
-func (c *Client) doRequest(req *http.Request) ([]byte, *http.Response, error) {
+func (c *Client) doRequest(req *http.Request) error {
 	// AccessToken Authentication
 	if auth, ok := c.ctx.Value(ContextAccessToken).(string); ok {
 		req.Header.Add("Authorization", auth)
@@ -44,17 +47,17 @@ func (c *Client) doRequest(req *http.Request) ([]byte, *http.Response, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, resp, err
+		return err
 	}
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, resp, err
+		return err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return body, resp, errInvalidRequest
+		return fmt.Errorf("%w: %s", errInvalidRequest, string(body))
 	}
 
-	return body, resp, nil
+	return nil
 }
