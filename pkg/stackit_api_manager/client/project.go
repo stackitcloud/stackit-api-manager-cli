@@ -69,7 +69,7 @@ func (c *Client) ProjectPublish( //nolint:dupl // API request
 	if err != nil {
 		return nil, nil, err
 	}
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(j))
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(j))
 	if err != nil {
 		return nil, nil, err
 	}
@@ -95,7 +95,7 @@ func (c *Client) ProjectRetire( //nolint:dupl // API request
 	if err != nil {
 		return nil, nil, err
 	}
-	req, err := http.NewRequest("DELETE", url, bytes.NewBuffer(j))
+	req, err := http.NewRequest(http.MethodDelete, url, bytes.NewBuffer(j))
 	if err != nil {
 		return nil, nil, err
 	}
