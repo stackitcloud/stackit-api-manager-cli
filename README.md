@@ -84,3 +84,10 @@ Run tests
 ```bash
 make test
 ```
+
+## Maintainers
+
+| Name                                               | Email                        |
+| :------------------------------------------------- | :--------------------------- |
+| [@linuxluigi](https://github.com/linuxluigi)       | steffen.exler@mail.schwarz   |
+| [@fabiolamicela](https://github.com/fabiolamicela) | fabio.la_micela@mail.schwarz |
