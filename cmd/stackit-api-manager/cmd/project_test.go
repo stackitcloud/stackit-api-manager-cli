@@ -3,12 +3,10 @@ package cmd
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
 	"github.com/spf13/cobra"
-	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
 )
 
 const (
@@ -27,6 +25,7 @@ type projectCmdArgs struct {
 type mockResponses struct {
 	path       string
 	statusCode int
+	method     string
 	body       interface{}
 }
 
@@ -48,59 +47,6 @@ func (args *projectCmdArgs) setArgs() {
 	openAPISpecFilePath = args.openAPISpecFilePath
 }
 
-func Test_newAPIClient(t *testing.T) {
-	tests := []struct {
-		name string
-		want *client.Client
-	}{
-		{
-			name: "success",
-			want: client.NewClient(defaultBaseURL, ""),
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			if got := newAPIClient(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newAPIClient() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
-func Test_newMetadata(t *testing.T) {
-	tests := []struct {
-		name       string
-		identifier string
-		stage      string
-		want       client.Metadata
-	}{
-		{
-			name: "success with empty values",
-			want: client.Metadata{
-				Stage: "",
-			},
-		},
-		{
-			name:       "success with test values",
-			identifier: "identifier-test",
-			stage:      "stage-test",
-			want: client.Metadata{
-				Stage: "stage-test",
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			identifier = tt.identifier
-			stage = tt.stage
-
-			if got := newMetadata(); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("newMetadata() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
-
 func Test_publishCmdRunE(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -114,12 +60,12 @@ func Test_publishCmdRunE(t *testing.T) {
 		{
 			name: "success",
 			args: projectCmdArgs{
-				serverBaseURL:       "http://localhost",
+				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
 				projectID:           "some-project-id",
 				identifier:          "some-identifier",
 				stage:               "some-stage",
-				openAPISpecFilePath: "../../../pkg/stackit_api_manager/client/testdata/test.json",
+				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
 			},
 			mockResponses: []mockResponses{
 				{
@@ -139,7 +85,7 @@ func Test_publishCmdRunE(t *testing.T) {
 		{
 			name: "error: status code 400",
 			args: projectCmdArgs{
-				serverBaseURL:       "http://localhost",
+				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
 				projectID:           "some-project-id",
 				identifier:          "some-identifier",
@@ -181,7 +127,7 @@ func Test_retireCmdRunE(t *testing.T) {
 		{
 			name: "success",
 			args: projectCmdArgs{
-				serverBaseURL: "http://localhost",
+				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
 				projectID:     "some-project-id",
 				identifier:    "some-identifier",
@@ -198,7 +144,7 @@ func Test_retireCmdRunE(t *testing.T) {
 		{
 			name: "error: status code 400",
 			args: projectCmdArgs{
-				serverBaseURL: "http://localhost",
+				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
 				projectID:     "some-project-id",
 				identifier:    "some-identifier",

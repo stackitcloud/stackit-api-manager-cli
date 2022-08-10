@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"fmt"
+	"context"
 
 	"github.com/spf13/cobra"
-	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
+	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
+	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/util"
 )
 
 //nolint:gochecknoglobals // CLI command
@@ -21,14 +22,10 @@ const (
 	defaultBaseURL = "https://api-manager.api.stackit.cloud"
 )
 
-func newAPIClient() *client.Client {
-	return client.NewClient(serverBaseURL, authToken)
-}
-
-func newMetadata() client.Metadata {
-	return client.Metadata{
-		Stage: stage,
-	}
+func newAPIClient() *apiManager.APIClient {
+	cfg := apiManager.NewConfiguration()
+	cfg.Servers[0].URL = serverBaseURL
+	return apiManager.NewAPIClient(cfg)
 }
 
 var projectCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
@@ -45,23 +42,30 @@ var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
-	base64Encoded, err := client.EncodeBase64File(openAPISpecFilePath)
+	base64Encoded, err := util.EncodeBase64File(openAPISpecFilePath)
 	if err != nil {
 		return err
 	}
 
-	err = c.ProjectPublish(projectID, identifier, &client.ProjectPublish{
-		Metadata: newMetadata(),
-		Spec: client.Spec{
-			OpenAPI: &client.OpenAPI{
-				Base64Encoded: base64Encoded,
-			},
+	body := *apiManager.NewAPIManagerServicePublishRequest()
+	body.Metadata = &apiManager.V1Metadata{Stage: &stage}
+	body.Spec = &apiManager.PublishRequestSpec{
+		OpenApi: &apiManager.PublishRequestOpenApi{
+			Base64Encoded: &base64Encoded,
 		},
-	})
+	}
+
+	_, r, err := c.APIManagerServiceApi.APIManagerServicePublish(
+		context.Background(),
+		projectID,
+		identifier,
+	).Body(body).Execute()
 	if err != nil {
+		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServicePublish``: %v\n", err)
+		cmd.Printf("Full HTTP response: %v\n", r)
 		return err
 	}
-	cmd.Println(fmt.Sprintf("API Gateway project %s published successfully with identifier %s", projectID, identifier))
+	cmd.Printf("API Gateway project %s published successfully with identifier %s", projectID, identifier)
 	return nil
 }
 
@@ -73,13 +77,17 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
-	err := c.ProjectRetire(projectID, identifier, &client.ProjectRetire{
-		Metadata: newMetadata(),
-	})
+
+	body := *apiManager.NewAPIManagerServiceRetireRequest()
+	body.Metadata = &apiManager.V1Metadata{Stage: &stage}
+
+	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(context.Background(), projectID, identifier).Body(body).Execute()
 	if err != nil {
+		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServiceRetire``: %v\n", err)
+		cmd.Printf("Full HTTP response: %v\n", r)
 		return err
 	}
-	cmd.Println(fmt.Sprintf("API Gateway project %s retired successfully with identifier %s", projectID, identifier))
+	cmd.Printf("Response from `APIManagerServiceApi.APIManagerServiceRetire`: %v\n", resp)
 
 	return nil
 }
