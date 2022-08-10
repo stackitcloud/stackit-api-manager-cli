@@ -16,8 +16,8 @@ import (
 
 // RpcStatus struct for RpcStatus
 type RpcStatus struct {
-	Code *int32 `json:"code,omitempty"`
-	Message *string `json:"message,omitempty"`
+	Code    *int32        `json:"code,omitempty"`
+	Message *string       `json:"message,omitempty"`
 	Details []ProtobufAny `json:"details,omitempty"`
 }
 
@@ -183,5 +183,3 @@ func (v *NullableRpcStatus) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -19,16 +19,15 @@ import (
 	"strings"
 )
 
-
 // APIManagerServiceApiService APIManagerServiceApi service
 type APIManagerServiceApiService service
 
 type ApiAPIManagerServicePublishRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *APIManagerServiceApiService
-	projectId string
+	projectId  string
 	identifier string
-	body *APIManagerServicePublishRequest
+	body       *APIManagerServicePublishRequest
 }
 
 func (r ApiAPIManagerServicePublishRequest) Body(body APIManagerServicePublishRequest) ApiAPIManagerServicePublishRequest {
@@ -53,8 +52,8 @@ Publish a new API for a dedicated service by providing the OpenApiSpec for it
 func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
 	return ApiAPIManagerServicePublishRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
@@ -63,10 +62,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Conte
 //  @return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIManagerServicePublishRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublish")
@@ -136,13 +135,13 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v RpcStatus
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
+		var v RpcStatus
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -159,11 +158,11 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 }
 
 type ApiAPIManagerServiceRetireRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *APIManagerServiceApiService
-	projectId string
+	projectId  string
 	identifier string
-	body *APIManagerServiceRetireRequest
+	body       *APIManagerServiceRetireRequest
 }
 
 func (r ApiAPIManagerServiceRetireRequest) Body(body APIManagerServiceRetireRequest) ApiAPIManagerServiceRetireRequest {
@@ -188,8 +187,8 @@ Retire an already existing API for a dedicated service by providing its Identifi
 func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {
 	return ApiAPIManagerServiceRetireRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
@@ -198,10 +197,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Contex
 //  @return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIManagerServiceRetireRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodDelete
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceRetire")
@@ -271,13 +270,13 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIMan
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-			var v RpcStatus
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.model = v
+		var v RpcStatus
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

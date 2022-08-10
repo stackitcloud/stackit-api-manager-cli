@@ -16,8 +16,8 @@ import (
 
 // APIManagerServicePublishRequest struct for APIManagerServicePublishRequest
 type APIManagerServicePublishRequest struct {
-	Metadata *V1Metadata `json:"metadata,omitempty"`
-	Spec *PublishRequestSpec `json:"spec,omitempty"`
+	Metadata *V1Metadata         `json:"metadata,omitempty"`
+	Spec     *PublishRequestSpec `json:"spec,omitempty"`
 }
 
 // NewAPIManagerServicePublishRequest instantiates a new APIManagerServicePublishRequest object
@@ -147,5 +147,3 @@ func (v *NullableAPIManagerServicePublishRequest) UnmarshalJSON(src []byte) erro
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

@@ -25,7 +25,6 @@ type projectCmdArgs struct {
 type mockResponses struct {
 	path       string
 	statusCode int
-	method     string
 	body       interface{}
 }
 
