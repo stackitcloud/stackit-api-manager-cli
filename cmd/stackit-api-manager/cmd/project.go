@@ -65,6 +65,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		cmd.Printf("Full HTTP response: %v\n", r)
 		return err
 	}
+	defer r.Body.Close()
 	cmd.Printf("API Gateway project %s published successfully with identifier %s", projectID, identifier)
 	return nil
 }
@@ -87,6 +88,7 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 		cmd.Printf("Full HTTP response: %v\n", r)
 		return err
 	}
+	defer r.Body.Close()
 	cmd.Printf("Response from `APIManagerServiceApi.APIManagerServiceRetire`: %v\n", resp)
 
 	return nil

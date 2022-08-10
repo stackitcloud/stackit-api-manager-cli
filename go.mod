@@ -1,6 +1,6 @@
 module github.com/stackitcloud/stackit-api-manager-cli
 
-go 1.18
+go 1.17
 
 require (
 	github.com/jarcoal/httpmock v1.2.0
