@@ -55,8 +55,11 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		},
 	}
 
+	// add auth token
+	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
+
 	_, r, err := c.APIManagerServiceApi.APIManagerServicePublish(
-		context.Background(),
+		ctx,
 		projectID,
 		identifier,
 	).Body(body).Execute()
@@ -82,7 +85,10 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	body := *apiManager.NewAPIManagerServiceRetireRequest()
 	body.Metadata = &apiManager.V1Metadata{Stage: &stage}
 
-	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(context.Background(), projectID, identifier).Body(body).Execute()
+	// add auth token
+	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
+
+	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(ctx, projectID, identifier).Body(body).Execute()
 	if err != nil {
 		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServiceRetire``: %v\n", err)
 		cmd.Printf("Full HTTP response: %v\n", r)
@@ -109,6 +115,7 @@ func init() { //nolint:gochecknoinits // cobra CLI
 	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", defaultBaseURL, "Server base URL")
 	projectCmd.MarkPersistentFlagRequired("url")
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
+	projectCmd.MarkPersistentFlagRequired("token")
 	projectCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
 	projectCmd.MarkPersistentFlagRequired("project")
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
