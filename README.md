@@ -1,7 +1,6 @@
 # STACKIT API Manager CLI
 
 [![GoTemplate](https://img.shields.io/badge/go/template-black?logo=go)](https://github.com/SchwarzIT/go-template)
-[![SIT](https://img.shields.io/badge/SIT-awesome-blueviolet.svg)](https://jobs.schwarz)
 [![CI](https://github.com/stackitcloud/stackit-api-manager-cli/actions/workflows/main.yml/badge.svg)](https://github.com/stackitcloud/stackit-api-manager-cli/actions/workflows/main.yml)
 [![Semgrep](https://github.com/stackitcloud/stackit-api-manager-cli/actions/workflows/semgrep.yml/badge.svg)](https://github.com/stackitcloud/stackit-api-manager-cli/actions/workflows/semgrep.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/stackitcloud/stackit-api-manager-cli)](https://goreportcard.com/report/github.com/stackitcloud/stackit-api-manager-cli)
