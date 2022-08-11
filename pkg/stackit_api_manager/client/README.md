@@ -74,7 +74,7 @@ ctx = context.WithValue(context.Background(), client.ContextOperationServerVaria
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://api-manager.api.dev.stackit.cloud*
+All URIs are relative to *https://api-manager.api.dev.stackit.cloud*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

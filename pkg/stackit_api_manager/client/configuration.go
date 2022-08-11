@@ -105,7 +105,7 @@ func NewConfiguration() *Configuration {
 		Debug:         false,
 		Servers: ServerConfigurations{
 			{
-				URL:         "http://api-manager.api.dev.stackit.cloud",
+				URL:         "https://api-manager.api.dev.stackit.cloud",
 				Description: "No description provided",
 			},
 		},

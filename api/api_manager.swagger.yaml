@@ -7,7 +7,7 @@ tags:
 - name: APIManagerService
 host: api-manager.api.dev.stackit.cloud
 schemes:
-- http
+- https
 consumes:
 - application/json
 produces:
