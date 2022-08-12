@@ -44,10 +44,10 @@ APIManagerServicePublish Publish API Endpoint
 
 Publish a new API for a dedicated service by providing the OpenApiSpec for it
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId
- @param identifier
- @return ApiAPIManagerServicePublishRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId
+	@param identifier
+	@return ApiAPIManagerServicePublishRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
 	return ApiAPIManagerServicePublishRequest{
@@ -59,7 +59,8 @@ func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Conte
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
+//
+//	@return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIManagerServicePublishRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
@@ -179,10 +180,10 @@ APIManagerServiceRetire Retire API Endpoint
 
 Retire an already existing API for a dedicated service by providing its Identifier
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId
- @param identifier
- @return ApiAPIManagerServiceRetireRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId
+	@param identifier
+	@return ApiAPIManagerServiceRetireRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {
 	return ApiAPIManagerServiceRetireRequest{
@@ -194,7 +195,8 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Contex
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
+//
+//	@return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIManagerServiceRetireRequest) (map[string]interface{}, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodDelete
