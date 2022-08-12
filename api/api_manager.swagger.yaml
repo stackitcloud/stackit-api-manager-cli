@@ -1,0 +1,135 @@
+swagger: "2.0"
+info:
+  title: api-manager-api
+  description: STACKIT API Manager API
+  version: "1.0"
+tags:
+- name: APIManagerService
+host: api-manager.api.dev.stackit.cloud
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /v1/projects/{projectId}/api/{identifier}:
+    delete:
+      summary: Retire API Endpoint
+      description: Retire an already existing API for a dedicated service by providing
+        its Identifier
+      operationId: APIManagerService_Retire
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1RetireResponse'
+        "404":
+          description: Could not find the API.
+          schema: {}
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        type: string
+      - name: identifier
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            metadata:
+              $ref: '#/definitions/v1Metadata'
+      tags:
+      - APIManagerService
+    post:
+      summary: Publish API Endpoint
+      description: Publish a new API for a dedicated service by providing the OpenApiSpec
+        for it
+      operationId: APIManagerService_Publish
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1PublishResponse'
+        "400":
+          description: Could not read or validate the openAPI specification.
+          schema: {}
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/rpcStatus'
+      parameters:
+      - name: projectId
+        in: path
+        required: true
+        type: string
+      - name: identifier
+        in: path
+        required: true
+        type: string
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            metadata:
+              $ref: '#/definitions/v1Metadata'
+            spec:
+              $ref: '#/definitions/PublishRequestSpec'
+      tags:
+      - APIManagerService
+definitions:
+  PublishRequestOpenApi:
+    type: object
+    properties:
+      base64Encoded:
+        type: string
+        title: |-
+          now the spec will be base64 string, later we might add a url to a spec
+          file or something else
+  PublishRequestSpec:
+    type: object
+    properties:
+      openApi:
+        $ref: '#/definitions/PublishRequestOpenApi'
+  protobufAny:
+    type: object
+    properties:
+      '@type':
+        type: string
+    additionalProperties: {}
+  rpcStatus:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      details:
+        type: array
+        items:
+          $ref: '#/definitions/protobufAny'
+  v1Metadata:
+    type: object
+    properties:
+      stage:
+        type: string
+  v1PublishResponse:
+    type: object
+    description: OpenAPI specification was published successfully
+    title: Publish response
+  v1RetireResponse:
+    type: object
+    description: OpenAPI specification was retired successfully
+    title: Retire response
