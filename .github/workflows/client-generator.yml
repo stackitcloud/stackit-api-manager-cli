@@ -1,0 +1,30 @@
+---
+# based on https://github.com/mvdan/github-actions-golang
+name: GeneratorCheck
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths-ignore: ["docs/**"]
+
+  push:
+    branches: ["main"]
+    paths-ignore: ["docs/**"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create API client from OpenAPI Spec file
+        run: make generate-client
+
+      - name: Check OAS is in sync with client
+        run: git diff --exit-code
+
