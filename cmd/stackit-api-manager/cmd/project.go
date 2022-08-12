@@ -100,7 +100,7 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func init() { //nolint:gochecknoinits // cobra CLI
+func init() {
 	rootCmd.AddCommand(projectCmd)
 	projectCmd.AddCommand(publishCmd)
 	projectCmd.AddCommand(retireCmd)
@@ -113,20 +113,20 @@ func init() { //nolint:gochecknoinits // cobra CLI
 
 	// projectsCmd flags
 	projectCmd.PersistentFlags().StringVarP(&serverBaseURL, "baseURL", "u", defaultBaseURL, "Server base URL")
-	projectCmd.MarkPersistentFlagRequired("url")
+	projectCmd.MarkPersistentFlagRequired("url") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&authToken, "token", "t", "", "Auth token for the API Manager")
-	projectCmd.MarkPersistentFlagRequired("token")
+	projectCmd.MarkPersistentFlagRequired("token") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
-	projectCmd.MarkPersistentFlagRequired("project")
+	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
-	projectCmd.MarkPersistentFlagRequired("identifier")
+	projectCmd.MarkPersistentFlagRequired("identifier") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&stage, "stage", "s", "", "Project Stage")
-	projectCmd.MarkPersistentFlagRequired("stage")
+	projectCmd.MarkPersistentFlagRequired("stage") //nolint:errcheck // cobra flag
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 
 	// publishCmd flags
 	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
-	publishCmd.MarkFlagRequired("oas")
+	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
 }
