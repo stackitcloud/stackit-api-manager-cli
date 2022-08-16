@@ -2,7 +2,7 @@ SHELL=/bin/bash -e -o pipefail
 PWD = $(shell pwd)
 
 # constants
-GOLANGCI_VERSION = 1.46.2
+GOLANGCI_VERSION = 1.48.0
 DOCKER_REPO = stackit-api-manager-cli
 OPENAPI_GENERATOR_VERSION=v6.0.1
 DOCKER_TAG = latest
