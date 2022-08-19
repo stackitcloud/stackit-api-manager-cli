@@ -24,10 +24,10 @@ make help
 If you have Go 1.16+, you can directly install by running:
 
 ```bash
-go install github.com/stackitcloud/stackit-api-manager-cli/cmd/gt@latest
+go install github.com/stackitcloud/stackit-api-manager-cli/cmd/stackit-api-manager@latest
 ```
 
-> Based on your go configuration the `stackit-api-manager-cli` binary can be found in `$GOPATH/bin` or `$HOME/go/bin` in case `$GOPATH` is not set.
+> Based on your go configuration the `stackit-api-manager` binary can be found in `$GOPATH/bin` or `$HOME/go/bin` in case `$GOPATH` is not set.
 > Make sure to add the respective directory to your `$PATH`.
 > [For more information see go docs for further information](https://golang.org/ref/mod#go-install). Run `go env` to view your current configuration.
 
@@ -41,7 +41,7 @@ Make the file executable and place it in a directory available in your `$PATH`.
 Use the CLI to publish your OpenAPI Spec:
 
 ```bash
-stackit-api-manager-cli project publish \
+stackit-api-manager project publish \
   ---identifier <YourIdentifier> \
   --project <YourProject> \
   --stage <YourStage> \
@@ -52,7 +52,7 @@ stackit-api-manager-cli project publish \
 Use the CLI to retire your OpenAPI Spec:
 
 ```bash
-stackit-api-manager-cli project retire \
+stackit-api-manager project retire \
   ---identifier <YourIdentifier> \
   --project <YourProject> \
   --stage <YourStage> \
