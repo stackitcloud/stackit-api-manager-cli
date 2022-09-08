@@ -84,10 +84,6 @@ Run tests
 make test
 ```
 
-```bash
-make generate-client
-```
-
 ## Update API client
 
 To update the API client, the OpenAPI Spec files needs to be in place at `api/api_manager.swagger.yaml` and then run:
