@@ -2,8 +2,9 @@ SHELL=/bin/bash -e -o pipefail
 PWD = $(shell pwd)
 
 # constants
-GOLANGCI_VERSION = 1.46.2
+GOLANGCI_VERSION = 1.48.0
 DOCKER_REPO = stackit-api-manager-cli
+OPENAPI_GENERATOR_VERSION=v6.0.1
 DOCKER_TAG = latest
 
 all: git-hooks  tidy ## Initializes all tools
@@ -66,10 +67,23 @@ out/report.json: out
 	@go test -count 1 ./... -coverprofile=out/cover.out --json | tee "$(@)"
 
 clean: ## Cleans up everything
-	@rm -rf bin out 
+	@rm -rf bin out
 
 docker: ## Builds docker image
 	docker buildx build -t $(DOCKER_REPO):$(DOCKER_TAG) .
+
+
+.PHONY: generate-client-code
+generate-client-code: ## generate API client code
+	docker run --rm \
+		-v ${PWD}:/local openapitools/openapi-generator-cli:${OPENAPI_GENERATOR_VERSION} generate \
+		-i /local/api/api_manager.swagger.yaml \
+		-g go \
+		--additional-properties=packageName=client \
+		-o /local/pkg/stackit_api_manager/client
+
+.PHONY: generate-client
+generate-client: generate-client-code fmt tidy ## genarte API client & run go mod tidy
 
 ci: lint-reports test-reports ## Executes lint and test and generates reports
 
