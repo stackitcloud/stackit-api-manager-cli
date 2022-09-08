@@ -91,3 +91,9 @@ To update the API client, the OpenAPI Spec files needs to be in place at `api/ap
 ```bash
 make generate-client
 ```
+
+## Maintainers
+
+| Name                                               | Email                        |
+| :------------------------------------------------- | :--------------------------- |
+| [@fabiolamicela](https://github.com/fabiolamicela) | fabio.la_micela@mail.schwarz |
