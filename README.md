@@ -42,7 +42,7 @@ Use the CLI to publish your OpenAPI Spec:
 
 ```bash
 stackit-api-manager project publish \
-  ---identifier <YourIdentifier> \
+  --identifier <YourIdentifier> \
   --baseURL <API-Manager-BaseURL> \
   --project <YourProject> \
   --stage <YourStage> \
@@ -54,7 +54,7 @@ Use the CLI to retire your OpenAPI Spec:
 
 ```bash
 stackit-api-manager project retire \
-  ---identifier <YourIdentifier> \
+  --identifier <YourIdentifier> \
   --baseURL <API-Manager-BaseURL> \
   --project <YourProject> \
   --stage <YourStage> \
