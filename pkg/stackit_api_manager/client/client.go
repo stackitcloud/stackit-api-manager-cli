@@ -41,10 +41,15 @@ const (
 )
 
 var (
+<<<<<<< Updated upstream
 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 	errMissingToken = fmt.Errorf("token is empty")
 	errInvalidToken = fmt.Errorf("token is invalid: must have prefix 'Bearer'")
+=======
+	jsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
+	xmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+>>>>>>> Stashed changes
 )
 
 // APIClient manages communication with the api-manager-api API v1.0
@@ -352,6 +357,7 @@ func (c *APIClient) prepareRequest(
 
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
+<<<<<<< Updated upstream
 			if auth == "" {
 				return nil, errMissingToken
 			}
@@ -359,6 +365,14 @@ func (c *APIClient) prepareRequest(
 				auth = "Bearer " + auth
 			} 
 			localVarRequest.Header.Add("Authorization", auth)
+=======
+			token, err := getToken(auth)
+			if err != nil {
+				return nil, err
+			}
+
+			localVarRequest.Header.Add("Authorization", token)
+>>>>>>> Stashed changes
 		}
 	}
 
