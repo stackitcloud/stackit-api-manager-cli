@@ -36,9 +36,15 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const (
+	Bearer string = "Bearer"
+)
+
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	jsonCheck       = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
+	xmlCheck        = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	errMissingToken = fmt.Errorf("token is empty")
+	errInvalidToken = fmt.Errorf("token is invalid: token must be of Bearer schema")
 )
 
 // APIClient manages communication with the api-manager-api API v1.0
@@ -346,9 +352,20 @@ func (c *APIClient) prepareRequest(
 
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
-			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
-		}
+			if auth == "" {
+				return nil, errMissingToken
+			}
 
+			hasBearerPrefix := strings.HasPrefix(auth, Bearer)
+			if strings.Contains(auth, " ") && !hasBearerPrefix {
+				return nil, errInvalidToken
+			}
+			if !hasBearerPrefix {
+				auth = Bearer + " " + auth
+			}
+
+			localVarRequest.Header.Add("Authorization", auth)
+		}
 	}
 
 	for header, value := range c.cfg.DefaultHeader {
