@@ -13,6 +13,18 @@ package client
 import (
 	"encoding/json"
 	"time"
+	"fmt"
+	"strings"
+)
+
+const (
+	Bearer string = "Bearer" // Prefix of Bearer token
+)
+
+var (
+	errMissingToken = fmt.Errorf("token is empty")
+	errMissingAuthentication = fmt.Errorf("missing authentication")
+	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of Bearer schema")
 )
 
 // PtrBool is a helper routine that returns a pointer to given boolean value.
@@ -325,4 +337,25 @@ func (v NullableTime) MarshalJSON() ([]byte, error) {
 func (v *NullableTime) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
+}
+
+func getToken(auth string) (string, error) {
+	splitAuth := strings.Split(auth, " ")
+	switch splitAuth[0] {
+	// If token is empty
+	case "":
+		return "", errMissingAuthentication
+	// If token has Bearer prefix
+	case Bearer:
+		if len(splitAuth) < 2 {
+			return "", errMissingToken
+		}
+		return auth, nil
+	// If it does not have prefix, then appends it
+	default:
+		if strings.Contains(auth, " ") {
+			return "", errInvalidAuthentication
+		}
+		return Bearer + " " + auth, nil
+	}
 }
