@@ -356,12 +356,13 @@ func (c *APIClient) prepareRequest(
 				return nil, errMissingToken
 			}
 
-			hasBearerPrefix := strings.HasPrefix(auth, Bearer)
-			if strings.Contains(auth, " ") && !hasBearerPrefix {
+			bearerPrefix := Bearer + " "
+			authHasBearerPrefix := strings.HasPrefix(auth, bearerPrefix)
+			if strings.Contains(auth, " ") && !authHasBearerPrefix {
 				return nil, errInvalidToken
 			}
-			if !hasBearerPrefix {
-				auth = Bearer + " " + auth
+			if !authHasBearerPrefix {
+				auth = bearerPrefix + auth
 			}
 
 			localVarRequest.Header.Add("Authorization", auth)
