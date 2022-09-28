@@ -18,8 +18,11 @@ var (
 	openAPISpecFilePath string
 )
 
+type supportedToken string
+
 const (
-	defaultBaseURL = "https://api-manager.api.stackit.cloud"
+	defaultBaseURL                = "https://api-manager.api.stackit.cloud"
+	Bearer         supportedToken = "Bearer"
 )
 
 func newAPIClient() *apiManager.APIClient {

@@ -14,9 +14,15 @@ import (
 	"bytes"
 	"context"
 	"io/ioutil"
+	"errors"
 	"net/http"
 	"net/url"
 	"strings"
+)
+
+var (
+	ErrUnauthenticatedToken = errors.New("unauthenticated token")
+	ErrWrongToken = errors.New("expecteded Bearer token")
 )
 
 // APIManagerServiceApiService APIManagerServiceApi service
@@ -111,6 +117,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 
 	localVarHTTPResponse, err := a.client.callAPI(req)
 	if err != nil || localVarHTTPResponse == nil {
+		if errors.Is(err, ErrUnauthenticatedToken) {
+			return nil, nil, ErrWrongToken
+		}
+
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 

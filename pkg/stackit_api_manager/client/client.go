@@ -36,9 +36,15 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const (
+	Bearer string = "Bearer"
+)
+
 var (
 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	errMissingToken = fmt.Errorf("token is empty")
+	errInvalidToken = fmt.Errorf("token is invalid: must have prefix 'Bearer'")
 )
 
 // APIClient manages communication with the api-manager-api API v1.0
@@ -346,9 +352,14 @@ func (c *APIClient) prepareRequest(
 
 		// AccessToken Authentication
 		if auth, ok := ctx.Value(ContextAccessToken).(string); ok {
-			localVarRequest.Header.Add("Authorization", "Bearer "+auth)
+			if auth == "" {
+				return nil, errMissingToken
+			}
+			if !strings.HasPrefix(auth, Bearer){
+				auth = "Bearer " + auth
+			} 
+			localVarRequest.Header.Add("Authorization", auth)
 		}
-
 	}
 
 	for header, value := range c.cfg.DefaultHeader {
