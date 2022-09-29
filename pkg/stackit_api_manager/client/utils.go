@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	bearer = "Bearer" // Prefix of Bearer token
+	bearer = "Bearer" // Prefix of token
 )
 
 var (
