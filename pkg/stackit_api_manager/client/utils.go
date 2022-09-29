@@ -12,17 +12,17 @@ package client
 
 import (
 	"encoding/json"
-	"time"
 	"fmt"
 	"strings"
+	"time"
 )
 
 const (
-	Bearer string = "Bearer" // Prefix of Bearer token
+	bearer = "Bearer" // Prefix of Bearer token
 )
 
 var (
-	errMissingToken = fmt.Errorf("token is empty")
+	errMissingToken          = fmt.Errorf("token is empty")
 	errMissingAuthentication = fmt.Errorf("missing authentication")
 	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of Bearer schema")
 )
@@ -346,7 +346,7 @@ func getToken(auth string) (string, error) {
 	case "":
 		return "", errMissingAuthentication
 	// If token has Bearer prefix
-	case Bearer:
+	case bearer:
 		if len(splitAuth) < 2 {
 			return "", errMissingToken
 		}
@@ -356,6 +356,6 @@ func getToken(auth string) (string, error) {
 		if strings.Contains(auth, " ") {
 			return "", errInvalidAuthentication
 		}
-		return Bearer + " " + auth, nil
+		return bearer + " " + auth, nil
 	}
 }

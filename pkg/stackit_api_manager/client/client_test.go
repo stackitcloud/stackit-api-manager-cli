@@ -24,7 +24,7 @@ func Test_GetToken(t *testing.T) {
 		},
 		{
 			description:      "token is empty with Bearer in auth",
-			auth:             Bearer,
+			auth:             bearer,
 			wantedError:      errMissingToken,
 			expectedResponse: "",
 		},
@@ -36,9 +36,9 @@ func Test_GetToken(t *testing.T) {
 		},
 		{
 			description:      "auth is valid",
-			auth:             Bearer + " " + token,
+			auth:             bearer + " " + token,
 			wantedError:      nil,
-			expectedResponse: Bearer + " " + token,
+			expectedResponse: bearer + " " + token,
 		},
 	}
 	for _, tt := range tests {
