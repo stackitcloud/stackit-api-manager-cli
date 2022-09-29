@@ -1,6 +1,5 @@
 README.md
 api_api_manager_service.go
-client.go
 configuration.go
 docs/APIManagerServiceApi.md
 docs/APIManagerServicePublishRequest.md
