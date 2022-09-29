@@ -24,7 +24,7 @@ const (
 var (
 	errMissingToken          = fmt.Errorf("token is empty")
 	errMissingAuthentication = fmt.Errorf("missing authentication")
-	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of Bearer schema")
+	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of %s schema", bearer)
 )
 
 // PtrBool is a helper routine that returns a pointer to given boolean value.
