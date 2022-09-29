@@ -36,10 +36,39 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const (
+	bearer = "Bearer" // Prefix of token
+)
+
 var (
 	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	errMissingToken          = fmt.Errorf("token is empty")
+	errMissingAuthentication = fmt.Errorf("missing authentication")
+	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of %s schema", bearer)
 )
+
+// Function to retrive the correct token for the publish prepare request
+func getToken(auth string) (string, error) {
+	splitAuth := strings.Split(auth, " ")
+	switch splitAuth[0] {
+	// If token is empty
+	case "":
+		return "", errMissingAuthentication
+	// If token has Bearer prefix
+	case bearer:
+		if len(splitAuth) < 2 {
+			return "", errMissingToken
+		}
+		return auth, nil
+	// If it does not have prefix, then appends it
+	default:
+		if strings.Contains(auth, " ") {
+			return "", errInvalidAuthentication
+		}
+		return bearer + " " + auth, nil
+	}
+}
 
 // APIClient manages communication with the api-manager-api API v1.0
 // In most cases there should be only one, shared, APIClient.
