@@ -354,7 +354,6 @@ func (c *APIClient) prepareRequest(
 			localVarRequest.Header.Add("Authorization", token)
 		}
 	}
-
 	for header, value := range c.cfg.DefaultHeader {
 		localVarRequest.Header.Add(header, value)
 	}
