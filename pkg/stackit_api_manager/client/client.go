@@ -41,8 +41,8 @@ const (
 )
 
 var (
-	jsonCheck = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
-	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
+	jsonCheck                = regexp.MustCompile(`(?i:(?:application|text)/(?:vnd\.[^;]+\+)?json)`)
+	xmlCheck                 = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 	errMissingToken          = fmt.Errorf("token is empty")
 	errMissingAuthentication = fmt.Errorf("missing authentication")
 	errInvalidAuthentication = fmt.Errorf("token is invalid: token must be of %s schema", bearer)
