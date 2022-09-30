@@ -70,6 +70,15 @@ stackit-api-manager project retire \
 - `https://api-manager.api.eu01.stackit.cloud` for `prd-eu01`
 - `https://api-manager.api.stackit.cloud` for `prd-global`
 
+
+#### Authenticated token
+
+The given authentication must be of Bearer type: `Bearer <token>`
+
+The Bearer prefix is already included in the authorization header, so the user only needs to provide the OAuth 2.0 `<token>` for the `--token` flag argument.
+
+For more information regarding the Bearer Authentication, please [click here](https://swagger.io/docs/specification/authentication/bearer-authentication/) (last accessed on 30/09/2022).
+
 ## Setup
 
 To get your setup up and running the only thing you have to do is
