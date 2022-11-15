@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -19,6 +19,8 @@ var (
 	stage               string
 	openAPISpecFilePath string
 )
+
+var errBadToken = fmt.Errorf("bad token")
 
 const (
 	defaultBaseURL = "https://api-manager.api.stackit.cloud"
@@ -62,7 +64,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 
 	if strings.HasPrefix(authToken, "Bearer ") {
 		cmd.Printf("Authorization token should have no Bearer prefix")
-		return errors.New("bad token")
+		return errBadToken
 	}
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
@@ -99,7 +101,7 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 
 	if strings.HasPrefix(authToken, "Bearer ") {
 		cmd.Printf("Authorization token should have no Bearer prefix")
-		return errors.New("bad token")
+		return errBadToken
 	}
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
