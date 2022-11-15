@@ -2,6 +2,8 @@ package cmd
 
 import (
 	"context"
+	"errors"
+	"strings"
 
 	"github.com/spf13/cobra"
 	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
@@ -47,14 +49,21 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	body := *apiManager.NewAPIManagerServicePublishRequest()
-	body.Metadata = &apiManager.V1Metadata{Stage: &stage}
-	body.Spec = &apiManager.PublishRequestSpec{
-		OpenApi: &apiManager.PublishRequestOpenApi{
-			Base64Encoded: &base64Encoded,
+	req := apiManager.PublishRequest{
+		Metadata: &apiManager.Metadata{
+			Stage: &stage,
+		},
+		Spec: &apiManager.PublishRequestSpec{
+			OpenApi: &apiManager.PublishRequestOpenApi{
+				Base64Encoded: &base64Encoded,
+			},
 		},
 	}
 
+	if strings.HasPrefix(authToken, "Bearer ") {
+		cmd.Printf("Authorization token should have no Bearer prefix")
+		return errors.New("bad token")
+	}
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
@@ -62,7 +71,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		ctx,
 		projectID,
 		identifier,
-	).Body(body).Execute()
+	).PublishRequest(req).Execute()
 	if err != nil {
 		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServicePublish``: %v\n", err)
 		cmd.Printf("Full HTTP response: %v\n", r)
@@ -82,13 +91,24 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
-	body := *apiManager.NewAPIManagerServiceRetireRequest()
-	body.Metadata = &apiManager.V1Metadata{Stage: &stage}
+	req := apiManager.RetireRequest{
+		Metadata: &apiManager.Metadata{
+			Stage: &stage,
+		},
+	}
 
+	if strings.HasPrefix(authToken, "Bearer ") {
+		cmd.Printf("Authorization token should have no Bearer prefix")
+		return errors.New("bad token")
+	}
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(ctx, projectID, identifier).Body(body).Execute()
+	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(
+		ctx,
+		projectID,
+		identifier,
+	).RetireRequest(req).Execute()
 	if err != nil {
 		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServiceRetire``: %v\n", err)
 		cmd.Printf("Full HTTP response: %v\n", r)

@@ -74,23 +74,24 @@ ctx = context.WithValue(context.Background(), client.ContextOperationServerVaria
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *https://api-manager.api.dev.stackit.cloud*
+All URIs are relative to *https://api-manager.api.integration.tst.stackit.cloud*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*APIManagerServiceApi* | [**APIManagerServicePublish**](docs/APIManagerServiceApi.md#apimanagerservicepublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
-*APIManagerServiceApi* | [**APIManagerServiceRetire**](docs/APIManagerServiceApi.md#apimanagerserviceretire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
+*APIManagerServiceApi* | [**APIManagerServicePublish**](docs/APIManagerServiceApi.md#apimanagerservicepublish) | **Post** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Publish API Endpoint
+*APIManagerServiceApi* | [**APIManagerServiceRetire**](docs/APIManagerServiceApi.md#apimanagerserviceretire) | **Delete** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Retire API Endpoint
 
 
 ## Documentation For Models
 
- - [APIManagerServicePublishRequest](docs/APIManagerServicePublishRequest.md)
- - [APIManagerServiceRetireRequest](docs/APIManagerServiceRetireRequest.md)
- - [ProtobufAny](docs/ProtobufAny.md)
+ - [GoogleProtobufAny](docs/GoogleProtobufAny.md)
+ - [Metadata](docs/Metadata.md)
+ - [PublishRequest](docs/PublishRequest.md)
  - [PublishRequestOpenApi](docs/PublishRequestOpenApi.md)
  - [PublishRequestSpec](docs/PublishRequestSpec.md)
- - [RpcStatus](docs/RpcStatus.md)
- - [V1Metadata](docs/V1Metadata.md)
+ - [PublishResponse](docs/PublishResponse.md)
+ - [RetireRequest](docs/RetireRequest.md)
+ - [Status](docs/Status.md)
 
 
 ## Documentation For Authorization

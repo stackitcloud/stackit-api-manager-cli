@@ -14,33 +14,33 @@ import (
 	"encoding/json"
 )
 
-// APIManagerServicePublishRequest struct for APIManagerServicePublishRequest
-type APIManagerServicePublishRequest struct {
-	Metadata *V1Metadata         `json:"metadata,omitempty"`
+// PublishRequest struct for PublishRequest
+type PublishRequest struct {
+	Metadata *Metadata           `json:"metadata,omitempty"`
 	Spec     *PublishRequestSpec `json:"spec,omitempty"`
 }
 
-// NewAPIManagerServicePublishRequest instantiates a new APIManagerServicePublishRequest object
+// NewPublishRequest instantiates a new PublishRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewAPIManagerServicePublishRequest() *APIManagerServicePublishRequest {
-	this := APIManagerServicePublishRequest{}
+func NewPublishRequest() *PublishRequest {
+	this := PublishRequest{}
 	return &this
 }
 
-// NewAPIManagerServicePublishRequestWithDefaults instantiates a new APIManagerServicePublishRequest object
+// NewPublishRequestWithDefaults instantiates a new PublishRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewAPIManagerServicePublishRequestWithDefaults() *APIManagerServicePublishRequest {
-	this := APIManagerServicePublishRequest{}
+func NewPublishRequestWithDefaults() *PublishRequest {
+	this := PublishRequest{}
 	return &this
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *APIManagerServicePublishRequest) GetMetadata() V1Metadata {
+func (o *PublishRequest) GetMetadata() Metadata {
 	if o == nil || o.Metadata == nil {
-		var ret V1Metadata
+		var ret Metadata
 		return ret
 	}
 	return *o.Metadata
@@ -48,7 +48,7 @@ func (o *APIManagerServicePublishRequest) GetMetadata() V1Metadata {
 
 // GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *APIManagerServicePublishRequest) GetMetadataOk() (*V1Metadata, bool) {
+func (o *PublishRequest) GetMetadataOk() (*Metadata, bool) {
 	if o == nil || o.Metadata == nil {
 		return nil, false
 	}
@@ -56,7 +56,7 @@ func (o *APIManagerServicePublishRequest) GetMetadataOk() (*V1Metadata, bool) {
 }
 
 // HasMetadata returns a boolean if a field has been set.
-func (o *APIManagerServicePublishRequest) HasMetadata() bool {
+func (o *PublishRequest) HasMetadata() bool {
 	if o != nil && o.Metadata != nil {
 		return true
 	}
@@ -64,13 +64,13 @@ func (o *APIManagerServicePublishRequest) HasMetadata() bool {
 	return false
 }
 
-// SetMetadata gets a reference to the given V1Metadata and assigns it to the Metadata field.
-func (o *APIManagerServicePublishRequest) SetMetadata(v V1Metadata) {
+// SetMetadata gets a reference to the given Metadata and assigns it to the Metadata field.
+func (o *PublishRequest) SetMetadata(v Metadata) {
 	o.Metadata = &v
 }
 
 // GetSpec returns the Spec field value if set, zero value otherwise.
-func (o *APIManagerServicePublishRequest) GetSpec() PublishRequestSpec {
+func (o *PublishRequest) GetSpec() PublishRequestSpec {
 	if o == nil || o.Spec == nil {
 		var ret PublishRequestSpec
 		return ret
@@ -80,7 +80,7 @@ func (o *APIManagerServicePublishRequest) GetSpec() PublishRequestSpec {
 
 // GetSpecOk returns a tuple with the Spec field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *APIManagerServicePublishRequest) GetSpecOk() (*PublishRequestSpec, bool) {
+func (o *PublishRequest) GetSpecOk() (*PublishRequestSpec, bool) {
 	if o == nil || o.Spec == nil {
 		return nil, false
 	}
@@ -88,7 +88,7 @@ func (o *APIManagerServicePublishRequest) GetSpecOk() (*PublishRequestSpec, bool
 }
 
 // HasSpec returns a boolean if a field has been set.
-func (o *APIManagerServicePublishRequest) HasSpec() bool {
+func (o *PublishRequest) HasSpec() bool {
 	if o != nil && o.Spec != nil {
 		return true
 	}
@@ -97,11 +97,11 @@ func (o *APIManagerServicePublishRequest) HasSpec() bool {
 }
 
 // SetSpec gets a reference to the given PublishRequestSpec and assigns it to the Spec field.
-func (o *APIManagerServicePublishRequest) SetSpec(v PublishRequestSpec) {
+func (o *PublishRequest) SetSpec(v PublishRequestSpec) {
 	o.Spec = &v
 }
 
-func (o APIManagerServicePublishRequest) MarshalJSON() ([]byte, error) {
+func (o PublishRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata
@@ -112,38 +112,38 @@ func (o APIManagerServicePublishRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullableAPIManagerServicePublishRequest struct {
-	value *APIManagerServicePublishRequest
+type NullablePublishRequest struct {
+	value *PublishRequest
 	isSet bool
 }
 
-func (v NullableAPIManagerServicePublishRequest) Get() *APIManagerServicePublishRequest {
+func (v NullablePublishRequest) Get() *PublishRequest {
 	return v.value
 }
 
-func (v *NullableAPIManagerServicePublishRequest) Set(val *APIManagerServicePublishRequest) {
+func (v *NullablePublishRequest) Set(val *PublishRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableAPIManagerServicePublishRequest) IsSet() bool {
+func (v NullablePublishRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableAPIManagerServicePublishRequest) Unset() {
+func (v *NullablePublishRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableAPIManagerServicePublishRequest(val *APIManagerServicePublishRequest) *NullableAPIManagerServicePublishRequest {
-	return &NullableAPIManagerServicePublishRequest{value: val, isSet: true}
+func NewNullablePublishRequest(val *PublishRequest) *NullablePublishRequest {
+	return &NullablePublishRequest{value: val, isSet: true}
 }
 
-func (v NullableAPIManagerServicePublishRequest) MarshalJSON() ([]byte, error) {
+func (v NullablePublishRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableAPIManagerServicePublishRequest) UnmarshalJSON(src []byte) error {
+func (v *NullablePublishRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

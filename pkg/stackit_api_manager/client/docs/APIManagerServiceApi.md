@@ -1,17 +1,17 @@
 # \APIManagerServiceApi
 
-All URIs are relative to *https://api-manager.api.dev.stackit.cloud*
+All URIs are relative to *https://api-manager.api.integration.tst.stackit.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**APIManagerServicePublish**](APIManagerServiceApi.md#APIManagerServicePublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
-[**APIManagerServiceRetire**](APIManagerServiceApi.md#APIManagerServiceRetire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
+[**APIManagerServicePublish**](APIManagerServiceApi.md#APIManagerServicePublish) | **Post** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Publish API Endpoint
+[**APIManagerServiceRetire**](APIManagerServiceApi.md#APIManagerServiceRetire) | **Delete** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Retire API Endpoint
 
 
 
 ## APIManagerServicePublish
 
-> map[string]interface{} APIManagerServicePublish(ctx, projectId, identifier).Body(body).Execute()
+> PublishResponse APIManagerServicePublish(ctx, metadataProjectId, metadataIdentifier).PublishRequest(publishRequest).Execute()
 
 Publish API Endpoint
 
@@ -30,18 +30,18 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
-    body := *openapiclient.NewAPIManagerServicePublishRequest() // APIManagerServicePublishRequest | 
+    metadataProjectId := "metadataProjectId_example" // string | 
+    metadataIdentifier := "metadataIdentifier_example" // string | 
+    publishRequest := *openapiclient.NewPublishRequest() // PublishRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServicePublish(context.Background(), projectId, identifier).Body(body).Execute()
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServicePublish(context.Background(), metadataProjectId, metadataIdentifier).PublishRequest(publishRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServicePublish``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `APIManagerServicePublish`: map[string]interface{}
+    // response from `APIManagerServicePublish`: PublishResponse
     fmt.Fprintf(os.Stdout, "Response from `APIManagerServiceApi.APIManagerServicePublish`: %v\n", resp)
 }
 ```
@@ -52,8 +52,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**metadataProjectId** | **string** |  | 
+**metadataIdentifier** | **string** |  | 
 
 ### Other Parameters
 
@@ -64,11 +64,11 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **body** | [**APIManagerServicePublishRequest**](APIManagerServicePublishRequest.md) |  | 
+ **publishRequest** | [**PublishRequest**](PublishRequest.md) |  | 
 
 ### Return type
 
-**map[string]interface{}**
+[**PublishResponse**](PublishResponse.md)
 
 ### Authorization
 
@@ -86,7 +86,7 @@ No authorization required
 
 ## APIManagerServiceRetire
 
-> map[string]interface{} APIManagerServiceRetire(ctx, projectId, identifier).Body(body).Execute()
+> map[string]interface{} APIManagerServiceRetire(ctx, metadataProjectId, metadataIdentifier).RetireRequest(retireRequest).Execute()
 
 Retire API Endpoint
 
@@ -105,13 +105,13 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
-    body := *openapiclient.NewAPIManagerServiceRetireRequest() // APIManagerServiceRetireRequest | 
+    metadataProjectId := "metadataProjectId_example" // string | 
+    metadataIdentifier := "metadataIdentifier_example" // string | 
+    retireRequest := *openapiclient.NewRetireRequest() // RetireRequest | 
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceRetire(context.Background(), projectId, identifier).Body(body).Execute()
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceRetire(context.Background(), metadataProjectId, metadataIdentifier).RetireRequest(retireRequest).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServiceRetire``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -127,8 +127,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**metadataProjectId** | **string** |  | 
+**metadataIdentifier** | **string** |  | 
 
 ### Other Parameters
 
@@ -139,7 +139,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **body** | [**APIManagerServiceRetireRequest**](APIManagerServiceRetireRequest.md) |  | 
+ **retireRequest** | [**RetireRequest**](RetireRequest.md) |  | 
 
 ### Return type
 
