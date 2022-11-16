@@ -16,6 +16,7 @@ import (
 
 // PublishRequestOpenApi struct for PublishRequestOpenApi
 type PublishRequestOpenApi struct {
+	// now the spec will be base64 string, later we might add a url to a spec file or something else
 	Base64Encoded *string `json:"base64Encoded,omitempty"`
 }
 

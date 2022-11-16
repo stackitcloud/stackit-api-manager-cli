@@ -77,7 +77,7 @@ docker: ## Builds docker image
 generate-client-code: ## generate API client code
 	docker run --rm \
 		-v ${PWD}:/local openapitools/openapi-generator-cli:${OPENAPI_GENERATOR_VERSION} generate \
-		-i /local/api/api_manager.swagger.yaml \
+		-i /local/api/api_manager.openapi.json \
 		-g go \
 		--additional-properties=packageName=client \
 		-o /local/pkg/stackit_api_manager/client
