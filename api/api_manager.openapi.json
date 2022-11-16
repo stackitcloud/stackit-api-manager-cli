@@ -236,7 +236,7 @@
   "servers": [
     {
       "description": "STACKIT API Manager API",
-      "url": "https://api-manager.api.integration.tst.stackit.cloud"
+      "url": "https://api-manager.api.stackit.cloud"
     }
   ],
   "tags": [

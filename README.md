@@ -105,7 +105,11 @@ make test
 
 ## Update API client
 
-To update the API client, the OpenAPI Spec files needs to be in place at `api/api_manager.openapi.json` and then run:
+To update the API client:
+
+- get the OpenAPI Spec from the `https://internal-docs.api.stackit.cloud/oas/api-manager`.
+- store OpenAPI Spec in `api/api_manager.openapi.json`.
+- then run:
 
 ```bash
 make generate-client
