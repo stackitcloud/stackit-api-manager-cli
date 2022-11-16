@@ -1,6 +1,6 @@
 # \APIManagerServiceApi
 
-All URIs are relative to *https://api-manager.api.stackit.cloud*
+All URIs are relative to *https://api-manager.api.integration.tst.stackit.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
