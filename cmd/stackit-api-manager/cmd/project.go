@@ -93,11 +93,8 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
-	req := apiManager.RetireRequest{
-		Metadata: &apiManager.Metadata{
-			Stage: &stage,
-		},
-	}
+	req := apiManager.RetireRequest{}
+	// probably need this inside: Metadata: &apiManager.Metadata{},
 
 	if strings.HasPrefix(authToken, "Bearer ") {
 		cmd.Printf("Authorization token should have no Bearer prefix")
@@ -142,13 +139,13 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
 	projectCmd.MarkPersistentFlagRequired("identifier") //nolint:errcheck // cobra flag
-	projectCmd.PersistentFlags().StringVarP(&stage, "stage", "s", "", "Project Stage")
-	projectCmd.MarkPersistentFlagRequired("stage") //nolint:errcheck // cobra flag
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 
 	// publishCmd flags
+	publishCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
+	publishCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
 	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
 }
