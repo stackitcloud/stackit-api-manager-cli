@@ -80,7 +80,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	defer r.Body.Close()
-	cmd.Printf("API Gateway project %s published successfully with identifier %s", projectID, identifier)
+	cmd.Printf("API Gateway project %s published successfully with identifier %s\n", projectID, identifier)
 	return nil
 }
 
@@ -119,10 +119,58 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
+var validateCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
+	Use:   "validate",
+	Short: "Validate an OpenAPI Spec for a Stackit API Gateway project",
+	RunE:  validateCmdRunE,
+}
+
+func validateCmdRunE(cmd *cobra.Command, args []string) error {
+	c := newAPIClient()
+
+	base64Encoded, err := util.EncodeBase64File(openAPISpecFilePath)
+	if err != nil {
+		return err
+	}
+
+	req := apiManager.PublishValidateRequest{
+		Metadata: &apiManager.PublishMetadata{
+			Stage: &stage,
+		},
+		Spec: &apiManager.Spec{
+			OpenApi: &apiManager.SpecOpenApi{
+				Base64Encoded: &base64Encoded,
+			},
+		},
+	}
+
+	if strings.HasPrefix(authToken, "Bearer ") {
+		cmd.Printf("Authorization token should have no Bearer prefix")
+		return errBadToken
+	}
+	// add auth token
+	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
+
+	_, r, err := c.APIManagerServiceApi.APIManagerServicePublishValidate(
+		ctx,
+		projectID,
+		identifier,
+	).PublishValidateRequest(req).Execute()
+	if err != nil {
+		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServicePublishValidate``: %v\n", err)
+		cmd.Printf("Full HTTP response: %v\n", r)
+		return err
+	}
+	defer r.Body.Close()
+	cmd.Printf("OpenAPI Spec for API Gateway project %s with identifier %s validated successfully\n", projectID, identifier)
+	return nil
+}
+
 func init() {
 	rootCmd.AddCommand(projectCmd)
 	projectCmd.AddCommand(publishCmd)
 	projectCmd.AddCommand(retireCmd)
+	projectCmd.AddCommand(validateCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -148,4 +196,10 @@ func init() {
 	publishCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
 	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
+
+	// validateCmd flags
+	validateCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
+	validateCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
+	validateCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
+	validateCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
 }
