@@ -80,7 +80,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	defer r.Body.Close()
-	cmd.Printf("API Gateway project %s published successfully with identifier %s", projectID, identifier)
+	cmd.Printf("API Gateway project %s published successfully with identifier %s\n", projectID, identifier)
 	return nil
 }
 
@@ -138,13 +138,13 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
 	projectCmd.MarkPersistentFlagRequired("identifier") //nolint:errcheck // cobra flag
-	projectCmd.PersistentFlags().StringVarP(&stage, "stage", "s", "", "Project Stage")
-	projectCmd.MarkPersistentFlagRequired("stage") //nolint:errcheck // cobra flag
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 
 	// publishCmd flags
+	publishCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
+	publishCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
 	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
 }
