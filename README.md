@@ -57,7 +57,6 @@ stackit-api-manager project retire \
   --identifier <YourIdentifier> \
   --baseURL <API-Manager-BaseURL> \
   --project <YourProject> \
-  --stage <YourStage> \
   --token <YourAuthToken>
 ```
 
