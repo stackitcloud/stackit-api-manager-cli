@@ -52,11 +52,11 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	req := apiManager.PublishRequest{
-		Metadata: &apiManager.Metadata{
+		Metadata: &apiManager.PublishMetadata{
 			Stage: &stage,
 		},
-		Spec: &apiManager.PublishRequestSpec{
-			OpenApi: &apiManager.PublishRequestOpenApi{
+		Spec: &apiManager.Spec{
+			OpenApi: &apiManager.SpecOpenApi{
 				Base64Encoded: &base64Encoded,
 			},
 		},

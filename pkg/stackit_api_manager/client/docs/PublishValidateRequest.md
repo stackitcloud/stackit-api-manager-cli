@@ -1,4 +1,4 @@
-# PublishRequest
+# PublishValidateRequest
 
 ## Properties
 
@@ -9,70 +9,70 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewPublishRequest
+### NewPublishValidateRequest
 
-`func NewPublishRequest() *PublishRequest`
+`func NewPublishValidateRequest() *PublishValidateRequest`
 
-NewPublishRequest instantiates a new PublishRequest object
+NewPublishValidateRequest instantiates a new PublishValidateRequest object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewPublishRequestWithDefaults
+### NewPublishValidateRequestWithDefaults
 
-`func NewPublishRequestWithDefaults() *PublishRequest`
+`func NewPublishValidateRequestWithDefaults() *PublishValidateRequest`
 
-NewPublishRequestWithDefaults instantiates a new PublishRequest object
+NewPublishValidateRequestWithDefaults instantiates a new PublishValidateRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetMetadata
 
-`func (o *PublishRequest) GetMetadata() PublishMetadata`
+`func (o *PublishValidateRequest) GetMetadata() PublishMetadata`
 
 GetMetadata returns the Metadata field if non-nil, zero value otherwise.
 
 ### GetMetadataOk
 
-`func (o *PublishRequest) GetMetadataOk() (*PublishMetadata, bool)`
+`func (o *PublishValidateRequest) GetMetadataOk() (*PublishMetadata, bool)`
 
 GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetadata
 
-`func (o *PublishRequest) SetMetadata(v PublishMetadata)`
+`func (o *PublishValidateRequest) SetMetadata(v PublishMetadata)`
 
 SetMetadata sets Metadata field to given value.
 
 ### HasMetadata
 
-`func (o *PublishRequest) HasMetadata() bool`
+`func (o *PublishValidateRequest) HasMetadata() bool`
 
 HasMetadata returns a boolean if a field has been set.
 
 ### GetSpec
 
-`func (o *PublishRequest) GetSpec() Spec`
+`func (o *PublishValidateRequest) GetSpec() Spec`
 
 GetSpec returns the Spec field if non-nil, zero value otherwise.
 
 ### GetSpecOk
 
-`func (o *PublishRequest) GetSpecOk() (*Spec, bool)`
+`func (o *PublishValidateRequest) GetSpecOk() (*Spec, bool)`
 
 GetSpecOk returns a tuple with the Spec field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSpec
 
-`func (o *PublishRequest) SetSpec(v Spec)`
+`func (o *PublishValidateRequest) SetSpec(v Spec)`
 
 SetSpec sets Spec field to given value.
 
 ### HasSpec
 
-`func (o *PublishRequest) HasSpec() bool`
+`func (o *PublishValidateRequest) HasSpec() bool`
 
 HasSpec returns a boolean if a field has been set.
 

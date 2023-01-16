@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Metadata** | Pointer to [**Metadata**](Metadata.md) |  | [optional] 
+**Metadata** | Pointer to [**RetireMetadata**](RetireMetadata.md) |  | [optional] 
 
 ## Methods
 
@@ -27,20 +27,20 @@ but it doesn't guarantee that properties required by API are set
 
 ### GetMetadata
 
-`func (o *RetireRequest) GetMetadata() Metadata`
+`func (o *RetireRequest) GetMetadata() RetireMetadata`
 
 GetMetadata returns the Metadata field if non-nil, zero value otherwise.
 
 ### GetMetadataOk
 
-`func (o *RetireRequest) GetMetadataOk() (*Metadata, bool)`
+`func (o *RetireRequest) GetMetadataOk() (*RetireMetadata, bool)`
 
 GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetMetadata
 
-`func (o *RetireRequest) SetMetadata(v Metadata)`
+`func (o *RetireRequest) SetMetadata(v RetireMetadata)`
 
 SetMetadata sets Metadata field to given value.
 

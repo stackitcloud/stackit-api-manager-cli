@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
@@ -105,8 +105,8 @@ func NewConfiguration() *Configuration {
 		Debug:         false,
 		Servers: ServerConfigurations{
 			{
-				URL:         "https://api-manager.api.stackit.cloud",
-				Description: "STACKIT API Manager API",
+				URL:         "https://api-manager.localhost",
+				Description: "STACKIT API Manager",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},
