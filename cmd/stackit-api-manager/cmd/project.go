@@ -52,11 +52,11 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	req := apiManager.PublishRequest{
-		Metadata: &apiManager.Metadata{
+		Metadata: &apiManager.PublishMetadata{
 			Stage: &stage,
 		},
-		Spec: &apiManager.PublishRequestSpec{
-			OpenApi: &apiManager.PublishRequestOpenApi{
+		Spec: &apiManager.Spec{
+			OpenApi: &apiManager.SpecOpenApi{
 				Base64Encoded: &base64Encoded,
 			},
 		},
@@ -93,11 +93,7 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
-	req := apiManager.RetireRequest{
-		Metadata: &apiManager.Metadata{
-			Stage: &stage,
-		},
-	}
+	req := apiManager.RetireRequest{}
 
 	if strings.HasPrefix(authToken, "Bearer ") {
 		cmd.Printf("Authorization token should have no Bearer prefix")

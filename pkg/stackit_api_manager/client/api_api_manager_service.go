@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
@@ -104,6 +104,132 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 	}
 	// body params
 	localVarPostBody = r.publishRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		var v Status
+		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+		if err != nil {
+			newErr.error = err.Error()
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAPIManagerServicePublishValidateRequest struct {
+	ctx                    context.Context
+	ApiService             *APIManagerServiceApiService
+	metadataProjectId      string
+	metadataIdentifier     string
+	publishValidateRequest *PublishValidateRequest
+}
+
+func (r ApiAPIManagerServicePublishValidateRequest) PublishValidateRequest(publishValidateRequest PublishValidateRequest) ApiAPIManagerServicePublishValidateRequest {
+	r.publishValidateRequest = &publishValidateRequest
+	return r
+}
+
+func (r ApiAPIManagerServicePublishValidateRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.APIManagerServicePublishValidateExecute(r)
+}
+
+/*
+APIManagerServicePublishValidate Validate API Endpoint
+
+Validate the OpenApiSpec for an API by providing the OAS for it
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param metadataProjectId
+	@param metadataIdentifier
+	@return ApiAPIManagerServicePublishValidateRequest
+*/
+func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, metadataProjectId string, metadataIdentifier string) ApiAPIManagerServicePublishValidateRequest {
+	return ApiAPIManagerServicePublishValidateRequest{
+		ApiService:         a,
+		ctx:                ctx,
+		metadataProjectId:  metadataProjectId,
+		metadataIdentifier: metadataIdentifier,
+	}
+}
+
+// Execute executes the request
+//
+//	@return map[string]interface{}
+func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r ApiAPIManagerServicePublishValidateRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublishValidate")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/projects/{metadata.project_id}/api/{metadata.identifier}/validate"
+	localVarPath = strings.Replace(localVarPath, "{"+"metadata.project_id"+"}", url.PathEscape(parameterToString(r.metadataProjectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"metadata.identifier"+"}", url.PathEscape(parameterToString(r.metadataIdentifier, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.publishValidateRequest == nil {
+		return localVarReturnValue, nil, reportError("publishValidateRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.publishValidateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

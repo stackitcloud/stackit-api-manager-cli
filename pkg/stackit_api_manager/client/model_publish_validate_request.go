@@ -14,31 +14,31 @@ import (
 	"encoding/json"
 )
 
-// PublishRequest struct for PublishRequest
-type PublishRequest struct {
+// PublishValidateRequest struct for PublishValidateRequest
+type PublishValidateRequest struct {
 	Metadata *PublishMetadata `json:"metadata,omitempty"`
 	Spec     *Spec            `json:"spec,omitempty"`
 }
 
-// NewPublishRequest instantiates a new PublishRequest object
+// NewPublishValidateRequest instantiates a new PublishValidateRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPublishRequest() *PublishRequest {
-	this := PublishRequest{}
+func NewPublishValidateRequest() *PublishValidateRequest {
+	this := PublishValidateRequest{}
 	return &this
 }
 
-// NewPublishRequestWithDefaults instantiates a new PublishRequest object
+// NewPublishValidateRequestWithDefaults instantiates a new PublishValidateRequest object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPublishRequestWithDefaults() *PublishRequest {
-	this := PublishRequest{}
+func NewPublishValidateRequestWithDefaults() *PublishValidateRequest {
+	this := PublishValidateRequest{}
 	return &this
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *PublishRequest) GetMetadata() PublishMetadata {
+func (o *PublishValidateRequest) GetMetadata() PublishMetadata {
 	if o == nil || o.Metadata == nil {
 		var ret PublishMetadata
 		return ret
@@ -48,7 +48,7 @@ func (o *PublishRequest) GetMetadata() PublishMetadata {
 
 // GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PublishRequest) GetMetadataOk() (*PublishMetadata, bool) {
+func (o *PublishValidateRequest) GetMetadataOk() (*PublishMetadata, bool) {
 	if o == nil || o.Metadata == nil {
 		return nil, false
 	}
@@ -56,7 +56,7 @@ func (o *PublishRequest) GetMetadataOk() (*PublishMetadata, bool) {
 }
 
 // HasMetadata returns a boolean if a field has been set.
-func (o *PublishRequest) HasMetadata() bool {
+func (o *PublishValidateRequest) HasMetadata() bool {
 	if o != nil && o.Metadata != nil {
 		return true
 	}
@@ -65,12 +65,12 @@ func (o *PublishRequest) HasMetadata() bool {
 }
 
 // SetMetadata gets a reference to the given PublishMetadata and assigns it to the Metadata field.
-func (o *PublishRequest) SetMetadata(v PublishMetadata) {
+func (o *PublishValidateRequest) SetMetadata(v PublishMetadata) {
 	o.Metadata = &v
 }
 
 // GetSpec returns the Spec field value if set, zero value otherwise.
-func (o *PublishRequest) GetSpec() Spec {
+func (o *PublishValidateRequest) GetSpec() Spec {
 	if o == nil || o.Spec == nil {
 		var ret Spec
 		return ret
@@ -80,7 +80,7 @@ func (o *PublishRequest) GetSpec() Spec {
 
 // GetSpecOk returns a tuple with the Spec field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PublishRequest) GetSpecOk() (*Spec, bool) {
+func (o *PublishValidateRequest) GetSpecOk() (*Spec, bool) {
 	if o == nil || o.Spec == nil {
 		return nil, false
 	}
@@ -88,7 +88,7 @@ func (o *PublishRequest) GetSpecOk() (*Spec, bool) {
 }
 
 // HasSpec returns a boolean if a field has been set.
-func (o *PublishRequest) HasSpec() bool {
+func (o *PublishValidateRequest) HasSpec() bool {
 	if o != nil && o.Spec != nil {
 		return true
 	}
@@ -97,11 +97,11 @@ func (o *PublishRequest) HasSpec() bool {
 }
 
 // SetSpec gets a reference to the given Spec and assigns it to the Spec field.
-func (o *PublishRequest) SetSpec(v Spec) {
+func (o *PublishValidateRequest) SetSpec(v Spec) {
 	o.Spec = &v
 }
 
-func (o PublishRequest) MarshalJSON() ([]byte, error) {
+func (o PublishValidateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata
@@ -112,38 +112,38 @@ func (o PublishRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullablePublishRequest struct {
-	value *PublishRequest
+type NullablePublishValidateRequest struct {
+	value *PublishValidateRequest
 	isSet bool
 }
 
-func (v NullablePublishRequest) Get() *PublishRequest {
+func (v NullablePublishValidateRequest) Get() *PublishValidateRequest {
 	return v.value
 }
 
-func (v *NullablePublishRequest) Set(val *PublishRequest) {
+func (v *NullablePublishValidateRequest) Set(val *PublishValidateRequest) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePublishRequest) IsSet() bool {
+func (v NullablePublishValidateRequest) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePublishRequest) Unset() {
+func (v *NullablePublishValidateRequest) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePublishRequest(val *PublishRequest) *NullablePublishRequest {
-	return &NullablePublishRequest{value: val, isSet: true}
+func NewNullablePublishValidateRequest(val *PublishValidateRequest) *NullablePublishValidateRequest {
+	return &NullablePublishValidateRequest{value: val, isSet: true}
 }
 
-func (v NullablePublishRequest) MarshalJSON() ([]byte, error) {
+func (v NullablePublishValidateRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePublishRequest) UnmarshalJSON(src []byte) error {
+func (v *NullablePublishValidateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
