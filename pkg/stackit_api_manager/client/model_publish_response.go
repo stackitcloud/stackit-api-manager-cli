@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
@@ -14,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// PublishResponse OpenAPI specification was retired successfully
+// PublishResponse OpenAPI specification was published successfully
 type PublishResponse struct {
 	ApiUrl *string `json:"apiUrl,omitempty"`
 }

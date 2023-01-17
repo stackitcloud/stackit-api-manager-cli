@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
@@ -14,31 +14,31 @@ import (
 	"encoding/json"
 )
 
-// PublishRequestOpenApi struct for PublishRequestOpenApi
-type PublishRequestOpenApi struct {
+// SpecOpenApi struct for SpecOpenApi
+type SpecOpenApi struct {
 	// now the spec will be base64 string, later we might add a url to a spec file or something else
 	Base64Encoded *string `json:"base64Encoded,omitempty"`
 }
 
-// NewPublishRequestOpenApi instantiates a new PublishRequestOpenApi object
+// NewSpecOpenApi instantiates a new SpecOpenApi object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewPublishRequestOpenApi() *PublishRequestOpenApi {
-	this := PublishRequestOpenApi{}
+func NewSpecOpenApi() *SpecOpenApi {
+	this := SpecOpenApi{}
 	return &this
 }
 
-// NewPublishRequestOpenApiWithDefaults instantiates a new PublishRequestOpenApi object
+// NewSpecOpenApiWithDefaults instantiates a new SpecOpenApi object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewPublishRequestOpenApiWithDefaults() *PublishRequestOpenApi {
-	this := PublishRequestOpenApi{}
+func NewSpecOpenApiWithDefaults() *SpecOpenApi {
+	this := SpecOpenApi{}
 	return &this
 }
 
 // GetBase64Encoded returns the Base64Encoded field value if set, zero value otherwise.
-func (o *PublishRequestOpenApi) GetBase64Encoded() string {
+func (o *SpecOpenApi) GetBase64Encoded() string {
 	if o == nil || o.Base64Encoded == nil {
 		var ret string
 		return ret
@@ -48,7 +48,7 @@ func (o *PublishRequestOpenApi) GetBase64Encoded() string {
 
 // GetBase64EncodedOk returns a tuple with the Base64Encoded field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PublishRequestOpenApi) GetBase64EncodedOk() (*string, bool) {
+func (o *SpecOpenApi) GetBase64EncodedOk() (*string, bool) {
 	if o == nil || o.Base64Encoded == nil {
 		return nil, false
 	}
@@ -56,7 +56,7 @@ func (o *PublishRequestOpenApi) GetBase64EncodedOk() (*string, bool) {
 }
 
 // HasBase64Encoded returns a boolean if a field has been set.
-func (o *PublishRequestOpenApi) HasBase64Encoded() bool {
+func (o *SpecOpenApi) HasBase64Encoded() bool {
 	if o != nil && o.Base64Encoded != nil {
 		return true
 	}
@@ -65,11 +65,11 @@ func (o *PublishRequestOpenApi) HasBase64Encoded() bool {
 }
 
 // SetBase64Encoded gets a reference to the given string and assigns it to the Base64Encoded field.
-func (o *PublishRequestOpenApi) SetBase64Encoded(v string) {
+func (o *SpecOpenApi) SetBase64Encoded(v string) {
 	o.Base64Encoded = &v
 }
 
-func (o PublishRequestOpenApi) MarshalJSON() ([]byte, error) {
+func (o SpecOpenApi) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Base64Encoded != nil {
 		toSerialize["base64Encoded"] = o.Base64Encoded
@@ -77,38 +77,38 @@ func (o PublishRequestOpenApi) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-type NullablePublishRequestOpenApi struct {
-	value *PublishRequestOpenApi
+type NullableSpecOpenApi struct {
+	value *SpecOpenApi
 	isSet bool
 }
 
-func (v NullablePublishRequestOpenApi) Get() *PublishRequestOpenApi {
+func (v NullableSpecOpenApi) Get() *SpecOpenApi {
 	return v.value
 }
 
-func (v *NullablePublishRequestOpenApi) Set(val *PublishRequestOpenApi) {
+func (v *NullableSpecOpenApi) Set(val *SpecOpenApi) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullablePublishRequestOpenApi) IsSet() bool {
+func (v NullableSpecOpenApi) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullablePublishRequestOpenApi) Unset() {
+func (v *NullableSpecOpenApi) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullablePublishRequestOpenApi(val *PublishRequestOpenApi) *NullablePublishRequestOpenApi {
-	return &NullablePublishRequestOpenApi{value: val, isSet: true}
+func NewNullableSpecOpenApi(val *SpecOpenApi) *NullableSpecOpenApi {
+	return &NullableSpecOpenApi{value: val, isSet: true}
 }
 
-func (v NullablePublishRequestOpenApi) MarshalJSON() ([]byte, error) {
+func (v NullableSpecOpenApi) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullablePublishRequestOpenApi) UnmarshalJSON(src []byte) error {
+func (v *NullableSpecOpenApi) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

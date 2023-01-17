@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
@@ -16,7 +16,7 @@ import (
 
 // RetireRequest struct for RetireRequest
 type RetireRequest struct {
-	Metadata *Metadata `json:"metadata,omitempty"`
+	Metadata *RetireMetadata `json:"metadata,omitempty"`
 }
 
 // NewRetireRequest instantiates a new RetireRequest object
@@ -37,9 +37,9 @@ func NewRetireRequestWithDefaults() *RetireRequest {
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *RetireRequest) GetMetadata() Metadata {
+func (o *RetireRequest) GetMetadata() RetireMetadata {
 	if o == nil || o.Metadata == nil {
-		var ret Metadata
+		var ret RetireMetadata
 		return ret
 	}
 	return *o.Metadata
@@ -47,7 +47,7 @@ func (o *RetireRequest) GetMetadata() Metadata {
 
 // GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RetireRequest) GetMetadataOk() (*Metadata, bool) {
+func (o *RetireRequest) GetMetadataOk() (*RetireMetadata, bool) {
 	if o == nil || o.Metadata == nil {
 		return nil, false
 	}
@@ -63,8 +63,8 @@ func (o *RetireRequest) HasMetadata() bool {
 	return false
 }
 
-// SetMetadata gets a reference to the given Metadata and assigns it to the Metadata field.
-func (o *RetireRequest) SetMetadata(v Metadata) {
+// SetMetadata gets a reference to the given RetireMetadata and assigns it to the Metadata field.
+func (o *RetireRequest) SetMetadata(v RetireMetadata) {
 	o.Metadata = &v
 }
 

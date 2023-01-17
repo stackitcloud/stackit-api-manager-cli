@@ -1,7 +1,7 @@
 /*
-api-manager-api
+STACKIT API Management Service
 
-STACKIT API Manager API
+STACKIT API Manager
 
 API version: 1.0
 */
