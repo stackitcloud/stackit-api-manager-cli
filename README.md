@@ -60,6 +60,18 @@ stackit-api-manager project retire \
   --token <YourAuthToken>
 ```
 
+Use the CLI to validate your OpenAPI Spec:
+
+```bash
+stackit-api-manager project validate \
+  --identifier <YourIdentifier> \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --stage <YourStage> \
+  --token <YourAuthToken> \
+  --oas <PathToOpenAPISpec>
+```
+
 #### API-Manager-BaseURL possible values
 
 - `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`
