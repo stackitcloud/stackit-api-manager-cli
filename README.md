@@ -80,9 +80,7 @@ Use the CLI to list all API identifiers for your project:
 stackit-api-manager project list \
   --baseURL <API-Manager-BaseURL> \
   --project <YourProject> \
-  --stage <YourStage> \
   --token <YourAuthToken> \
-  --oas <PathToOpenAPISpec>
 ```
 
 #### API-Manager-BaseURL possible values
