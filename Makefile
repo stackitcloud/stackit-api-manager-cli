@@ -43,7 +43,7 @@ $(GOLANGCI_LINT):
 	@mv bin/golangci-lint "$(@)"
 
 lint: fmt $(GOLANGCI_LINT) download ## Lints all code with golangci-lint
-	@$(GOLANGCI_LINT) run 
+	@$(GOLANGCI_LINT) run
 
 lint-reports: out/lint.xml
 
