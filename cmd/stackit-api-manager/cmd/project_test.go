@@ -131,7 +131,6 @@ func Test_publishCmdRunE(t *testing.T) {
 	}
 }
 
-//nolint:dupl // ignore dupl linter error for testing
 func Test_retireCmdRunE(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
