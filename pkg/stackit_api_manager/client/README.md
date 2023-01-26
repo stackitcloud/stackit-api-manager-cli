@@ -78,23 +78,24 @@ All URIs are relative to *https://api-manager.api.stackit.cloud*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*APIManagerServiceApi* | [**APIManagerServicePublish**](docs/APIManagerServiceApi.md#apimanagerservicepublish) | **Post** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Publish API Endpoint
-*APIManagerServiceApi* | [**APIManagerServicePublishValidate**](docs/APIManagerServiceApi.md#apimanagerservicepublishvalidate) | **Post** /v1/projects/{metadata.project_id}/api/{metadata.identifier}/validate | Validate API Endpoint
-*APIManagerServiceApi* | [**APIManagerServiceRetire**](docs/APIManagerServiceApi.md#apimanagerserviceretire) | **Delete** /v1/projects/{metadata.project_id}/api/{metadata.identifier} | Retire API Endpoint
+*APIManagerServiceApi* | [**APIManagerServiceFetchAPI**](docs/APIManagerServiceApi.md#apimanagerservicefetchapi) | **Get** /v1alpha/projects/{projectId}/api/{identifier} | Fetch API Endpoint
+*APIManagerServiceApi* | [**APIManagerServiceFetchProjectAPIIdentifiers**](docs/APIManagerServiceApi.md#apimanagerservicefetchprojectapiidentifiers) | **Get** /v1alpha/projects/{projectId} | Fetch Project APIIdentifiers Endpoint
+*APIManagerServiceApi* | [**APIManagerServicePublish**](docs/APIManagerServiceApi.md#apimanagerservicepublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
+*APIManagerServiceApi* | [**APIManagerServicePublishValidate**](docs/APIManagerServiceApi.md#apimanagerservicepublishvalidate) | **Post** /v1/projects/{projectId}/api/{identifier}/validate | Validate API Endpoint
+*APIManagerServiceApi* | [**APIManagerServiceRetire**](docs/APIManagerServiceApi.md#apimanagerserviceretire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
 
 
 ## Documentation For Models
 
- - [GoogleProtobufAny](docs/GoogleProtobufAny.md)
+ - [FetchAPIResponse](docs/FetchAPIResponse.md)
+ - [FetchProjectAPIIdentifiersResponse](docs/FetchProjectAPIIdentifiersResponse.md)
  - [PublishMetadata](docs/PublishMetadata.md)
  - [PublishRequest](docs/PublishRequest.md)
  - [PublishResponse](docs/PublishResponse.md)
  - [PublishValidateRequest](docs/PublishValidateRequest.md)
- - [RetireMetadata](docs/RetireMetadata.md)
  - [RetireRequest](docs/RetireRequest.md)
  - [Spec](docs/Spec.md)
  - [SpecOpenApi](docs/SpecOpenApi.md)
- - [Status](docs/Status.md)
 
 
 ## Documentation For Authorization

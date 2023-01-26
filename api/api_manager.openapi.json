@@ -1,25 +1,40 @@
 {
   "components": {
     "schemas": {
-      "GoogleProtobufAny": {
-        "additionalProperties": true,
-        "description": "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.",
+      "FetchAPIResponse": {
+        "description": "API was fetched successfully",
         "properties": {
-          "@type": {
-            "description": "The type of the serialized message.",
+          "apiUrl": {
+            "type": "string"
+          },
+          "spec": {
+            "$ref": "#/components/schemas/Spec"
+          },
+          "stage": {
+            "type": "string"
+          },
+          "upstreamUrl": {
             "type": "string"
           }
         },
+        "title": "FetchAPI response",
+        "type": "object"
+      },
+      "FetchProjectAPIIdentifiersResponse": {
+        "description": "API identifiers were fetched successfully",
+        "properties": {
+          "identifiers": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "title": "FetchProjectAPIIdentifiers response",
         "type": "object"
       },
       "PublishMetadata": {
         "properties": {
-          "identifier": {
-            "type": "string"
-          },
-          "projectId": {
-            "type": "string"
-          },
           "stage": {
             "type": "string"
           }
@@ -28,8 +43,16 @@
       },
       "PublishRequest": {
         "properties": {
+          "identifier": {
+            "readOnly": true,
+            "type": "string"
+          },
           "metadata": {
             "$ref": "#/components/schemas/PublishMetadata"
+          },
+          "projectId": {
+            "readOnly": true,
+            "type": "string"
           },
           "spec": {
             "$ref": "#/components/schemas/Spec"
@@ -49,8 +72,16 @@
       },
       "PublishValidateRequest": {
         "properties": {
+          "identifier": {
+            "readOnly": true,
+            "type": "string"
+          },
           "metadata": {
             "$ref": "#/components/schemas/PublishMetadata"
+          },
+          "projectId": {
+            "readOnly": true,
+            "type": "string"
           },
           "spec": {
             "$ref": "#/components/schemas/Spec"
@@ -63,21 +94,15 @@
         "title": "Validate response",
         "type": "object"
       },
-      "RetireMetadata": {
+      "RetireRequest": {
         "properties": {
           "identifier": {
+            "readOnly": true,
             "type": "string"
           },
           "projectId": {
+            "readOnly": true,
             "type": "string"
-          }
-        },
-        "type": "object"
-      },
-      "RetireRequest": {
-        "properties": {
-          "metadata": {
-            "$ref": "#/components/schemas/RetireMetadata"
           }
         },
         "type": "object"
@@ -103,28 +128,6 @@
           }
         },
         "type": "object"
-      },
-      "Status": {
-        "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
-        "properties": {
-          "code": {
-            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].",
-            "format": "int32",
-            "type": "integer"
-          },
-          "details": {
-            "description": "A list of messages that carry the error details.  There is a common set of message types for APIs to use.",
-            "items": {
-              "$ref": "#/components/schemas/GoogleProtobufAny"
-            },
-            "type": "array"
-          },
-          "message": {
-            "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.",
-            "type": "string"
-          }
-        },
-        "type": "object"
       }
     }
   },
@@ -135,14 +138,14 @@
   },
   "openapi": "3.0.3",
   "paths": {
-    "/v1/projects/{metadata.project_id}/api/{metadata.identifier}": {
+    "/v1/projects/{projectId}/api/{identifier}": {
       "delete": {
         "description": "Retire an already existing API for a dedicated service by providing its Identifier",
         "operationId": "APIManagerService_Retire",
         "parameters": [
           {
             "in": "path",
-            "name": "metadata.project_id",
+            "name": "projectId",
             "required": true,
             "schema": {
               "type": "string"
@@ -150,7 +153,7 @@
           },
           {
             "in": "path",
-            "name": "metadata.identifier",
+            "name": "identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -180,16 +183,6 @@
           },
           "400": {
             "description": "Could not find the API."
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Status"
-                }
-              }
-            },
-            "description": "Default error response"
           }
         },
         "summary": "Retire API Endpoint",
@@ -203,7 +196,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "metadata.project_id",
+            "name": "projectId",
             "required": true,
             "schema": {
               "type": "string"
@@ -211,7 +204,7 @@
           },
           {
             "in": "path",
-            "name": "metadata.identifier",
+            "name": "identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -241,16 +234,6 @@
           },
           "400": {
             "description": "Could not read or validate the OpenAPI specification."
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Status"
-                }
-              }
-            },
-            "description": "Default error response"
           }
         },
         "summary": "Publish API Endpoint",
@@ -259,14 +242,14 @@
         ]
       }
     },
-    "/v1/projects/{metadata.project_id}/api/{metadata.identifier}/validate": {
+    "/v1/projects/{projectId}/api/{identifier}/validate": {
       "post": {
         "description": "Validate the OpenApiSpec for an API by providing the OAS for it",
         "operationId": "APIManagerService_PublishValidate",
         "parameters": [
           {
             "in": "path",
-            "name": "metadata.project_id",
+            "name": "projectId",
             "required": true,
             "schema": {
               "type": "string"
@@ -274,7 +257,7 @@
           },
           {
             "in": "path",
-            "name": "metadata.identifier",
+            "name": "identifier",
             "required": true,
             "schema": {
               "type": "string"
@@ -304,19 +287,87 @@
           },
           "400": {
             "description": "Could not read or validate the OpenAPI specification."
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Status"
-                }
-              }
-            },
-            "description": "Default error response"
           }
         },
         "summary": "Validate API Endpoint",
+        "tags": [
+          "APIManagerService"
+        ]
+      }
+    },
+    "/v1alpha/projects/{projectId}": {
+      "get": {
+        "description": "Fetches all API identifiers which belong to a project byproviding its projectId",
+        "operationId": "APIManagerService_FetchProjectAPIIdentifiers",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchProjectAPIIdentifiersResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Could not fetch API identifiers for project."
+          }
+        },
+        "summary": "Fetch Project APIIdentifiers Endpoint",
+        "tags": [
+          "APIManagerService"
+        ]
+      }
+    },
+    "/v1alpha/projects/{projectId}/api/{identifier}": {
+      "get": {
+        "description": "Fetches an already existing API for a dedicated service byproviding its identifier",
+        "operationId": "APIManagerService_FetchAPI",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchAPIResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Could not fetch API."
+          }
+        },
+        "summary": "Fetch API Endpoint",
         "tags": [
           "APIManagerService"
         ]

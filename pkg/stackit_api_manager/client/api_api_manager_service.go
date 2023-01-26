@@ -22,12 +22,224 @@ import (
 // APIManagerServiceApiService APIManagerServiceApi service
 type APIManagerServiceApiService service
 
+type ApiAPIManagerServiceFetchAPIRequest struct {
+	ctx        context.Context
+	ApiService *APIManagerServiceApiService
+	projectId  string
+	identifier string
+}
+
+func (r ApiAPIManagerServiceFetchAPIRequest) Execute() (*FetchAPIResponse, *http.Response, error) {
+	return r.ApiService.APIManagerServiceFetchAPIExecute(r)
+}
+
+/*
+APIManagerServiceFetchAPI Fetch API Endpoint
+
+Fetches an already existing API for a dedicated service byproviding its identifier
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId
+	@param identifier
+	@return ApiAPIManagerServiceFetchAPIRequest
+*/
+func (a *APIManagerServiceApiService) APIManagerServiceFetchAPI(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceFetchAPIRequest {
+	return ApiAPIManagerServiceFetchAPIRequest{
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+		identifier: identifier,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FetchAPIResponse
+func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIManagerServiceFetchAPIRequest) (*FetchAPIResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FetchAPIResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchAPI")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1alpha/projects/{projectId}/api/{identifier}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest struct {
+	ctx        context.Context
+	ApiService *APIManagerServiceApiService
+	projectId  string
+}
+
+func (r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) Execute() (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
+	return r.ApiService.APIManagerServiceFetchProjectAPIIdentifiersExecute(r)
+}
+
+/*
+APIManagerServiceFetchProjectAPIIdentifiers Fetch Project APIIdentifiers Endpoint
+
+Fetches all API identifiers which belong to a project byproviding its projectId
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId
+	@return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest
+*/
+func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiers(ctx context.Context, projectId string) ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest {
+	return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest{
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+	}
+}
+
+// Execute executes the request
+//
+//	@return FetchProjectAPIIdentifiersResponse
+func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiersExecute(r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FetchProjectAPIIdentifiersResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchProjectAPIIdentifiers")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1alpha/projects/{projectId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiAPIManagerServicePublishRequest struct {
-	ctx                context.Context
-	ApiService         *APIManagerServiceApiService
-	metadataProjectId  string
-	metadataIdentifier string
-	publishRequest     *PublishRequest
+	ctx            context.Context
+	ApiService     *APIManagerServiceApiService
+	projectId      string
+	identifier     string
+	publishRequest *PublishRequest
 }
 
 func (r ApiAPIManagerServicePublishRequest) PublishRequest(publishRequest PublishRequest) ApiAPIManagerServicePublishRequest {
@@ -45,16 +257,16 @@ APIManagerServicePublish Publish API Endpoint
 Publish a new API for a dedicated service by providing the OpenApiSpec for it
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param metadataProjectId
-	@param metadataIdentifier
+	@param projectId
+	@param identifier
 	@return ApiAPIManagerServicePublishRequest
 */
-func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, metadataProjectId string, metadataIdentifier string) ApiAPIManagerServicePublishRequest {
+func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
 	return ApiAPIManagerServicePublishRequest{
-		ApiService:         a,
-		ctx:                ctx,
-		metadataProjectId:  metadataProjectId,
-		metadataIdentifier: metadataIdentifier,
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+		identifier: identifier,
 	}
 }
 
@@ -74,9 +286,9 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/v1/projects/{metadata.project_id}/api/{metadata.identifier}"
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.project_id"+"}", url.PathEscape(parameterToString(r.metadataProjectId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.identifier"+"}", url.PathEscape(parameterToString(r.metadataIdentifier, "")), -1)
+	localVarPath := localBasePath + "/v1/projects/{projectId}/api/{identifier}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -126,13 +338,6 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		var v Status
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -151,8 +356,8 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 type ApiAPIManagerServicePublishValidateRequest struct {
 	ctx                    context.Context
 	ApiService             *APIManagerServiceApiService
-	metadataProjectId      string
-	metadataIdentifier     string
+	projectId              string
+	identifier             string
 	publishValidateRequest *PublishValidateRequest
 }
 
@@ -171,16 +376,16 @@ APIManagerServicePublishValidate Validate API Endpoint
 Validate the OpenApiSpec for an API by providing the OAS for it
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param metadataProjectId
-	@param metadataIdentifier
+	@param projectId
+	@param identifier
 	@return ApiAPIManagerServicePublishValidateRequest
 */
-func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, metadataProjectId string, metadataIdentifier string) ApiAPIManagerServicePublishValidateRequest {
+func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishValidateRequest {
 	return ApiAPIManagerServicePublishValidateRequest{
-		ApiService:         a,
-		ctx:                ctx,
-		metadataProjectId:  metadataProjectId,
-		metadataIdentifier: metadataIdentifier,
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+		identifier: identifier,
 	}
 }
 
@@ -200,9 +405,9 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r 
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/v1/projects/{metadata.project_id}/api/{metadata.identifier}/validate"
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.project_id"+"}", url.PathEscape(parameterToString(r.metadataProjectId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.identifier"+"}", url.PathEscape(parameterToString(r.metadataIdentifier, "")), -1)
+	localVarPath := localBasePath + "/v1/projects/{projectId}/api/{identifier}/validate"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -252,13 +457,6 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		var v Status
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -275,11 +473,11 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r 
 }
 
 type ApiAPIManagerServiceRetireRequest struct {
-	ctx                context.Context
-	ApiService         *APIManagerServiceApiService
-	metadataProjectId  string
-	metadataIdentifier string
-	retireRequest      *RetireRequest
+	ctx           context.Context
+	ApiService    *APIManagerServiceApiService
+	projectId     string
+	identifier    string
+	retireRequest *RetireRequest
 }
 
 func (r ApiAPIManagerServiceRetireRequest) RetireRequest(retireRequest RetireRequest) ApiAPIManagerServiceRetireRequest {
@@ -297,16 +495,16 @@ APIManagerServiceRetire Retire API Endpoint
 Retire an already existing API for a dedicated service by providing its Identifier
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param metadataProjectId
-	@param metadataIdentifier
+	@param projectId
+	@param identifier
 	@return ApiAPIManagerServiceRetireRequest
 */
-func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, metadataProjectId string, metadataIdentifier string) ApiAPIManagerServiceRetireRequest {
+func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {
 	return ApiAPIManagerServiceRetireRequest{
-		ApiService:         a,
-		ctx:                ctx,
-		metadataProjectId:  metadataProjectId,
-		metadataIdentifier: metadataIdentifier,
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+		identifier: identifier,
 	}
 }
 
@@ -326,9 +524,9 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIMan
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/v1/projects/{metadata.project_id}/api/{metadata.identifier}"
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.project_id"+"}", url.PathEscape(parameterToString(r.metadataProjectId, "")), -1)
-	localVarPath = strings.Replace(localVarPath, "{"+"metadata.identifier"+"}", url.PathEscape(parameterToString(r.metadataIdentifier, "")), -1)
+	localVarPath := localBasePath + "/v1/projects/{projectId}/api/{identifier}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
@@ -378,13 +576,6 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIMan
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		var v Status
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
