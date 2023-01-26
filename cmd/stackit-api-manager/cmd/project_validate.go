@@ -1,3 +1,4 @@
+//nolint:dupl // more clear without reusing functionality
 package cmd
 
 import (
@@ -16,7 +17,6 @@ var validateCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	RunE:  validateCmdRunE,
 }
 
-//nolint:dupl // more clear without reusing publish functionality
 func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 

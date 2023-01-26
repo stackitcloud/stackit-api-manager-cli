@@ -40,7 +40,7 @@ out/bin:
 GOLANGCI_LINT = bin/golangci-lint-$(GOLANGCI_VERSION)
 $(GOLANGCI_LINT):
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | bash -s -- -b bin v$(GOLANGCI_VERSION)
-	@mv bin/golangci-lint "$(@)"
+	@mv bin/golangci-lint "$(@)" --fix
 
 lint: fmt $(GOLANGCI_LINT) download ## Lints all code with golangci-lint
 	@$(GOLANGCI_LINT) run
