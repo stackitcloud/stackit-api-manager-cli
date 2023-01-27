@@ -138,6 +138,41 @@
   },
   "openapi": "3.0.3",
   "paths": {
+    "/v1/projects/{projectId}": {
+      "get": {
+        "description": "Fetches all API identifiers which belong to a project by providing its projectId",
+        "operationId": "APIManagerService_FetchProjectAPIIdentifiers",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchProjectAPIIdentifiersResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Could not fetch API identifiers for project."
+          }
+        },
+        "summary": "Fetch Project APIIdentifiers Endpoint",
+        "tags": [
+          "APIManagerService"
+        ]
+      }
+    },
     "/v1/projects/{projectId}/api/{identifier}": {
       "delete": {
         "description": "Retire an already existing API for a dedicated service by providing its Identifier",
@@ -186,6 +221,47 @@
           }
         },
         "summary": "Retire API Endpoint",
+        "tags": [
+          "APIManagerService"
+        ]
+      },
+      "get": {
+        "description": "Fetches an already existing API for a dedicated service by providing its identifier",
+        "operationId": "APIManagerService_FetchAPI",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FetchAPIResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Could not fetch API."
+          }
+        },
+        "summary": "Fetch API Endpoint",
         "tags": [
           "APIManagerService"
         ]
@@ -290,84 +366,6 @@
           }
         },
         "summary": "Validate API Endpoint",
-        "tags": [
-          "APIManagerService"
-        ]
-      }
-    },
-    "/v1alpha/projects/{projectId}": {
-      "get": {
-        "description": "Fetches all API identifiers which belong to a project byproviding its projectId",
-        "operationId": "APIManagerService_FetchProjectAPIIdentifiers",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "projectId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchProjectAPIIdentifiersResponse"
-                }
-              }
-            },
-            "description": "OK"
-          },
-          "400": {
-            "description": "Could not fetch API identifiers for project."
-          }
-        },
-        "summary": "Fetch Project APIIdentifiers Endpoint",
-        "tags": [
-          "APIManagerService"
-        ]
-      }
-    },
-    "/v1alpha/projects/{projectId}/api/{identifier}": {
-      "get": {
-        "description": "Fetches an already existing API for a dedicated service byproviding its identifier",
-        "operationId": "APIManagerService_FetchAPI",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "projectId",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "identifier",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FetchAPIResponse"
-                }
-              }
-            },
-            "description": "OK"
-          },
-          "400": {
-            "description": "Could not fetch API."
-          }
-        },
-        "summary": "Fetch API Endpoint",
         "tags": [
           "APIManagerService"
         ]

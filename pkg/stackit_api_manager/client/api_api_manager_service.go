@@ -36,7 +36,7 @@ func (r ApiAPIManagerServiceFetchAPIRequest) Execute() (*FetchAPIResponse, *http
 /*
 APIManagerServiceFetchAPI Fetch API Endpoint
 
-Fetches an already existing API for a dedicated service byproviding its identifier
+Fetches an already existing API for a dedicated service by providing its identifier
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param projectId
@@ -68,7 +68,7 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIM
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/v1alpha/projects/{projectId}/api/{identifier}"
+	localVarPath := localBasePath + "/v1/projects/{projectId}/api/{identifier}"
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
 	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
 
@@ -143,7 +143,7 @@ func (r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) Execute() (*Fetch
 /*
 APIManagerServiceFetchProjectAPIIdentifiers Fetch Project APIIdentifiers Endpoint
 
-Fetches all API identifiers which belong to a project byproviding its projectId
+Fetches all API identifiers which belong to a project by providing its projectId
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@param projectId
@@ -173,7 +173,7 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifier
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/v1alpha/projects/{projectId}"
+	localVarPath := localBasePath + "/v1/projects/{projectId}"
 	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)

@@ -4,8 +4,8 @@ All URIs are relative to *https://api-manager.api.stackit.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**APIManagerServiceFetchAPI**](APIManagerServiceApi.md#APIManagerServiceFetchAPI) | **Get** /v1alpha/projects/{projectId}/api/{identifier} | Fetch API Endpoint
-[**APIManagerServiceFetchProjectAPIIdentifiers**](APIManagerServiceApi.md#APIManagerServiceFetchProjectAPIIdentifiers) | **Get** /v1alpha/projects/{projectId} | Fetch Project APIIdentifiers Endpoint
+[**APIManagerServiceFetchAPI**](APIManagerServiceApi.md#APIManagerServiceFetchAPI) | **Get** /v1/projects/{projectId}/api/{identifier} | Fetch API Endpoint
+[**APIManagerServiceFetchProjectAPIIdentifiers**](APIManagerServiceApi.md#APIManagerServiceFetchProjectAPIIdentifiers) | **Get** /v1/projects/{projectId} | Fetch Project APIIdentifiers Endpoint
 [**APIManagerServicePublish**](APIManagerServiceApi.md#APIManagerServicePublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
 [**APIManagerServicePublishValidate**](APIManagerServiceApi.md#APIManagerServicePublishValidate) | **Post** /v1/projects/{projectId}/api/{identifier}/validate | Validate API Endpoint
 [**APIManagerServiceRetire**](APIManagerServiceApi.md#APIManagerServiceRetire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
