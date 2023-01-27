@@ -1,10 +1,8 @@
-//nolint:dupl // more clear without reusing functionality
 package cmd
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
@@ -14,7 +12,7 @@ import (
 
 type fetchAPIResponse struct {
 	Stage             string `json:"stage"`
-	ApiURL            string `json:"api_url"`
+	APIURL            string `json:"api_url"`
 	UpstreamURL       string `json:"upstream_url"`
 	Base64EncodedSpec string `json:"base64_encoded_spec"`
 }
@@ -47,12 +45,9 @@ func fetchAPICmdRunE(cmd *cobra.Command, args []string) error {
 	}
 	defer httpResponse.Body.Close()
 
-	if grpcResponse == nil {
-		return fmt.Errorf("nil grpc response")
-	}
 	jsonResponse, err := json.Marshal(fetchAPIResponse{
 		Stage:             grpcResponse.GetStage(),
-		ApiURL:            grpcResponse.GetApiUrl(),
+		APIURL:            grpcResponse.GetApiUrl(),
 		UpstreamURL:       grpcResponse.GetUpstreamUrl(),
 		Base64EncodedSpec: grpcResponse.Spec.OpenApi.GetBase64Encoded(),
 	})

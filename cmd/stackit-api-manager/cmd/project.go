@@ -66,6 +66,10 @@ func init() {
 	retireCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
 	retireCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
+	// fetchAPICmd flags
+	fetchAPICmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	fetchAPICmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
+
 	// publishCmd flags
 	publishCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
 	publishCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
