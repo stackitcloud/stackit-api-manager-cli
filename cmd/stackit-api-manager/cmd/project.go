@@ -42,6 +42,7 @@ func init() {
 	projectCmd.AddCommand(retireCmd)
 	projectCmd.AddCommand(validateCmd)
 	projectCmd.AddCommand(listCmd)
+	projectCmd.AddCommand(fetchAPICmd)
 
 	// Here you will define your flags and configuration settings.
 
