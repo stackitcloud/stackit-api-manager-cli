@@ -1,4 +1,3 @@
-//nolint:dupl // ignore duplicates for tests
 package cmd
 
 import (
