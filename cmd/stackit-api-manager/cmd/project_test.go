@@ -285,3 +285,156 @@ func Test_validateCmdRunE(t *testing.T) {
 		})
 	}
 }
+
+func Test_listCmdRunE(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	tests := []struct {
+		name          string
+		args          projectCmdArgs
+		mockResponses []mockResponses
+		wantErr       bool
+	}{
+		{
+			name: "success",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+			},
+			mockResponses: []mockResponses{
+				{
+					path:       "/v1/projects/some-project-id",
+					statusCode: 200,
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "error: missing project id",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+			},
+			wantErr: true,
+		},
+		{
+			name: "error: status code 400",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+			},
+			mockResponses: []mockResponses{
+				{
+					path:       "/v1/projects/some-project-id",
+					statusCode: 400,
+				},
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.args.setArgs()
+			for _, mockResponse := range tt.mockResponses {
+				mockResponse.mockJSONHTTPResponse(t, http.MethodGet)
+			}
+			if err := listCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
+				t.Errorf("listCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
+
+func Test_fetchAPICmsdRunE(t *testing.T) {
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	type OpenAPI struct {
+		Base64Encoded string `json:"base64_encoded"`
+	}
+	type Spec struct {
+		OpenAPI OpenAPI `json:"open_api"`
+	}
+	type fetchResponseBody struct {
+		Stage       string `json:"stage"`
+		APIURL      string `json:"api_url"`
+		UpstreamURL string `json:"upstream_url"`
+		Spec        Spec   `json:"spec"`
+	}
+
+	tests := []struct {
+		name          string
+		args          projectCmdArgs
+		mockResponses []mockResponses
+		wantErr       bool
+	}{
+		{
+			name: "success",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+				identifier:    "some-identifier",
+			},
+			mockResponses: []mockResponses{
+				{
+					path:       "/v1/projects/some-project-id/api/some-identifier",
+					statusCode: 200,
+					body:       fetchResponseBody{},
+				},
+			},
+			wantErr: false,
+		},
+		{
+			name: "error: missing project id",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				identifier:    "some-identifier",
+			},
+			wantErr: true,
+		},
+		{
+			name: "error: missing identifier",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+			},
+			wantErr: true,
+		},
+
+		{
+			name: "error: status code 400",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+				identifier:    "some-identifier",
+			},
+			mockResponses: []mockResponses{
+				{
+					path:       "/v1/projects/some-project-id/api/some-identifier",
+					statusCode: 400,
+				},
+			},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tt.args.setArgs()
+			for _, mockResponse := range tt.mockResponses {
+				mockResponse.mockJSONHTTPResponse(t, http.MethodGet)
+			}
+			err := fetchAPICmdRunE(&cobra.Command{}, []string{})
+			fmt.Printf("err: %v", err)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("fetchAPICmdRunE() error = %v, wantErr %v", err, tt.wantErr)
+			}
+		})
+	}
+}
