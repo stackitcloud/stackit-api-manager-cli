@@ -58,7 +58,7 @@ func fetchAPICmdRunE(cmd *cobra.Command, args []string) error {
 	cmd.Printf("Successfully fetched API for API Gateway project %s with identifier %s\n%v\n",
 		projectID,
 		identifier,
-		jsonResponse,
+		string(jsonResponse),
 	)
 	return nil
 }
