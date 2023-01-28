@@ -83,6 +83,16 @@ stackit-api-manager project list \
   --token <YourAuthToken> \
 ```
 
+Use the CLI to fetch stage, host URL, upstream URL and the base64 encoded Spec for an API:
+
+```bash
+stackit-api-manager project fetch \
+  --identifier <YourIdentifier> \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --token <YourAuthToken> \
+```
+
 #### API-Manager-BaseURL possible values
 
 - `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`

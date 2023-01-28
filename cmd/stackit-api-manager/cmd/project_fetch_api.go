@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"strings"
 
 	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
@@ -44,11 +45,14 @@ func fetchAPICmdRunE(cmd *cobra.Command, args []string) error {
 	}
 	defer httpResponse.Body.Close()
 
-	jsonResponse := fetchAPIResponse{
+	jsonResponse, err := json.Marshal(fetchAPIResponse{
 		Stage:             grpcResponse.GetStage(),
 		APIURL:            grpcResponse.GetApiUrl(),
 		UpstreamURL:       grpcResponse.GetUpstreamUrl(),
 		Base64EncodedSpec: grpcResponse.Spec.OpenApi.GetBase64Encoded(),
+	})
+	if err != nil {
+		return err
 	}
 
 	cmd.Printf("Successfully fetched API for API Gateway project %s with identifier %s\n%v\n",
