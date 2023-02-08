@@ -8,6 +8,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var errNilCmdResponse = fmt.Errorf("invalid nil cmdResponse")
+
 // gatewayResponse contains the HTTP status code and error message
 // which are returned by the gateway in case of an error
 type gatewayResponse struct {
@@ -33,7 +35,7 @@ type cmdResponseInterface interface {
 // prints the CLI response in JSON format for successful requests
 func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
-		return fmt.Errorf("invalid nil cmdResponse")
+		return errNilCmdResponse
 	}
 	CLIResponse := CLIResponse{
 		Success:    true,

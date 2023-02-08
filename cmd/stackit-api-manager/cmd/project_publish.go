@@ -1,4 +1,3 @@
-//nolint:dupl // more clear without reusing functionality
 package cmd
 
 import (
