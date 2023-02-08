@@ -45,7 +45,7 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 	}
 	jsonCLIResponse, err := json.Marshal(CLIResponse)
 	if err != nil {
-		return fmt.Errorf("failed to encode publish CLI response: %w", err)
+		return fmt.Errorf("failed to encode CLI response: %w", err)
 	}
 
 	cmd.Println(string(jsonCLIResponse))
