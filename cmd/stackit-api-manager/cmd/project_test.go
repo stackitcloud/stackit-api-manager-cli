@@ -83,7 +83,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "error: status code 400",
+			name: "status code 400 - no error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
@@ -98,7 +98,7 @@ func Test_publishCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
@@ -142,7 +142,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: status code 400",
+			name: "status code 400 - no error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -156,7 +156,7 @@ func Test_retireCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
@@ -209,7 +209,7 @@ func Test_validateCmdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "error: status code 400",
+			name: "status code 400 - no error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
@@ -224,7 +224,7 @@ func Test_validateCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: true,
+			wantErr: false,
 		},
 	}
 	for _, tt := range tests {
