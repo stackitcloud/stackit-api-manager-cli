@@ -60,14 +60,13 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		projectID,
 		identifier,
 	).PublishRequest(req).Execute()
+	if err != nil && httpResp == nil {
+		return err
+	}
 	defer httpResp.Body.Close()
-	if err != nil {
-		err := printErrorCLIResponseJSON(cmd, httpResp)
-		if err != nil {
-			return err
-		}
 
-		return nil
+	if err != nil {
+		return printErrorCLIResponseJSON(cmd, httpResp)
 	}
 
 	publishResponse := publishResponse{
@@ -76,10 +75,6 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		Stage:      stage,
 		APIURL:     grpcResp.GetApiUrl(),
 	}
-	err = printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, &publishResponse)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, &publishResponse)
 }

@@ -59,14 +59,13 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		projectID,
 		identifier,
 	).PublishValidateRequest(req).Execute()
+	if err != nil && httpResp == nil {
+		return err
+	}
 	defer httpResp.Body.Close()
-	if err != nil {
-		err := printErrorCLIResponseJSON(cmd, httpResp)
-		if err != nil {
-			return err
-		}
 
-		return nil
+	if err != nil {
+		return printErrorCLIResponseJSON(cmd, httpResp)
 	}
 
 	validateResponse := &validateResponse{
@@ -74,10 +73,6 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		ProjectID:  projectID,
 		Stage:      stage,
 	}
-	err = printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, validateResponse)
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, validateResponse)
 }
