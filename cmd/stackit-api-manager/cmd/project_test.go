@@ -46,16 +46,16 @@ func (args *projectCmdArgs) setArgs() {
 	openAPISpecFilePath = args.openAPISpecFilePath
 }
 
-//nolint:dupl // ignore dupl linter error for testing
 func Test_publishCmdRunE(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
 	tests := []struct {
-		name          string
-		args          projectCmdArgs
-		mockResponses []mockResponses
-		wantErr       bool
+		name            string
+		args            projectCmdArgs
+		mockResponses   []mockResponses
+		mockNilResponse bool
+		wantErr         bool
 	}{
 		{
 			name: "success",
@@ -80,7 +80,8 @@ func Test_publishCmdRunE(t *testing.T) {
 			args: projectCmdArgs{
 				openAPISpecFilePath: "./no-test.json",
 			},
-			wantErr: true,
+			mockNilResponse: false,
+			wantErr:         true,
 		},
 		{
 			name: "status code 400 - no error",
@@ -100,12 +101,28 @@ func Test_publishCmdRunE(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "error: nil http response",
+			args: projectCmdArgs{
+				serverBaseURL:       mockServerURL,
+				authToken:           "some-auth-token",
+				projectID:           "some-project-id",
+				identifier:          "some-identifier",
+				stage:               "some-stage",
+				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
+			},
+			mockNilResponse: true,
+			wantErr:         true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodPost)
+			}
+			if tt.mockNilResponse {
+				httpmock.Reset()
 			}
 			if err := publishCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("publishCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
@@ -119,10 +136,11 @@ func Test_retireCmdRunE(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	tests := []struct {
-		name          string
-		args          projectCmdArgs
-		mockResponses []mockResponses
-		wantErr       bool
+		name            string
+		args            projectCmdArgs
+		mockResponses   []mockResponses
+		mockNilResponse bool
+		wantErr         bool
 	}{
 		{
 			name: "success",
@@ -131,7 +149,6 @@ func Test_retireCmdRunE(t *testing.T) {
 				authToken:     "some-auth-token",
 				projectID:     "some-project-id",
 				identifier:    "some-identifier",
-				stage:         "some-stage",
 			},
 			mockResponses: []mockResponses{
 				{
@@ -148,7 +165,6 @@ func Test_retireCmdRunE(t *testing.T) {
 				authToken:     "some-auth-token",
 				projectID:     "some-project-id",
 				identifier:    "some-identifier",
-				stage:         "some-stage",
 			},
 			mockResponses: []mockResponses{
 				{
@@ -158,12 +174,26 @@ func Test_retireCmdRunE(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "error: nil http response",
+			args: projectCmdArgs{
+				serverBaseURL: mockServerURL,
+				authToken:     "some-auth-token",
+				projectID:     "some-project-id",
+				identifier:    "some-identifier",
+			},
+			mockNilResponse: true,
+			wantErr:         true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodDelete)
+			}
+			if tt.mockNilResponse {
+				httpmock.Reset()
 			}
 			if err := retireCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("retireCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
@@ -172,16 +202,16 @@ func Test_retireCmdRunE(t *testing.T) {
 	}
 }
 
-//nolint:dupl // ignore dupl linter error for testing
 func Test_validateCmdRunE(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
 	tests := []struct {
-		name          string
-		args          projectCmdArgs
-		mockResponses []mockResponses
-		wantErr       bool
+		name            string
+		args            projectCmdArgs
+		mockResponses   []mockResponses
+		mockNilResponse bool
+		wantErr         bool
 	}{
 		{
 			name: "success",
@@ -226,12 +256,28 @@ func Test_validateCmdRunE(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "error: nil http response",
+			args: projectCmdArgs{
+				serverBaseURL:       mockServerURL,
+				authToken:           "some-auth-token",
+				projectID:           "some-project-id",
+				identifier:          "some-identifier",
+				stage:               "some-stage",
+				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
+			},
+			mockNilResponse: true,
+			wantErr:         true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodPost)
+			}
+			if tt.mockNilResponse {
+				httpmock.Reset()
 			}
 			if err := validateCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("validateCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
