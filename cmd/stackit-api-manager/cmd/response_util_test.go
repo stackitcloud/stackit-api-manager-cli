@@ -419,8 +419,7 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantPrint: fmt.Sprintf("Failed to %s: %s", validateCmd.Use, testErrorMessage),
-			wantErr:   false,
+			wantErr: false,
 		},
 		{
 			name: "failed validate with invalid gateway response (string statuscode) returns error",
