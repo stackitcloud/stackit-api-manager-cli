@@ -42,7 +42,7 @@ func init() {
 	projectCmd.AddCommand(retireCmd)
 	projectCmd.AddCommand(validateCmd)
 	projectCmd.AddCommand(listCmd)
-	projectCmd.AddCommand(fetchAPICmd)
+	projectCmd.AddCommand(fetchCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -67,8 +67,8 @@ func init() {
 	retireCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
 	// fetchAPICmd flags
-	fetchAPICmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
-	fetchAPICmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
+	fetchCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	fetchCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
 	// publishCmd flags
 	publishCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")

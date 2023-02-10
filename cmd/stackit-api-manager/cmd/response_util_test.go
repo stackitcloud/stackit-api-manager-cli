@@ -13,16 +13,21 @@ import (
 )
 
 const (
-	validIdentifier = "api-id"
-	validProjectID  = "project-id"
-	validStage      = "stage"
-	validAPIURL     = "test.url/fun"
-
-	testErrorMessage = "error message"
-	testStatusCode   = 322
+	validIdentifier      = "api-id"
+	validIdentifierOther = "api-id-other"
+	validProjectID       = "project-id"
+	validStage           = "stage"
+	validAPIURL          = "test.url/fun"
+	validUpstreamURL     = "upstream.url/fun"
+	validBase64Spec      = "e2FiY30="
+	testErrorMessage     = "error message"
+	testStatusCode       = 322
 )
 
 var (
+	validIdentifiersList     = []string{validIdentifier, validIdentifierOther}
+	validIdentifiersListJSON = `["` + strings.Join(validIdentifiersList, `","`) + `"]`
+
 	validGatewayResponseBody   = fmt.Sprintf(`{"Status": %d, "Message": "%s"}`, testStatusCode, testErrorMessage)
 	invalidGatewayResponseBody = fmt.Sprintf(`{"Status": "%d", "Message": "%s"}`, testStatusCode, testErrorMessage)
 
@@ -34,6 +39,14 @@ var (
 
 	validateSuccessMessageHumanReadable = fmt.Sprintf(`OpenAPI specification for API with identifier "%s", project "%s" and stage "%s" validated successfully`, validIdentifier, validProjectID, validStage)
 	validateSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"OpenAPI specification validated successfully","response":{"identifier":"%s","projectId":"%s","stage":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage)
+
+	listSuccessMessageHumanReadable = fmt.Sprintf(`Project "%s" has the following identifiers: %+v`, validProjectID, validIdentifiersList)
+	listSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"Listed API identifiers for project successfully","response":{"identifiers":%s,"projectId":"%s"}}`, testStatusCode, validIdentifiersListJSON, validProjectID)
+
+	fetchSuccessMessageHumanReadable = fmt.Sprintf(`Base64 encoded OpenAPI specification for API with identifier "%s" for project "%s" and stage "%s" (API-URL: "%s", Upstream-URL: "%s") is: %v`,
+		validIdentifier, validProjectID, validStage, validAPIURL, validUpstreamURL, validBase64Spec)
+	fetchSuccessMessageJSON = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"Fetched API successfully","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s","upstreamUrl":"%s","base64EncodedSpec":"%s"}}`,
+		testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL, validUpstreamURL, validBase64Spec)
 )
 
 type unknownCmdResponse struct{}
@@ -217,6 +230,36 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 			wantPrint: validateSuccessMessageJSON,
 			wantErr:   nil,
 		},
+		{
+			name: "successful list returns no error and prints JSON as expected",
+			args: args{
+				cmd:        listCmd,
+				statusCode: testStatusCode,
+				cmdResponse: &listResponse{
+					Identifiers: validIdentifiersList,
+					ProjectID:   validProjectID,
+				},
+			},
+			wantPrint: listSuccessMessageJSON,
+			wantErr:   nil,
+		},
+		{
+			name: "successful fetch returns no error and prints JSON as expected",
+			args: args{
+				cmd:        fetchCmd,
+				statusCode: testStatusCode,
+				cmdResponse: &fetchResponse{
+					Identifier:        validIdentifier,
+					ProjectID:         validProjectID,
+					Stage:             validStage,
+					APIURL:            validAPIURL,
+					UpstreamURL:       validUpstreamURL,
+					Base64EncodedSpec: validBase64Spec,
+				},
+			},
+			wantPrint: fetchSuccessMessageJSON,
+			wantErr:   nil,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -235,7 +278,7 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 			gotPrint := strings.TrimRight(string(gotPrintBytes), "\n")
 
 			if gotErr == nil && gotPrint != tt.wantPrint {
-				t.Errorf("printSuccessCLIResponseJSON() expected message to be\n%v\nbut got\n%v", tt.wantPrint, gotPrint)
+				t.Errorf("printSuccessCLIResponseJSON() expected message to be\nABC%vABC\nbut got\nABC%vABC", tt.wantPrint, gotPrint)
 			}
 		})
 	}
@@ -303,6 +346,36 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 				},
 			},
 			wantPrint: validateSuccessMessageHumanReadable,
+			wantErr:   false,
+		},
+		{
+			name: "successful list returns no error and prints expected human-readable message",
+			args: args{
+				cmd:        listCmd,
+				statusCode: testStatusCode,
+				cmdResponse: &listResponse{
+					Identifiers: validIdentifiersList,
+					ProjectID:   validProjectID,
+				},
+			},
+			wantPrint: listSuccessMessageHumanReadable,
+			wantErr:   false,
+		},
+		{
+			name: "successful fetch returns no error and prints expected human-readable message",
+			args: args{
+				cmd:        fetchCmd,
+				statusCode: testStatusCode,
+				cmdResponse: &fetchResponse{
+					Identifier:        validIdentifier,
+					ProjectID:         validProjectID,
+					Stage:             validStage,
+					APIURL:            validAPIURL,
+					UpstreamURL:       validUpstreamURL,
+					Base64EncodedSpec: validBase64Spec,
+				},
+			},
+			wantPrint: fetchSuccessMessageHumanReadable,
 			wantErr:   false,
 		},
 	}
@@ -425,6 +498,64 @@ func Test_printErrorCLIResponse(t *testing.T) {
 			name: "failed validate with invalid gateway response (string statuscode) returns error",
 			args: args{
 				cmd:                 validateCmd,
+				statusCode:          testStatusCode,
+				gatewayResponseBody: invalidGatewayResponseBody,
+			},
+			wantErr: true,
+		},
+		{
+			name: "failed list returns no error and prints JSON as expected",
+			args: args{
+				cmd:                 listCmd,
+				statusCode:          testStatusCode,
+				printJSON:           true,
+				gatewayResponseBody: validGatewayResponseBody,
+			},
+			wantErr: false,
+		},
+		{
+			name: "failed list returns no error and prints human-readable as expected",
+			args: args{
+				cmd:                 listCmd,
+				statusCode:          testStatusCode,
+				printJSON:           false,
+				gatewayResponseBody: validGatewayResponseBody,
+			},
+			wantErr: false,
+		},
+		{
+			name: "failed list with invalid gateway response (string statuscode) returns error",
+			args: args{
+				cmd:                 listCmd,
+				statusCode:          testStatusCode,
+				gatewayResponseBody: invalidGatewayResponseBody,
+			},
+			wantErr: true,
+		},
+		{
+			name: "failed fetch returns no error and prints JSON as expected",
+			args: args{
+				cmd:                 fetchCmd,
+				statusCode:          testStatusCode,
+				printJSON:           true,
+				gatewayResponseBody: validGatewayResponseBody,
+			},
+			wantErr: false,
+		},
+		{
+			name: "failed fetch returns no error and prints human-readable as expected",
+			args: args{
+				cmd:                 fetchCmd,
+				statusCode:          testStatusCode,
+				printJSON:           false,
+				gatewayResponseBody: validGatewayResponseBody,
+			},
+			wantErr: false,
+		},
+		{
+			name: "failed fetch with invalid gateway response (string statuscode) returns error",
+			args: args{
+				cmd:                 fetchCmd,
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},

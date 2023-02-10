@@ -464,7 +464,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			err := fetchAPICmdRunE(&cobra.Command{}, []string{})
+			err := fetchCmdRunE(&cobra.Command{}, []string{})
 			fmt.Printf("err: %v", err)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("fetchAPICmdRunE() error = %v, wantErr %v", err, tt.wantErr)

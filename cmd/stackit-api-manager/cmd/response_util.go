@@ -76,7 +76,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 	case *listResponse:
 		cmd.Printf("Project \"%s\" has the following identifiers: %+v", r.ProjectID, r.Identifiers)
 	case *fetchResponse:
-		cmd.Printf("Fetched OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" successfully (API-URL: \"%s\", Upstream-URL: \"%s\")\nBase64 encoded OpenAPI specification: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
+		cmd.Printf("Base64 encoded OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" (API-URL: \"%s\", Upstream-URL: \"%s\") is: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
 	default:
 		return fmt.Errorf("failed to print human readable success response: %w %T", errUnknownCmdResponseType, r)
 	}
