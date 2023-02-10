@@ -449,7 +449,7 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				t.Errorf("printErrorCLIResponse() got error = %v, want %v", gotErr, tt.wantErr)
 			}
 
-			wantPrint := fmt.Sprintf("Failed to %s! An error occured with statuscode %d: %s", tt.args.cmd.Use, testStatusCode, testErrorMessage)
+			wantPrint := fmt.Sprintf("Failed to %s! An error occurred with statuscode %d: %s", tt.args.cmd.Use, testStatusCode, testErrorMessage)
 			if tt.args.printJSON {
 				wantPrint = fmt.Sprintf(`{"success":false,"statusCode":%d,"message":"%s"}`, testStatusCode, testErrorMessage)
 			}

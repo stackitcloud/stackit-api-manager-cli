@@ -102,7 +102,7 @@ func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 		return nil
 	}
 
-	cmd.Printf("Failed to %s! An error occured with statuscode %d: %s\n", cmd.Use, httpResp.StatusCode, errorMessage)
+	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, httpResp.StatusCode, errorMessage)
 	return nil
 }
 
