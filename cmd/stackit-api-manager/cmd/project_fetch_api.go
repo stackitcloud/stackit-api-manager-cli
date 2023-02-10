@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"encoding/json"
 	"strings"
 
 	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
@@ -10,11 +9,19 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type fetchAPIResponse struct {
+const messageFetchSuccess = "Fetched API successfully"
+
+type fetchResponse struct {
+	Identifier        string `json:"identifier"`
+	ProjectID         string `json:"projectId"`
 	Stage             string `json:"stage"`
 	APIURL            string `json:"api_url"`
 	UpstreamURL       string `json:"upstream_url"`
 	Base64EncodedSpec string `json:"base64_encoded_spec"`
+}
+
+func (r fetchResponse) successMessage() string {
+	return messageFetchSuccess
 }
 
 var fetchAPICmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
@@ -33,32 +40,27 @@ func fetchAPICmdRunE(cmd *cobra.Command, args []string) error {
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	grpcResponse, httpResponse, err := c.APIManagerServiceApi.APIManagerServiceFetchAPI(
+	grpcResp, httpResp, err := c.APIManagerServiceApi.APIManagerServiceFetchAPI(
 		ctx,
 		projectID,
 		identifier,
 	).Execute()
-	if err != nil {
-		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServiceFetchAPI``: %v\n", err)
-		cmd.Printf("Full HTTP response: %v\n", httpResponse)
+	if err != nil && httpResp == nil {
 		return err
 	}
-	defer httpResponse.Body.Close()
-
-	jsonResponse, err := json.Marshal(fetchAPIResponse{
-		Stage:             grpcResponse.GetStage(),
-		APIURL:            grpcResponse.GetApiUrl(),
-		UpstreamURL:       grpcResponse.GetUpstreamUrl(),
-		Base64EncodedSpec: grpcResponse.Spec.OpenApi.GetBase64Encoded(),
-	})
+	defer httpResp.Body.Close()
 	if err != nil {
-		return err
+		return printErrorCLIResponse(cmd, httpResp)
 	}
 
-	cmd.Printf("Successfully fetched API for API Gateway project %s with identifier %s\n%v\n",
-		projectID,
-		identifier,
-		string(jsonResponse),
-	)
-	return nil
+	fetchResponse := fetchResponse{
+		Identifier:        identifier,
+		ProjectID:         projectID,
+		Stage:             grpcResp.GetStage(),
+		APIURL:            grpcResp.GetApiUrl(),
+		UpstreamURL:       grpcResp.GetUpstreamUrl(),
+		Base64EncodedSpec: grpcResp.Spec.OpenApi.GetBase64Encoded(),
+	}
+
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &fetchResponse)
 }
