@@ -83,7 +83,7 @@ stackit-api-manager project list \
   --token <YourAuthToken> \
 ```
 
-Use the CLI to fetch the base64 encoded Spec, host URL, upstream URL and stage for an API:
+Use the CLI to fetch the base64-encoded OpenAPI specification, stage, API-URL and upstream-URL for an API:
 
 ```bash
 stackit-api-manager project fetch \
