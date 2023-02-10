@@ -72,6 +72,8 @@ stackit-api-manager project validate \
   --oas <PathToOpenAPISpec>
 ```
 
+For each request, you can add the `--json` flag to print the CLI response in JSON format instead of receiving a human-readable message.
+
 #### API-Manager-BaseURL possible values
 
 - `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`
