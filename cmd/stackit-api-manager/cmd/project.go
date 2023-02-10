@@ -16,6 +16,7 @@ var (
 	identifier          string
 	stage               string
 	openAPISpecFilePath string
+	printJSON           bool
 )
 
 var errBadToken = fmt.Errorf("bad token")
@@ -56,6 +57,7 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
 	projectCmd.MarkPersistentFlagRequired("identifier") //nolint:errcheck // cobra flag
+	projectCmd.PersistentFlags().BoolVar(&printJSON, "json", false, "Print JSON instead of human readable response")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

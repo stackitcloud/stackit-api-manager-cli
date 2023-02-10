@@ -49,7 +49,7 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	defer httpResp.Body.Close()
 
 	if err != nil {
-		return printErrorCLIResponseJSON(cmd, httpResp)
+		return printErrorCLIResponse(cmd, httpResp)
 	}
 
 	retireResponse := retireResponse{
@@ -57,5 +57,5 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 		ProjectID:  projectID,
 	}
 
-	return printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, &retireResponse)
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &retireResponse)
 }

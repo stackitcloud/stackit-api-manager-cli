@@ -10,7 +10,7 @@ import (
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/util"
 )
 
-const messageValidateSuccess = "OpenAPI Specification validated successfully"
+const messageValidateSuccess = "OpenAPI specification validated successfully"
 
 type validateResponse struct {
 	Identifier string `json:"identifier"`
@@ -65,7 +65,7 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	defer httpResp.Body.Close()
 
 	if err != nil {
-		return printErrorCLIResponseJSON(cmd, httpResp)
+		return printErrorCLIResponse(cmd, httpResp)
 	}
 
 	validateResponse := &validateResponse{
@@ -74,5 +74,5 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		Stage:      stage,
 	}
 
-	return printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, validateResponse)
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, validateResponse)
 }

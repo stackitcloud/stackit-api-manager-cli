@@ -64,9 +64,8 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		return err
 	}
 	defer httpResp.Body.Close()
-
 	if err != nil {
-		return printErrorCLIResponseJSON(cmd, httpResp)
+		return printErrorCLIResponse(cmd, httpResp)
 	}
 
 	publishResponse := publishResponse{
@@ -76,5 +75,5 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		APIURL:     grpcResp.GetApiUrl(),
 	}
 
-	return printSuccessCLIResponseJSON(cmd, httpResp.StatusCode, &publishResponse)
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)
 }

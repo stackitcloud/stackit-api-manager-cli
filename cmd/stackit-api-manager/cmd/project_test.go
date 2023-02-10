@@ -76,7 +76,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: missing file",
+			name: "missing file - error",
 			args: projectCmdArgs{
 				openAPISpecFilePath: "./no-test.json",
 			},
@@ -102,7 +102,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: nil http response",
+			name: "nil http response - error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
@@ -175,7 +175,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: nil http response",
+			name: "nil http response - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -257,7 +257,7 @@ func Test_validateCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: nil http response",
+			name: "nil http response - error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
