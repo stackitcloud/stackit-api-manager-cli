@@ -291,10 +291,11 @@ func Test_listCmdRunE(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	tests := []struct {
-		name          string
-		args          projectCmdArgs
-		mockResponses []mockResponses
-		wantErr       bool
+		name            string
+		args            projectCmdArgs
+		mockResponses   []mockResponses
+		mockNilResponse bool
+		wantErr         bool
 	}{
 		{
 			name: "success",
@@ -312,7 +313,7 @@ func Test_listCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: missing project id",
+			name: "missing project id - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -320,7 +321,7 @@ func Test_listCmdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "error: status code 400",
+			name: "status code 400 - no error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -332,7 +333,20 @@ func Test_listCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: true,
+			wantErr: false,
+		},
+		{
+			name: "nil http response - error",
+			args: projectCmdArgs{
+				serverBaseURL:       mockServerURL,
+				authToken:           "some-auth-token",
+				projectID:           "some-project-id",
+				identifier:          "some-identifier",
+				stage:               "some-stage",
+				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
+			},
+			mockNilResponse: true,
+			wantErr:         true,
 		},
 	}
 	for _, tt := range tests {
@@ -340,6 +354,9 @@ func Test_listCmdRunE(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodGet)
+			}
+			if tt.mockNilResponse {
+				httpmock.Reset()
 			}
 			if err := listCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("listCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
@@ -366,10 +383,11 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 	}
 
 	tests := []struct {
-		name          string
-		args          projectCmdArgs
-		mockResponses []mockResponses
-		wantErr       bool
+		name            string
+		args            projectCmdArgs
+		mockResponses   []mockResponses
+		mockNilResponse bool
+		wantErr         bool
 	}{
 		{
 			name: "success",
@@ -389,7 +407,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "error: missing project id",
+			name: "missing project id - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -398,7 +416,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "error: missing identifier",
+			name: "missing identifier - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -408,7 +426,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 		},
 
 		{
-			name: "error: status code 400",
+			name: "status code 400 - no error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -421,7 +439,20 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: true,
+			wantErr: false,
+		},
+		{
+			name: "nil http response - error",
+			args: projectCmdArgs{
+				serverBaseURL:       mockServerURL,
+				authToken:           "some-auth-token",
+				projectID:           "some-project-id",
+				identifier:          "some-identifier",
+				stage:               "some-stage",
+				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
+			},
+			mockNilResponse: true,
+			wantErr:         true,
 		},
 	}
 	for _, tt := range tests {
@@ -429,6 +460,9 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 			tt.args.setArgs()
 			for _, mockResponse := range tt.mockResponses {
 				mockResponse.mockJSONHTTPResponse(t, http.MethodGet)
+			}
+			if tt.mockNilResponse {
+				httpmock.Reset()
 			}
 			err := fetchAPICmdRunE(&cobra.Command{}, []string{})
 			fmt.Printf("err: %v", err)
