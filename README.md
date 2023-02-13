@@ -74,6 +74,25 @@ stackit-api-manager project validate \
   --oas <PathToOpenAPISpec>
 ```
 
+Use the CLI to list all API identifiers for your project:
+
+```bash
+stackit-api-manager project list \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --token <YourAuthToken> \
+```
+
+Use the CLI to fetch the base64-encoded OpenAPI specification, stage, API-URL and upstream-URL for an API:
+
+```bash
+stackit-api-manager project fetch \
+  --identifier <YourIdentifier> \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --token <YourAuthToken> \
+```
+
 #### API-Manager-BaseURL possible values
 
 - `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`
