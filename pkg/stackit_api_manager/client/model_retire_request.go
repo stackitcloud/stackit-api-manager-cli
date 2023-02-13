@@ -16,7 +16,8 @@ import (
 
 // RetireRequest struct for RetireRequest
 type RetireRequest struct {
-	Metadata *RetireMetadata `json:"metadata,omitempty"`
+	Identifier *string `json:"identifier,omitempty"`
+	ProjectId  *string `json:"projectId,omitempty"`
 }
 
 // NewRetireRequest instantiates a new RetireRequest object
@@ -36,42 +37,77 @@ func NewRetireRequestWithDefaults() *RetireRequest {
 	return &this
 }
 
-// GetMetadata returns the Metadata field value if set, zero value otherwise.
-func (o *RetireRequest) GetMetadata() RetireMetadata {
-	if o == nil || o.Metadata == nil {
-		var ret RetireMetadata
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+func (o *RetireRequest) GetIdentifier() string {
+	if o == nil || o.Identifier == nil {
+		var ret string
 		return ret
 	}
-	return *o.Metadata
+	return *o.Identifier
 }
 
-// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RetireRequest) GetMetadataOk() (*RetireMetadata, bool) {
-	if o == nil || o.Metadata == nil {
+func (o *RetireRequest) GetIdentifierOk() (*string, bool) {
+	if o == nil || o.Identifier == nil {
 		return nil, false
 	}
-	return o.Metadata, true
+	return o.Identifier, true
 }
 
-// HasMetadata returns a boolean if a field has been set.
-func (o *RetireRequest) HasMetadata() bool {
-	if o != nil && o.Metadata != nil {
+// HasIdentifier returns a boolean if a field has been set.
+func (o *RetireRequest) HasIdentifier() bool {
+	if o != nil && o.Identifier != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetMetadata gets a reference to the given RetireMetadata and assigns it to the Metadata field.
-func (o *RetireRequest) SetMetadata(v RetireMetadata) {
-	o.Metadata = &v
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+func (o *RetireRequest) SetIdentifier(v string) {
+	o.Identifier = &v
+}
+
+// GetProjectId returns the ProjectId field value if set, zero value otherwise.
+func (o *RetireRequest) GetProjectId() string {
+	if o == nil || o.ProjectId == nil {
+		var ret string
+		return ret
+	}
+	return *o.ProjectId
+}
+
+// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RetireRequest) GetProjectIdOk() (*string, bool) {
+	if o == nil || o.ProjectId == nil {
+		return nil, false
+	}
+	return o.ProjectId, true
+}
+
+// HasProjectId returns a boolean if a field has been set.
+func (o *RetireRequest) HasProjectId() bool {
+	if o != nil && o.ProjectId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectId gets a reference to the given string and assigns it to the ProjectId field.
+func (o *RetireRequest) SetProjectId(v string) {
+	o.ProjectId = &v
 }
 
 func (o RetireRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Metadata != nil {
-		toSerialize["metadata"] = o.Metadata
+	if o.Identifier != nil {
+		toSerialize["identifier"] = o.Identifier
+	}
+	if o.ProjectId != nil {
+		toSerialize["projectId"] = o.ProjectId
 	}
 	return json.Marshal(toSerialize)
 }

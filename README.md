@@ -38,6 +38,8 @@ Make the file executable and place it in a directory available in your `$PATH`.
 
 ### Interact with STACKIT API Manager service
 
+For each request, you can add the `--json` flag to print the CLI response in JSON format instead of receiving a human-readable message.
+
 Use the CLI to publish your OpenAPI Spec:
 
 ```bash
@@ -70,6 +72,25 @@ stackit-api-manager project validate \
   --stage <YourStage> \
   --token <YourAuthToken> \
   --oas <PathToOpenAPISpec>
+```
+
+Use the CLI to list all API identifiers for your project:
+
+```bash
+stackit-api-manager project list \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --token <YourAuthToken> \
+```
+
+Use the CLI to fetch the base64-encoded OpenAPI specification, stage, API-URL and upstream-URL for an API:
+
+```bash
+stackit-api-manager project fetch \
+  --identifier <YourIdentifier> \
+  --baseURL <API-Manager-BaseURL> \
+  --project <YourProject> \
+  --token <YourAuthToken> \
 ```
 
 #### API-Manager-BaseURL possible values

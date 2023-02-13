@@ -16,8 +16,10 @@ import (
 
 // PublishRequest struct for PublishRequest
 type PublishRequest struct {
-	Metadata *PublishMetadata `json:"metadata,omitempty"`
-	Spec     *Spec            `json:"spec,omitempty"`
+	Identifier *string          `json:"identifier,omitempty"`
+	Metadata   *PublishMetadata `json:"metadata,omitempty"`
+	ProjectId  *string          `json:"projectId,omitempty"`
+	Spec       *Spec            `json:"spec,omitempty"`
 }
 
 // NewPublishRequest instantiates a new PublishRequest object
@@ -35,6 +37,38 @@ func NewPublishRequest() *PublishRequest {
 func NewPublishRequestWithDefaults() *PublishRequest {
 	this := PublishRequest{}
 	return &this
+}
+
+// GetIdentifier returns the Identifier field value if set, zero value otherwise.
+func (o *PublishRequest) GetIdentifier() string {
+	if o == nil || o.Identifier == nil {
+		var ret string
+		return ret
+	}
+	return *o.Identifier
+}
+
+// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishRequest) GetIdentifierOk() (*string, bool) {
+	if o == nil || o.Identifier == nil {
+		return nil, false
+	}
+	return o.Identifier, true
+}
+
+// HasIdentifier returns a boolean if a field has been set.
+func (o *PublishRequest) HasIdentifier() bool {
+	if o != nil && o.Identifier != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
+func (o *PublishRequest) SetIdentifier(v string) {
+	o.Identifier = &v
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
@@ -67,6 +101,38 @@ func (o *PublishRequest) HasMetadata() bool {
 // SetMetadata gets a reference to the given PublishMetadata and assigns it to the Metadata field.
 func (o *PublishRequest) SetMetadata(v PublishMetadata) {
 	o.Metadata = &v
+}
+
+// GetProjectId returns the ProjectId field value if set, zero value otherwise.
+func (o *PublishRequest) GetProjectId() string {
+	if o == nil || o.ProjectId == nil {
+		var ret string
+		return ret
+	}
+	return *o.ProjectId
+}
+
+// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishRequest) GetProjectIdOk() (*string, bool) {
+	if o == nil || o.ProjectId == nil {
+		return nil, false
+	}
+	return o.ProjectId, true
+}
+
+// HasProjectId returns a boolean if a field has been set.
+func (o *PublishRequest) HasProjectId() bool {
+	if o != nil && o.ProjectId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectId gets a reference to the given string and assigns it to the ProjectId field.
+func (o *PublishRequest) SetProjectId(v string) {
+	o.ProjectId = &v
 }
 
 // GetSpec returns the Spec field value if set, zero value otherwise.
@@ -103,8 +169,14 @@ func (o *PublishRequest) SetSpec(v Spec) {
 
 func (o PublishRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.Identifier != nil {
+		toSerialize["identifier"] = o.Identifier
+	}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata
+	}
+	if o.ProjectId != nil {
+		toSerialize["projectId"] = o.ProjectId
 	}
 	if o.Spec != nil {
 		toSerialize["spec"] = o.Spec

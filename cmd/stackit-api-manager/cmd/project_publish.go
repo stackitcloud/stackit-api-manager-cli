@@ -1,4 +1,3 @@
-//nolint:dupl // more clear without reusing functionality
 package cmd
 
 import (
@@ -10,6 +9,19 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/util"
 )
+
+const messagePublishSuccess = "API published successfully"
+
+type publishResponse struct {
+	Identifier string `json:"identifier"`
+	ProjectID  string `json:"projectId"`
+	Stage      string `json:"stage"`
+	APIURL     string `json:"apiUrl"`
+}
+
+func (r publishResponse) successMessage() string {
+	return messagePublishSuccess
+}
 
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "publish",
@@ -43,17 +55,25 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	_, r, err := c.APIManagerServiceApi.APIManagerServicePublish(
+	grpcResp, httpResp, err := c.APIManagerServiceApi.APIManagerServicePublish(
 		ctx,
 		projectID,
 		identifier,
 	).PublishRequest(req).Execute()
-	if err != nil {
-		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServicePublish``: %v\n", err)
-		cmd.Printf("Full HTTP response: %v\n", r)
+	if err != nil && httpResp == nil {
 		return err
 	}
-	defer r.Body.Close()
-	cmd.Printf("API Gateway project %s published successfully with identifier %s\n", projectID, identifier)
-	return nil
+	defer httpResp.Body.Close()
+	if err != nil {
+		return printErrorCLIResponse(cmd, httpResp)
+	}
+
+	publishResponse := publishResponse{
+		Identifier: identifier,
+		ProjectID:  projectID,
+		Stage:      stage,
+		APIURL:     grpcResp.GetApiUrl(),
+	}
+
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)
 }

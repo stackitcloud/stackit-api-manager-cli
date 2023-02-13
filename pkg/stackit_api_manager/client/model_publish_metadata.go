@@ -16,9 +16,7 @@ import (
 
 // PublishMetadata struct for PublishMetadata
 type PublishMetadata struct {
-	Identifier *string `json:"identifier,omitempty"`
-	ProjectId  *string `json:"projectId,omitempty"`
-	Stage      *string `json:"stage,omitempty"`
+	Stage *string `json:"stage,omitempty"`
 }
 
 // NewPublishMetadata instantiates a new PublishMetadata object
@@ -36,70 +34,6 @@ func NewPublishMetadata() *PublishMetadata {
 func NewPublishMetadataWithDefaults() *PublishMetadata {
 	this := PublishMetadata{}
 	return &this
-}
-
-// GetIdentifier returns the Identifier field value if set, zero value otherwise.
-func (o *PublishMetadata) GetIdentifier() string {
-	if o == nil || o.Identifier == nil {
-		var ret string
-		return ret
-	}
-	return *o.Identifier
-}
-
-// GetIdentifierOk returns a tuple with the Identifier field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PublishMetadata) GetIdentifierOk() (*string, bool) {
-	if o == nil || o.Identifier == nil {
-		return nil, false
-	}
-	return o.Identifier, true
-}
-
-// HasIdentifier returns a boolean if a field has been set.
-func (o *PublishMetadata) HasIdentifier() bool {
-	if o != nil && o.Identifier != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
-func (o *PublishMetadata) SetIdentifier(v string) {
-	o.Identifier = &v
-}
-
-// GetProjectId returns the ProjectId field value if set, zero value otherwise.
-func (o *PublishMetadata) GetProjectId() string {
-	if o == nil || o.ProjectId == nil {
-		var ret string
-		return ret
-	}
-	return *o.ProjectId
-}
-
-// GetProjectIdOk returns a tuple with the ProjectId field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PublishMetadata) GetProjectIdOk() (*string, bool) {
-	if o == nil || o.ProjectId == nil {
-		return nil, false
-	}
-	return o.ProjectId, true
-}
-
-// HasProjectId returns a boolean if a field has been set.
-func (o *PublishMetadata) HasProjectId() bool {
-	if o != nil && o.ProjectId != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetProjectId gets a reference to the given string and assigns it to the ProjectId field.
-func (o *PublishMetadata) SetProjectId(v string) {
-	o.ProjectId = &v
 }
 
 // GetStage returns the Stage field value if set, zero value otherwise.
@@ -136,12 +70,6 @@ func (o *PublishMetadata) SetStage(v string) {
 
 func (o PublishMetadata) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Identifier != nil {
-		toSerialize["identifier"] = o.Identifier
-	}
-	if o.ProjectId != nil {
-		toSerialize["projectId"] = o.ProjectId
-	}
 	if o.Stage != nil {
 		toSerialize["stage"] = o.Stage
 	}

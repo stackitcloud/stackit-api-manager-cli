@@ -1,4 +1,3 @@
-//nolint:dupl // more clear without reusing functionality
 package cmd
 
 import (
@@ -10,6 +9,18 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/util"
 )
+
+const messageValidateSuccess = "OpenAPI specification validated successfully"
+
+type validateResponse struct {
+	Identifier string `json:"identifier"`
+	ProjectID  string `json:"projectId"`
+	Stage      string `json:"stage"`
+}
+
+func (r validateResponse) successMessage() string {
+	return messageValidateSuccess
+}
 
 var validateCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "validate",
@@ -43,17 +54,25 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	_, r, err := c.APIManagerServiceApi.APIManagerServicePublishValidate(
+	_, httpResp, err := c.APIManagerServiceApi.APIManagerServicePublishValidate(
 		ctx,
 		projectID,
 		identifier,
 	).PublishValidateRequest(req).Execute()
-	if err != nil {
-		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServicePublishValidate``: %v\n", err)
-		cmd.Printf("Full HTTP response: %v\n", r)
+	if err != nil && httpResp == nil {
 		return err
 	}
-	defer r.Body.Close()
-	cmd.Printf("OpenAPI Spec for API Gateway project %s with identifier %s validated successfully\n", projectID, identifier)
-	return nil
+	defer httpResp.Body.Close()
+
+	if err != nil {
+		return printErrorCLIResponse(cmd, httpResp)
+	}
+
+	validateResponse := &validateResponse{
+		Identifier: identifier,
+		ProjectID:  projectID,
+		Stage:      stage,
+	}
+
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, validateResponse)
 }

@@ -9,6 +9,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const messageRetireSuccess = "API retired successfully"
+
+type retireResponse struct {
+	Identifier string `json:"identifier"`
+	ProjectID  string `json:"projectId"`
+}
+
+func (r retireResponse) successMessage() string {
+	return messageRetireSuccess
+}
+
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:   "retire",
 	Short: "Retire a OpenAPI Spec from a Stackit API Gateway project",
@@ -27,18 +38,24 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	resp, r, err := c.APIManagerServiceApi.APIManagerServiceRetire(
+	_, httpResp, err := c.APIManagerServiceApi.APIManagerServiceRetire(
 		ctx,
 		projectID,
 		identifier,
 	).RetireRequest(req).Execute()
-	if err != nil {
-		cmd.Printf("Error when calling `APIManagerServiceApi.APIManagerServiceRetire``: %v\n", err)
-		cmd.Printf("Full HTTP response: %v\n", r)
+	if err != nil && httpResp == nil {
 		return err
 	}
-	defer r.Body.Close()
-	cmd.Printf("Response from `APIManagerServiceApi.APIManagerServiceRetire`: %v\n", resp)
+	defer httpResp.Body.Close()
 
-	return nil
+	if err != nil {
+		return printErrorCLIResponse(cmd, httpResp)
+	}
+
+	retireResponse := retireResponse{
+		Identifier: identifier,
+		ProjectID:  projectID,
+	}
+
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &retireResponse)
 }

@@ -16,6 +16,7 @@ var (
 	identifier          string
 	stage               string
 	openAPISpecFilePath string
+	printJSON           bool
 )
 
 var errBadToken = fmt.Errorf("bad token")
@@ -40,6 +41,8 @@ func init() {
 	projectCmd.AddCommand(publishCmd)
 	projectCmd.AddCommand(retireCmd)
 	projectCmd.AddCommand(validateCmd)
+	projectCmd.AddCommand(listCmd)
+	projectCmd.AddCommand(fetchCmd)
 
 	// Here you will define your flags and configuration settings.
 
@@ -54,21 +57,32 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("token") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().StringVarP(&projectID, "project", "p", "", "Project ID")
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
-	projectCmd.PersistentFlags().StringVarP(&identifier, "identifier", "i", "", "Project Identifier")
-	projectCmd.MarkPersistentFlagRequired("identifier") //nolint:errcheck // cobra flag
+	projectCmd.PersistentFlags().BoolVar(&printJSON, "json", false, "Print JSON instead of human readable response")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
+
+	// retireCmd flags
+	retireCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	retireCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
+
+	// fetchAPICmd flags
+	fetchCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	fetchCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
 	// publishCmd flags
 	publishCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
 	publishCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
 	publishCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
+	publishCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	publishCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
 	// validateCmd flags
 	validateCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
 	validateCmd.MarkFlagRequired("stage") //nolint:errcheck // cobra flag
 	validateCmd.Flags().StringVarP(&openAPISpecFilePath, "oas", "o", "", "OpenAPI Spec file path")
 	validateCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
+	validateCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	validateCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 }
