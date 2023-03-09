@@ -52,7 +52,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	if strings.HasPrefix(authToken, "Bearer ") {
-		cmd.Printf("Authorization token should have no Bearer prefix: %w", errBadToken)
+		cmd.Printf("Authorization token should have no Bearer prefix")
 		return errBadToken
 	}
 	// add auth token
