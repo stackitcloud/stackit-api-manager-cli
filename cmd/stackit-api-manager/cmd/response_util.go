@@ -9,8 +9,11 @@ import (
 )
 
 var (
-	errNilCmdResponse         = fmt.Errorf("invalid nil cmdResponse")
-	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
+	errEncodingCLIResponse     = fmt.Errorf("failed to encode CLI response")
+	errDecodingGatewayResponse = fmt.Errorf("failed to decode gateway response")
+	errRequestFailed           = fmt.Errorf("request failed")
+	errNilCmdResponse          = fmt.Errorf("invalid nil cmdResponse")
+	errUnknownCmdResponseType  = fmt.Errorf("unknown cmdResponse type")
 )
 
 // gatewayResponse contains the HTTP status code and error message
@@ -38,6 +41,7 @@ type cmdResponseInterface interface {
 // prints the CLI response for successful requests
 func printSuccessCLIResponse(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
+		cmd.Print(errNilCmdResponse)
 		return errNilCmdResponse
 	}
 	if printJSON {
@@ -57,7 +61,8 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 	}
 	jsonCLIResponse, err := json.Marshal(CLIResponse)
 	if err != nil {
-		return fmt.Errorf("failed to encode CLI response: %w", err)
+		cmd.Printf("%w: %w", errEncodingCLIResponse, err)
+		return fmt.Errorf("%w: %w", errEncodingCLIResponse, err)
 	}
 
 	cmd.Println(string(jsonCLIResponse))
@@ -78,7 +83,8 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 	case *fetchResponse:
 		cmd.Printf("Base64 encoded OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" (API-URL: \"%s\", Upstream-URL: \"%s\") is: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
 	default:
-		return fmt.Errorf("failed to print human readable success response: %w %T", errUnknownCmdResponseType, r)
+		cmd.Print("%w %T", errUnknownCmdResponseType, r)
+		return fmt.Errorf("%w %T", errUnknownCmdResponseType, r)
 	}
 
 	return nil
@@ -88,7 +94,8 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 	errorMessage, err := retrieveGatewayErrorMessage(httpResp)
 	if err != nil {
-		return fmt.Errorf("failed to decode gateway response: %w", err)
+		cmd.Print("%w: %w", errDecodingGatewayResponse, err)
+		return fmt.Errorf("%w: %w", errDecodingGatewayResponse, err)
 	}
 
 	if printJSON {
@@ -99,15 +106,16 @@ func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 		}
 		jsonCLIResponse, err := json.Marshal(CLIResponse)
 		if err != nil {
-			return fmt.Errorf("failed to encode CLI response: %w", err)
+			cmd.Print("%w: %w", errEncodingCLIResponse, err)
+			return fmt.Errorf("%w: %w", errEncodingCLIResponse, err)
 		}
 
 		cmd.Println(string(jsonCLIResponse))
-		return nil
+		return errRequestFailed
 	}
 
 	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, httpResp.StatusCode, errorMessage)
-	return nil
+	return errRequestFailed
 }
 
 // unmarshals the error message from the gateway HTTP response body

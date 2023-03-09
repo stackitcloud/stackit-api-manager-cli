@@ -21,16 +21,18 @@ func (r listResponse) successMessage() string {
 }
 
 var listCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "list",
-	Short: "List all API identifiers for a Stackit API Gateway project",
-	RunE:  listCmdRunE,
+	Use:           "list",
+	Short:         "List all API identifiers for a Stackit API Gateway project",
+	RunE:          listCmdRunE,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func listCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
 	if strings.HasPrefix(authToken, "Bearer ") {
-		cmd.Printf("Authorization token should have no Bearer prefix")
+		cmd.Printf("Authorization token should have no Bearer prefix: %w", errBadToken)
 		return errBadToken
 	}
 	// add auth token
@@ -41,6 +43,7 @@ func listCmdRunE(cmd *cobra.Command, args []string) error {
 		projectID,
 	).Execute()
 	if err != nil && httpResp == nil {
+		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()
