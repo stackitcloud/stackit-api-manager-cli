@@ -79,11 +79,5 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		APIURL:     grpcResp.GetApiUrl(),
 	}
 
-	err = printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)
-	if err != nil {
-		cmd.Print(err)
-		return err
-	}
-
-	return nil
+	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)
 }
