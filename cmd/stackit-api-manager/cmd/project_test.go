@@ -80,11 +80,10 @@ func Test_publishCmdRunE(t *testing.T) {
 			args: projectCmdArgs{
 				openAPISpecFilePath: "./no-test.json",
 			},
-			mockNilResponse: false,
-			wantErr:         true,
+			wantErr: true,
 		},
 		{
-			name: "status code 400 - no error",
+			name: "status code 400 - error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
@@ -99,7 +98,7 @@ func Test_publishCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "nil http response - error",
@@ -124,7 +123,7 @@ func Test_publishCmdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			if err := publishCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
+			if err := publishCmdRunE(&cobra.Command{Use: "publish"}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("publishCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -159,7 +158,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name: "status code 400 - no error",
+			name: "status code 400 - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -172,7 +171,7 @@ func Test_retireCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "nil http response - error",
@@ -195,7 +194,7 @@ func Test_retireCmdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			if err := retireCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
+			if err := retireCmdRunE(&cobra.Command{Use: "retire"}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("retireCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -239,7 +238,7 @@ func Test_validateCmdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "status code 400 - no error",
+			name: "status code 400 - error",
 			args: projectCmdArgs{
 				serverBaseURL:       mockServerURL,
 				authToken:           "some-auth-token",
@@ -254,7 +253,7 @@ func Test_validateCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "nil http response - error",
@@ -279,7 +278,7 @@ func Test_validateCmdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			if err := validateCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
+			if err := validateCmdRunE(&cobra.Command{Use: "validate"}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("validateCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -321,7 +320,7 @@ func Test_listCmdRunE(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "status code 400 - no error",
+			name: "status code 400 - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -333,7 +332,7 @@ func Test_listCmdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "nil http response - error",
@@ -358,7 +357,7 @@ func Test_listCmdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			if err := listCmdRunE(&cobra.Command{}, []string{}); (err != nil) != tt.wantErr {
+			if err := listCmdRunE(&cobra.Command{Use: "list"}, []string{}); (err != nil) != tt.wantErr {
 				t.Errorf("listCmdRunE() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
@@ -426,7 +425,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 		},
 
 		{
-			name: "status code 400 - no error",
+			name: "status code 400 - error",
 			args: projectCmdArgs{
 				serverBaseURL: mockServerURL,
 				authToken:     "some-auth-token",
@@ -439,7 +438,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 					statusCode: 400,
 				},
 			},
-			wantErr: false,
+			wantErr: true,
 		},
 		{
 			name: "nil http response - error",
@@ -464,7 +463,7 @@ func Test_fetchAPICmsdRunE(t *testing.T) {
 			if tt.mockNilResponse {
 				httpmock.Reset()
 			}
-			err := fetchCmdRunE(&cobra.Command{}, []string{})
+			err := fetchCmdRunE(&cobra.Command{Use: "fetch"}, []string{})
 			fmt.Printf("err: %v", err)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("fetchAPICmdRunE() error = %v, wantErr %v", err, tt.wantErr)
