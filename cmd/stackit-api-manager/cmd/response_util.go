@@ -74,7 +74,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 	case *validateResponse:
 		cmd.Printf("OpenAPI specification for API with identifier \"%s\", project \"%s\" and stage \"%s\" validated successfully\n", r.Identifier, r.ProjectID, r.Stage)
 	case *listResponse:
-		cmd.Printf("Project \"%s\" has the following identifiers: %+v", r.ProjectID, r.Identifiers)
+		cmd.Printf("Project \"%s\" has the following identifiers: %+v\n", r.ProjectID, r.Identifiers)
 	case *fetchResponse:
 		cmd.Printf("Base64 encoded OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" (API-URL: \"%s\", Upstream-URL: \"%s\") is: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
 	default:
