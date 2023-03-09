@@ -11,10 +11,10 @@ import (
 var (
 	errEncodingCLIResponseMessage     = "failed to encode CLI response"
 	errDecodingGatewayResponseMessage = "failed to decode gateway response"
-	errUnknownCmdResponseTypeMessage  = "unknown cmdResponse type"
 
-	errRequestFailed  = fmt.Errorf("request failed")
-	errNilCmdResponse = fmt.Errorf("invalid nil cmdResponse")
+	errNilCmdResponse         = fmt.Errorf("invalid nil cmdResponse")
+	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
+	errRequestFailed          = fmt.Errorf("request failed")
 )
 
 // gatewayResponse contains the HTTP status code and error message
@@ -84,8 +84,8 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 	case *fetchResponse:
 		cmd.Printf("Base64 encoded OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" (API-URL: \"%s\", Upstream-URL: \"%s\") is: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
 	default:
-		cmd.Printf("%s %T", errUnknownCmdResponseTypeMessage, r)
-		return fmt.Errorf("%s %T", errUnknownCmdResponseTypeMessage, r)
+		cmd.Printf("%s %T", errUnknownCmdResponseType.Error(), r)
+		return fmt.Errorf("%w %T", errUnknownCmdResponseType, r)
 	}
 
 	return nil
