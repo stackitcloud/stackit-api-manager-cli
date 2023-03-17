@@ -24,9 +24,11 @@ func (r publishResponse) successMessage() string {
 }
 
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "publish",
-	Short: "Publish a OpenAPI Spec to a Stackit API Gateway project",
-	RunE:  publishCmdRunE,
+	Use:           "publish",
+	Short:         "Publish a OpenAPI Spec to a Stackit API Gateway project",
+	RunE:          publishCmdRunE,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func publishCmdRunE(cmd *cobra.Command, args []string) error {
@@ -34,6 +36,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 
 	base64Encoded, err := util.EncodeBase64File(openAPISpecFilePath)
 	if err != nil {
+		cmd.Print(err)
 		return err
 	}
 
@@ -61,6 +64,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		identifier,
 	).PublishRequest(req).Execute()
 	if err != nil && httpResp == nil {
+		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()

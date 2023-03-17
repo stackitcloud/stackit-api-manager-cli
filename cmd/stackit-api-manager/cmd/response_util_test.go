@@ -414,7 +414,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 		name      string
 		args      args
 		wantPrint string
-		wantErr   bool
 	}{
 		{
 			name: "failed publish returns no error and prints JSON as expected",
@@ -424,7 +423,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           true,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed publish returns no error and prints human-readable as expected",
@@ -434,7 +432,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed publish with invalid gateway response (string statuscode) returns error",
@@ -443,7 +440,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
-			wantErr: true,
 		},
 		{
 			name: "failed retire returns no error and prints JSON as expected",
@@ -453,7 +449,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           true,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed retire returns no error and prints human-readable as expected",
@@ -463,7 +458,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed retire with invalid gateway response (string statuscode) returns error",
@@ -472,7 +466,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
-			wantErr: true,
 		},
 		{
 			name: "failed validate returns no error and prints JSON as expected",
@@ -482,7 +475,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           true,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed validate returns no error and prints human-readable as expected",
@@ -492,7 +484,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed validate with invalid gateway response (string statuscode) returns error",
@@ -501,7 +492,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
-			wantErr: true,
 		},
 		{
 			name: "failed list returns no error and prints JSON as expected",
@@ -511,7 +501,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           true,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed list returns no error and prints human-readable as expected",
@@ -521,7 +510,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed list with invalid gateway response (string statuscode) returns error",
@@ -530,7 +518,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
-			wantErr: true,
 		},
 		{
 			name: "failed fetch returns no error and prints JSON as expected",
@@ -540,7 +527,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           true,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed fetch returns no error and prints human-readable as expected",
@@ -550,7 +536,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				printJSON:           false,
 				gatewayResponseBody: validGatewayResponseBody,
 			},
-			wantErr: false,
 		},
 		{
 			name: "failed fetch with invalid gateway response (string statuscode) returns error",
@@ -559,7 +544,6 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				statusCode:          testStatusCode,
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
-			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -574,9 +558,10 @@ func Test_printErrorCLIResponse(t *testing.T) {
 
 			printJSON = tt.args.printJSON
 
+			wantErr := true
 			gotErr := printErrorCLIResponse(tt.args.cmd, httpResp)
-			if (gotErr != nil) != tt.wantErr {
-				t.Errorf("printErrorCLIResponse() got error = %v, want %v", gotErr, tt.wantErr)
+			if (gotErr != nil) != wantErr {
+				t.Errorf("printErrorCLIResponse() got error = %v, want %v", gotErr, wantErr)
 			}
 
 			wantPrint := fmt.Sprintf("Failed to %s! An error occurred with statuscode %d: %s", tt.args.cmd.Use, testStatusCode, testErrorMessage)

@@ -21,9 +21,11 @@ func (r listResponse) successMessage() string {
 }
 
 var listCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "list",
-	Short: "List all API identifiers for a Stackit API Gateway project",
-	RunE:  listCmdRunE,
+	Use:           "list",
+	Short:         "List all API identifiers for a Stackit API Gateway project",
+	RunE:          listCmdRunE,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func listCmdRunE(cmd *cobra.Command, args []string) error {
@@ -41,6 +43,7 @@ func listCmdRunE(cmd *cobra.Command, args []string) error {
 		projectID,
 	).Execute()
 	if err != nil && httpResp == nil {
+		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()

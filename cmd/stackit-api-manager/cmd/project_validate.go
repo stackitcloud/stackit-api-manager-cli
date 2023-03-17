@@ -23,9 +23,11 @@ func (r validateResponse) successMessage() string {
 }
 
 var validateCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "validate",
-	Short: "Validate an OpenAPI Spec for a Stackit API Gateway project",
-	RunE:  validateCmdRunE,
+	Use:           "validate",
+	Short:         "Validate an OpenAPI Spec for a Stackit API Gateway project",
+	RunE:          validateCmdRunE,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func validateCmdRunE(cmd *cobra.Command, args []string) error {
@@ -33,6 +35,7 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 
 	base64Encoded, err := util.EncodeBase64File(openAPISpecFilePath)
 	if err != nil {
+		cmd.Print(err)
 		return err
 	}
 
@@ -60,6 +63,7 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		identifier,
 	).PublishValidateRequest(req).Execute()
 	if err != nil && httpResp == nil {
+		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()

@@ -21,9 +21,11 @@ func (r retireResponse) successMessage() string {
 }
 
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:   "retire",
-	Short: "Retire a OpenAPI Spec from a Stackit API Gateway project",
-	RunE:  retireCmdRunE,
+	Use:           "retire",
+	Short:         "Retire a OpenAPI Spec from a Stackit API Gateway project",
+	RunE:          retireCmdRunE,
+	SilenceErrors: true,
+	SilenceUsage:  true,
 }
 
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
@@ -44,6 +46,7 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 		identifier,
 	).RetireRequest(req).Execute()
 	if err != nil && httpResp == nil {
+		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()
