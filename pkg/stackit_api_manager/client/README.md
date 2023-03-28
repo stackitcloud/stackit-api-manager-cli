@@ -93,6 +93,7 @@ Class | Method | HTTP request | Description
  - [PublishRequest](docs/PublishRequest.md)
  - [PublishResponse](docs/PublishResponse.md)
  - [PublishValidateRequest](docs/PublishValidateRequest.md)
+ - [PublishValidateResponse](docs/PublishValidateResponse.md)
  - [RetireRequest](docs/RetireRequest.md)
  - [Spec](docs/Spec.md)
  - [SpecOpenApi](docs/SpecOpenApi.md)

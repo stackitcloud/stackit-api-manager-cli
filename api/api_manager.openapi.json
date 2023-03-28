@@ -91,6 +91,17 @@
       },
       "PublishValidateResponse": {
         "description": "OpenAPI specification was validated successfully",
+        "properties": {
+          "linterWarnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "linterWarningsCount": {
+            "type": "string"
+          }
+        },
         "title": "Validate response",
         "type": "object"
       },
@@ -374,7 +385,7 @@
   },
   "servers": [
     {
-      "description": "STACKIT API Manager API",
+      "description": "STACKIT API Manager",
       "url": "https://api-manager.api.stackit.cloud"
     }
   ],
