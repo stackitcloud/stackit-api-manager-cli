@@ -232,7 +232,7 @@ No authorization required
 
 ## APIManagerServicePublishValidate
 
-> map[string]interface{} APIManagerServicePublishValidate(ctx, projectId, identifier).PublishValidateRequest(publishValidateRequest).Execute()
+> PublishValidateResponse APIManagerServicePublishValidate(ctx, projectId, identifier).PublishValidateRequest(publishValidateRequest).Execute()
 
 Validate API Endpoint
 
@@ -262,7 +262,7 @@ func main() {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServicePublishValidate``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
     }
-    // response from `APIManagerServicePublishValidate`: map[string]interface{}
+    // response from `APIManagerServicePublishValidate`: PublishValidateResponse
     fmt.Fprintf(os.Stdout, "Response from `APIManagerServiceApi.APIManagerServicePublishValidate`: %v\n", resp)
 }
 ```
@@ -289,7 +289,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**PublishValidateResponse**](PublishValidateResponse.md)
 
 ### Authorization
 

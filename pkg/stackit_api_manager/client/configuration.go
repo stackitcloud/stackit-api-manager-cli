@@ -106,7 +106,7 @@ func NewConfiguration() *Configuration {
 		Servers: ServerConfigurations{
 			{
 				URL:         "https://api-manager.api.stackit.cloud",
-				Description: "STACKIT API Manager API",
+				Description: "STACKIT API Manager",
 			},
 		},
 		OperationServers: map[string]ServerConfigurations{},
