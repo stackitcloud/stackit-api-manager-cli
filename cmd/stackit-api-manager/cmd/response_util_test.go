@@ -278,7 +278,7 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 			gotPrint := strings.TrimRight(string(gotPrintBytes), "\n")
 
 			if gotErr == nil && gotPrint != tt.wantPrint {
-				t.Errorf("printSuccessCLIResponseJSON() expected message to be\nABC%vABC\nbut got\nABC%vABC", tt.wantPrint, gotPrint)
+				t.Errorf("printSuccessCLIResponseJSON() expected message to be\n%v\nbut got\n%v", tt.wantPrint, gotPrint)
 			}
 		})
 	}
