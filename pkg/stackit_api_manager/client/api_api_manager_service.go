@@ -366,7 +366,7 @@ func (r ApiAPIManagerServicePublishValidateRequest) PublishValidateRequest(publi
 	return r
 }
 
-func (r ApiAPIManagerServicePublishValidateRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiAPIManagerServicePublishValidateRequest) Execute() (*PublishValidateResponse, *http.Response, error) {
 	return r.ApiService.APIManagerServicePublishValidateExecute(r)
 }
 
@@ -391,13 +391,13 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx conte
 
 // Execute executes the request
 //
-//	@return map[string]interface{}
-func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r ApiAPIManagerServicePublishValidateRequest) (map[string]interface{}, *http.Response, error) {
+//	@return PublishValidateResponse
+func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r ApiAPIManagerServicePublishValidateRequest) (*PublishValidateResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarReturnValue *PublishValidateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublishValidate")
