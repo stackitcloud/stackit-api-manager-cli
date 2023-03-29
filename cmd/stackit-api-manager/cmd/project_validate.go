@@ -13,9 +13,11 @@ import (
 const messageValidateSuccess = "OpenAPI specification validated successfully"
 
 type validateResponse struct {
-	Identifier string `json:"identifier"`
-	ProjectID  string `json:"projectId"`
-	Stage      string `json:"stage"`
+	Identifier          string   `json:"identifier"`
+	ProjectID           string   `json:"projectId"`
+	Stage               string   `json:"stage"`
+	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
+	LinterWarnings      []string `json:"linter_warnings,omitempty"`
 }
 
 func (r validateResponse) successMessage() string {
@@ -57,7 +59,7 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	// add auth token
 	ctx := context.WithValue(context.Background(), apiManager.ContextAccessToken, authToken)
 
-	_, httpResp, err := c.APIManagerServiceApi.APIManagerServicePublishValidate(
+	grpcResp, httpResp, err := c.APIManagerServiceApi.APIManagerServicePublishValidate(
 		ctx,
 		projectID,
 		identifier,
@@ -73,9 +75,11 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	validateResponse := &validateResponse{
-		Identifier: identifier,
-		ProjectID:  projectID,
-		Stage:      stage,
+		Identifier:          identifier,
+		ProjectID:           projectID,
+		Stage:               stage,
+		LinterWarnings:      grpcResp.GetLinterWarnings(),
+		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
 	}
 
 	return printSuccessCLIResponse(cmd, httpResp.StatusCode, validateResponse)
