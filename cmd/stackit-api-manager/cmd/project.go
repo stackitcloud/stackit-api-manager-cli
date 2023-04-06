@@ -78,7 +78,7 @@ func init() {
 	publishCmd.MarkFlagRequired("oas") //nolint:errcheck // cobra flag
 	publishCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
 	publishCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
-	projectCmd.Flags().BoolVar(&ignoreLintingErrors, "ignore-linting-errors", false, "Skip OpenAPI Spec validation")
+	publishCmd.Flags().BoolVar(&ignoreLintingErrors, "ignore-linting-errors", false, "Skip OpenAPI Spec validation")
 
 	// validateCmd flags
 	validateCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")
