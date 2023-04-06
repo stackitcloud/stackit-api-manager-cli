@@ -21,6 +21,7 @@ type projectCmdArgs struct {
 	identifier          string
 	stage               string
 	openAPISpecFilePath string
+	ignoreLintingErrors bool
 }
 
 type mockResponses struct {
@@ -67,6 +68,7 @@ func Test_publishCmdRunE(t *testing.T) {
 				identifier:          "some-identifier",
 				stage:               "some-stage",
 				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
+				ignoreLintingErrors: true,
 			},
 			mockResponses: []mockResponses{
 				{

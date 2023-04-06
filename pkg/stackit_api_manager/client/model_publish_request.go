@@ -16,10 +16,11 @@ import (
 
 // PublishRequest struct for PublishRequest
 type PublishRequest struct {
-	Identifier *string          `json:"identifier,omitempty"`
-	Metadata   *PublishMetadata `json:"metadata,omitempty"`
-	ProjectId  *string          `json:"projectId,omitempty"`
-	Spec       *Spec            `json:"spec,omitempty"`
+	Identifier          *string          `json:"identifier,omitempty"`
+	IgnoreLintingErrors *bool            `json:"ignoreLintingErrors,omitempty"`
+	Metadata            *PublishMetadata `json:"metadata,omitempty"`
+	ProjectId           *string          `json:"projectId,omitempty"`
+	Spec                *Spec            `json:"spec,omitempty"`
 }
 
 // NewPublishRequest instantiates a new PublishRequest object
@@ -69,6 +70,38 @@ func (o *PublishRequest) HasIdentifier() bool {
 // SetIdentifier gets a reference to the given string and assigns it to the Identifier field.
 func (o *PublishRequest) SetIdentifier(v string) {
 	o.Identifier = &v
+}
+
+// GetIgnoreLintingErrors returns the IgnoreLintingErrors field value if set, zero value otherwise.
+func (o *PublishRequest) GetIgnoreLintingErrors() bool {
+	if o == nil || o.IgnoreLintingErrors == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IgnoreLintingErrors
+}
+
+// GetIgnoreLintingErrorsOk returns a tuple with the IgnoreLintingErrors field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishRequest) GetIgnoreLintingErrorsOk() (*bool, bool) {
+	if o == nil || o.IgnoreLintingErrors == nil {
+		return nil, false
+	}
+	return o.IgnoreLintingErrors, true
+}
+
+// HasIgnoreLintingErrors returns a boolean if a field has been set.
+func (o *PublishRequest) HasIgnoreLintingErrors() bool {
+	if o != nil && o.IgnoreLintingErrors != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIgnoreLintingErrors gets a reference to the given bool and assigns it to the IgnoreLintingErrors field.
+func (o *PublishRequest) SetIgnoreLintingErrors(v bool) {
+	o.IgnoreLintingErrors = &v
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
@@ -171,6 +204,9 @@ func (o PublishRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Identifier != nil {
 		toSerialize["identifier"] = o.Identifier
+	}
+	if o.IgnoreLintingErrors != nil {
+		toSerialize["ignoreLintingErrors"] = o.IgnoreLintingErrors
 	}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata
