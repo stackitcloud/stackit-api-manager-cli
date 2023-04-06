@@ -389,7 +389,7 @@
   "servers": [
     {
       "description": "STACKIT API Manager",
-      "url": "https://api-manager.api.dev.stackit.cloud"
+      "url": "https://api-manager.api.stackit.cloud"
     }
   ],
   "tags": [
