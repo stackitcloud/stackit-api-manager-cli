@@ -37,7 +37,7 @@ func (m *mockResponses) mockJSONHTTPResponse(t *testing.T, method string) {
 	httpmock.RegisterResponder(method, fmt.Sprintf("%s%s", mockServerURL, m.path), jsonResponse)
 }
 
-// setArgs for project CMD CLI flags
+// setArgs for project CMD CLI flags test
 func (args *projectCmdArgs) setArgs() {
 	serverBaseURL = args.serverBaseURL
 	authToken = args.authToken
