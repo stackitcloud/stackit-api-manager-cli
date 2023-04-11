@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Identifier** | Pointer to **string** |  | [optional] [readonly] 
+**IgnoreLintingErrors** | Pointer to **bool** |  | [optional] 
 **Metadata** | Pointer to [**PublishMetadata**](PublishMetadata.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] [readonly] 
 **Spec** | Pointer to [**Spec**](Spec.md) |  | [optional] 
@@ -52,6 +53,31 @@ SetIdentifier sets Identifier field to given value.
 `func (o *PublishRequest) HasIdentifier() bool`
 
 HasIdentifier returns a boolean if a field has been set.
+
+### GetIgnoreLintingErrors
+
+`func (o *PublishRequest) GetIgnoreLintingErrors() bool`
+
+GetIgnoreLintingErrors returns the IgnoreLintingErrors field if non-nil, zero value otherwise.
+
+### GetIgnoreLintingErrorsOk
+
+`func (o *PublishRequest) GetIgnoreLintingErrorsOk() (*bool, bool)`
+
+GetIgnoreLintingErrorsOk returns a tuple with the IgnoreLintingErrors field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoreLintingErrors
+
+`func (o *PublishRequest) SetIgnoreLintingErrors(v bool)`
+
+SetIgnoreLintingErrors sets IgnoreLintingErrors field to given value.
+
+### HasIgnoreLintingErrors
+
+`func (o *PublishRequest) HasIgnoreLintingErrors() bool`
+
+HasIgnoreLintingErrors returns a boolean if a field has been set.
 
 ### GetMetadata
 

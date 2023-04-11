@@ -47,6 +47,9 @@
             "readOnly": true,
             "type": "string"
           },
+          "ignoreLintingErrors": {
+            "type": "boolean"
+          },
           "metadata": {
             "$ref": "#/components/schemas/PublishMetadata"
           },
