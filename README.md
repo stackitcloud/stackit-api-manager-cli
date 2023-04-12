@@ -38,7 +38,7 @@ Make the file executable and place it in a directory available in your `$PATH`.
 
 ### Interact with STACKIT API Manager service
 
-On publishing an OpenAPI Specifications, it is validated against a linting ruleset compliant with the OpenAPI 3.0 standard. Linting errors can be ignored using the `--ignore-linting-errors` flag.
+On publishing an OpenAPI Specification, it is validated against a linting ruleset compliant with the OpenAPI 3.0 standard by default. OpenAPI Specifications are successfully published only, if they do not contain any linting errors. This behaviour can be disabled using the `--ignore-linting-errors` flag.
 For each request, you can add the `--json` flag to print the CLI response in JSON format instead of receiving a human-readable message.
 
 Use the CLI to publish your OpenAPI Spec:
