@@ -51,7 +51,7 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	if strings.HasPrefix(authToken, "Bearer ") {
-		cmd.Printf("Authorization token should have no Bearer prefix")
+		cmd.Print("Authorization token should have no Bearer prefix")
 		return errBadToken
 	}
 	// add auth token
