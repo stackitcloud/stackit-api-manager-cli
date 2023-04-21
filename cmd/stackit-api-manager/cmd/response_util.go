@@ -43,7 +43,6 @@ type cmdResponseInterface interface {
 // prints the CLI response for successful requests
 func printSuccessCLIResponse(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
-		cmd.Print(errNilCmdResponse)
 		return errNilCmdResponse
 	}
 	if printJSON {
@@ -63,7 +62,6 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 	}
 	jsonCLIResponse, err := json.Marshal(CLIResponse)
 	if err != nil {
-		cmd.Printf("%s: %s", errEncodingCLIResponseMessage, err.Error())
 		return fmt.Errorf("%s: %w", errEncodingCLIResponseMessage, err)
 	}
 
@@ -89,7 +87,6 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 	case *fetchResponse:
 		cmd.Printf("Base64 encoded OpenAPI specification for API with identifier \"%s\" for project \"%s\" and stage \"%s\" (API-URL: \"%s\", Upstream-URL: \"%s\") is: %v\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL, r.UpstreamURL, r.Base64EncodedSpec)
 	default:
-		cmd.Printf("%s %T", errUnknownCmdResponseType.Error(), r)
 		return fmt.Errorf("%w %T", errUnknownCmdResponseType, r)
 	}
 
@@ -100,7 +97,6 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 	errorMessage, err := retrieveGatewayErrorMessage(httpResp)
 	if err != nil {
-		cmd.Printf("%s: %s", errDecodingGatewayResponseMessage, err.Error())
 		return fmt.Errorf("%s: %w", errDecodingGatewayResponseMessage, err)
 	}
 
@@ -112,7 +108,6 @@ func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 		}
 		jsonCLIResponse, err := json.Marshal(CLIResponse)
 		if err != nil {
-			cmd.Printf("%s: %s", errEncodingCLIResponseMessage, err.Error())
 			return fmt.Errorf("%s: %w", errEncodingCLIResponseMessage, err)
 		}
 
