@@ -25,18 +25,17 @@ func (r fetchResponse) successMessage() string {
 }
 
 var fetchCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
-	Use:           "fetch",
-	Short:         "Fetches the OpenAPI Spec and metadata for an existing Stackit API Gateway project API",
-	RunE:          fetchCmdRunE,
-	SilenceErrors: true,
-	SilenceUsage:  true,
+	Use:          "fetch",
+	Short:        "Fetches the OpenAPI Spec and metadata for an existing Stackit API Gateway project API",
+	RunE:         fetchCmdRunE,
+	SilenceUsage: true,
 }
 
 func fetchCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
 	if strings.HasPrefix(authToken, "Bearer ") {
-		cmd.Printf("Authorization token should have no Bearer prefix")
+		cmd.Print("Authorization token should have no Bearer prefix")
 		return errBadToken
 	}
 	// add auth token
@@ -48,7 +47,6 @@ func fetchCmdRunE(cmd *cobra.Command, args []string) error {
 		identifier,
 	).Execute()
 	if err != nil && httpResp == nil {
-		cmd.Print(err)
 		return err
 	}
 	defer httpResp.Body.Close()
