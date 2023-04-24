@@ -96,10 +96,6 @@ stackit-api-manager project fetch \
 
 #### API-Manager-BaseURL possible values
 
-- `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`
-- `https://api-manager.api.dev.stackit.cloud` for `dev-global`
-- `https://api-manager.api.eu01.stg.stackit.cloud` for `stg-eu01`  
-- `https://api-manager.api.stg.stackit.cloud` for `stg-global`
 - `https://api-manager.api.eu01.stackit.cloud` for `prd-eu01`
 - `https://api-manager.api.stackit.cloud` for `prd-global`
 
