@@ -136,7 +136,7 @@ make test
 
 To update the API client:
 
-- get the OpenAPI Spec from the `https://internal-docs.api.stackit.cloud/oas/api-manager`.
+- get the OpenAPI Spec.
 - store OpenAPI Spec in `api/api_manager.openapi.json`.
 - then run:
 
