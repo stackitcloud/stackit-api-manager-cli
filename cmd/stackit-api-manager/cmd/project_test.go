@@ -14,13 +14,14 @@ const (
 )
 
 type projectCmdArgs struct {
-	serverBaseURL       string
-	authToken           string
-	projectID           string
-	identifier          string
-	stage               string
-	openAPISpecFilePath string
-	ignoreLintingErrors bool
+	serverBaseURL         string
+	authToken             string
+	projectID             string
+	identifier            string
+	stage                 string
+	openAPISpecFilePath   string
+	ignoreLintingErrors   bool
+	ignoreBreakingChanges bool
 }
 
 type mockResponses struct {
@@ -61,13 +62,14 @@ func Test_publishCmdRunE(t *testing.T) {
 		{
 			name: "success",
 			args: projectCmdArgs{
-				serverBaseURL:       mockServerURL,
-				authToken:           "some-auth-token",
-				projectID:           "some-project-id",
-				identifier:          "some-identifier",
-				stage:               "some-stage",
-				openAPISpecFilePath: "../../../pkg/stackit_api_manager/util/test_data/test.json",
-				ignoreLintingErrors: true,
+				serverBaseURL:         mockServerURL,
+				authToken:             "some-auth-token",
+				projectID:             "some-project-id",
+				identifier:            "some-identifier",
+				stage:                 "some-stage",
+				openAPISpecFilePath:   "../../../pkg/stackit_api_manager/util/test_data/test.json",
+				ignoreLintingErrors:   true,
+				ignoreBreakingChanges: true,
 			},
 			mockResponses: []mockResponses{
 				{

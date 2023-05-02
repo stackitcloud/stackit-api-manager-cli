@@ -50,6 +50,9 @@
           "ignoreLintingErrors": {
             "type": "boolean"
           },
+          "ignoreBreakingChanges": {
+            "type": "boolean"
+          },
           "metadata": {
             "$ref": "#/components/schemas/PublishMetadata"
           },
