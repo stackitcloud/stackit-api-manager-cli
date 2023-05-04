@@ -10,14 +10,15 @@ import (
 
 //nolint:gochecknoglobals // CLI command
 var (
-	serverBaseURL       string
-	authToken           string
-	projectID           string
-	identifier          string
-	stage               string
-	openAPISpecFilePath string
-	printJSON           bool
-	ignoreLintingErrors bool
+	serverBaseURL         string
+	authToken             string
+	projectID             string
+	identifier            string
+	stage                 string
+	openAPISpecFilePath   string
+	printJSON             bool
+	ignoreLintingErrors   bool
+	ignoreBreakingChanges bool
 )
 
 var errBadToken = fmt.Errorf("bad token")
@@ -79,6 +80,8 @@ func init() {
 	publishCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
 	publishCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 	publishCmd.Flags().BoolVar(&ignoreLintingErrors, "ignore-linting-errors", false, "Skip OpenAPI Spec validation")
+	publishCmd.Flags().BoolVar(&ignoreBreakingChanges, "ignore-breaking-changes", false, "Ignore breaking changes")
+	publishCmd.MarkFlagRequired("ignoreBreakingChanges") //nolint:errcheck // cobra flag
 
 	// validateCmd flags
 	validateCmd.Flags().StringVarP(&stage, "stage", "s", "", "Project Stage")

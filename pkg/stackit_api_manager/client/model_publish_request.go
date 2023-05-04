@@ -16,11 +16,12 @@ import (
 
 // PublishRequest struct for PublishRequest
 type PublishRequest struct {
-	Identifier          *string          `json:"identifier,omitempty"`
-	IgnoreLintingErrors *bool            `json:"ignoreLintingErrors,omitempty"`
-	Metadata            *PublishMetadata `json:"metadata,omitempty"`
-	ProjectId           *string          `json:"projectId,omitempty"`
-	Spec                *Spec            `json:"spec,omitempty"`
+	Identifier            *string          `json:"identifier,omitempty"`
+	IgnoreLintingErrors   *bool            `json:"ignoreLintingErrors,omitempty"`
+	IgnoreBreakingChanges *bool            `json:"ignoreBreakingChanges,omitempty"`
+	Metadata              *PublishMetadata `json:"metadata,omitempty"`
+	ProjectId             *string          `json:"projectId,omitempty"`
+	Spec                  *Spec            `json:"spec,omitempty"`
 }
 
 // NewPublishRequest instantiates a new PublishRequest object
@@ -102,6 +103,38 @@ func (o *PublishRequest) HasIgnoreLintingErrors() bool {
 // SetIgnoreLintingErrors gets a reference to the given bool and assigns it to the IgnoreLintingErrors field.
 func (o *PublishRequest) SetIgnoreLintingErrors(v bool) {
 	o.IgnoreLintingErrors = &v
+}
+
+// GetIgnoreBreakingChanges returns the IgnoreBreakingChanges field value if set, zero value otherwise.
+func (o *PublishRequest) GetIgnoreBreakingChanges() bool {
+	if o == nil || o.IgnoreBreakingChanges == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IgnoreBreakingChanges
+}
+
+// GetIgnoreBreakingChangesOk returns a tuple with the IgnoreBreakingChanges field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishRequest) GetIgnoreBreakingChangesOk() (*bool, bool) {
+	if o == nil || o.IgnoreBreakingChanges == nil {
+		return nil, false
+	}
+	return o.IgnoreBreakingChanges, true
+}
+
+// HasIgnoreBreakingChanges returns a boolean if a field has been set.
+func (o *PublishRequest) HasIgnoreBreakingChanges() bool {
+	if o != nil && o.IgnoreBreakingChanges != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIgnoreBreakingChanges gets a reference to the given bool and assigns it to the IgnoreBreakingChanges field.
+func (o *PublishRequest) SetIgnoreBreakingChanges(v bool) {
+	o.IgnoreBreakingChanges = &v
 }
 
 // GetMetadata returns the Metadata field value if set, zero value otherwise.
@@ -207,6 +240,9 @@ func (o PublishRequest) MarshalJSON() ([]byte, error) {
 	}
 	if o.IgnoreLintingErrors != nil {
 		toSerialize["ignoreLintingErrors"] = o.IgnoreLintingErrors
+	}
+	if o.IgnoreBreakingChanges != nil {
+		toSerialize["ignoreBreakingChanges"] = o.IgnoreBreakingChanges
 	}
 	if o.Metadata != nil {
 		toSerialize["metadata"] = o.Metadata

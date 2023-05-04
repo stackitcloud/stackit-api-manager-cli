@@ -47,7 +47,8 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 				Base64Encoded: &base64Encoded,
 			},
 		},
-		IgnoreLintingErrors: &ignoreLintingErrors,
+		IgnoreLintingErrors:   &ignoreLintingErrors,
+		IgnoreBreakingChanges: &ignoreBreakingChanges,
 	}
 
 	if strings.HasPrefix(authToken, "Bearer ") {

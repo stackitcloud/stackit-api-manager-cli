@@ -6,6 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Identifier** | Pointer to **string** |  | [optional] [readonly] 
 **IgnoreLintingErrors** | Pointer to **bool** |  | [optional] 
+**IgnoreBreakingChanges** | Pointer to **bool** |  | [optional] 
 **Metadata** | Pointer to [**PublishMetadata**](PublishMetadata.md) |  | [optional] 
 **ProjectId** | Pointer to **string** |  | [optional] [readonly] 
 **Spec** | Pointer to [**Spec**](Spec.md) |  | [optional] 
@@ -78,6 +79,31 @@ SetIgnoreLintingErrors sets IgnoreLintingErrors field to given value.
 `func (o *PublishRequest) HasIgnoreLintingErrors() bool`
 
 HasIgnoreLintingErrors returns a boolean if a field has been set.
+
+### GetIgnoreBreakingChanges
+
+`func (o *PublishRequest) GetIgnoreBreakingChanges() bool`
+
+GetIgnoreBreakingChanges returns the IgnoreBreakingChanges field if non-nil, zero value otherwise.
+
+### GetIgnoreBreakingChangesOk
+
+`func (o *PublishRequest) GetIgnoreBreakingChangesOk() (*bool, bool)`
+
+GetIgnoreBreakingChangesOk returns a tuple with the IgnoreBreakingChanges field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIgnoreBreakingChanges
+
+`func (o *PublishRequest) SetIgnoreBreakingChanges(v bool)`
+
+SetIgnoreBreakingChanges sets IgnoreBreakingChanges field to given value.
+
+### HasIgnoreBreakingChanges
+
+`func (o *PublishRequest) HasIgnoreBreakingChanges() bool`
+
+HasIgnoreBreakingChanges returns a boolean if a field has been set.
 
 ### GetMetadata
 
