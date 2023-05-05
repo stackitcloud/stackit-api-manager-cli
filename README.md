@@ -105,10 +105,6 @@ stackit-api-manager project fetch \
 
 #### API-Manager-BaseURL possible values
 
-- `https://api-manager.api.eu01.dev.stackit.cloud` for `dev-eu01`
-- `https://api-manager.api.dev.stackit.cloud` for `dev-global`
-- `https://api-manager.api.eu01.stg.stackit.cloud` for `stg-eu01`  
-- `https://api-manager.api.stg.stackit.cloud` for `stg-global`
 - `https://api-manager.api.eu01.stackit.cloud` for `prd-eu01`
 - `https://api-manager.api.stackit.cloud` for `prd-global`
 
@@ -149,7 +145,7 @@ make test
 
 To update the API client:
 
-- get the OpenAPI Spec from the `https://internal-docs.api.stackit.cloud/oas/api-manager`.
+- get the OpenAPI Spec.
 - store OpenAPI Spec in `api/api_manager.openapi.json`.
 - then run:
 
