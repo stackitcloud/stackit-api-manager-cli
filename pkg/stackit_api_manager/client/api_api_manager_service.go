@@ -19,13 +19,14 @@ import (
 	"strings"
 )
 
+
 // APIManagerServiceApiService APIManagerServiceApi service
 type APIManagerServiceApiService service
 
 type ApiAPIManagerServiceFetchAPIRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *APIManagerServiceApiService
-	projectId  string
+	projectId string
 	identifier string
 }
 
@@ -46,8 +47,8 @@ Fetches an already existing API for a dedicated service by providing its identif
 func (a *APIManagerServiceApiService) APIManagerServiceFetchAPI(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceFetchAPIRequest {
 	return ApiAPIManagerServiceFetchAPIRequest{
 		ApiService: a,
-		ctx:        ctx,
-		projectId:  projectId,
+		ctx: ctx,
+		projectId: projectId,
 		identifier: identifier,
 	}
 }
@@ -56,10 +57,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPI(ctx context.Cont
 //  @return FetchAPIResponse
 func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIManagerServiceFetchAPIRequest) (*FetchAPIResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *FetchAPIResponse
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *FetchAPIResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchAPI")
@@ -130,9 +131,9 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIM
 }
 
 type ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest struct {
-	ctx        context.Context
+	ctx context.Context
 	ApiService *APIManagerServiceApiService
-	projectId  string
+	projectId string
 }
 
 func (r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) Execute() (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
@@ -151,8 +152,8 @@ Fetches all API identifiers which belong to a project by providing its projectId
 func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiers(ctx context.Context, projectId string) ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest {
 	return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest{
 		ApiService: a,
-		ctx:        ctx,
-		projectId:  projectId,
+		ctx: ctx,
+		projectId: projectId,
 	}
 }
 
@@ -160,10 +161,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifier
 //  @return FetchProjectAPIIdentifiersResponse
 func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiersExecute(r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodGet
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *FetchProjectAPIIdentifiersResponse
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *FetchProjectAPIIdentifiersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchProjectAPIIdentifiers")
@@ -233,10 +234,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifier
 }
 
 type ApiAPIManagerServicePublishRequest struct {
-	ctx            context.Context
-	ApiService     *APIManagerServiceApiService
-	projectId      string
-	identifier     string
+	ctx context.Context
+	ApiService *APIManagerServiceApiService
+	projectId string
+	identifier string
 	publishRequest *PublishRequest
 }
 
@@ -263,8 +264,8 @@ Publish a new API for a dedicated service by providing the OpenApiSpec for it
 func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
 	return ApiAPIManagerServicePublishRequest{
 		ApiService: a,
-		ctx:        ctx,
-		projectId:  projectId,
+		ctx: ctx,
+		projectId: projectId,
 		identifier: identifier,
 	}
 }
@@ -273,10 +274,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Conte
 //  @return PublishResponse
 func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIManagerServicePublishRequest) (*PublishResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PublishResponse
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PublishResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublish")
@@ -352,10 +353,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 }
 
 type ApiAPIManagerServicePublishValidateRequest struct {
-	ctx                    context.Context
-	ApiService             *APIManagerServiceApiService
-	projectId              string
-	identifier             string
+	ctx context.Context
+	ApiService *APIManagerServiceApiService
+	projectId string
+	identifier string
 	publishValidateRequest *PublishValidateRequest
 }
 
@@ -382,8 +383,8 @@ Validate the OpenApiSpec for an API by providing the OAS for it
 func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishValidateRequest {
 	return ApiAPIManagerServicePublishValidateRequest{
 		ApiService: a,
-		ctx:        ctx,
-		projectId:  projectId,
+		ctx: ctx,
+		projectId: projectId,
 		identifier: identifier,
 	}
 }
@@ -392,10 +393,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx conte
 //  @return PublishValidateResponse
 func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r ApiAPIManagerServicePublishValidateRequest) (*PublishValidateResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodPost
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue *PublishValidateResponse
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PublishValidateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublishValidate")
@@ -471,10 +472,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r 
 }
 
 type ApiAPIManagerServiceRetireRequest struct {
-	ctx           context.Context
-	ApiService    *APIManagerServiceApiService
-	projectId     string
-	identifier    string
+	ctx context.Context
+	ApiService *APIManagerServiceApiService
+	projectId string
+	identifier string
 	retireRequest *RetireRequest
 }
 
@@ -501,8 +502,8 @@ Retire an already existing API for a dedicated service by providing its Identifi
 func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {
 	return ApiAPIManagerServiceRetireRequest{
 		ApiService: a,
-		ctx:        ctx,
-		projectId:  projectId,
+		ctx: ctx,
+		projectId: projectId,
 		identifier: identifier,
 	}
 }
@@ -511,10 +512,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Contex
 //  @return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIManagerServiceRetireRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod  = http.MethodDelete
-		localVarPostBody    interface{}
-		formFiles           []formFile
-		localVarReturnValue map[string]interface{}
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceRetire")

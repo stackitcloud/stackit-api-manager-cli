@@ -17,13 +17,13 @@ import (
 // PublishRequest struct for PublishRequest
 type PublishRequest struct {
 	// Identifier of API to be published
-	Identifier            *string          `json:"identifier,omitempty"`
-	IgnoreBreakingChanges *bool            `json:"ignoreBreakingChanges,omitempty"`
-	IgnoreLintingErrors   *bool            `json:"ignoreLintingErrors,omitempty"`
-	Metadata              *PublishMetadata `json:"metadata,omitempty"`
+	Identifier *string `json:"identifier,omitempty"`
+	IgnoreBreakingChanges *bool `json:"ignoreBreakingChanges,omitempty"`
+	IgnoreLintingErrors *bool `json:"ignoreLintingErrors,omitempty"`
+	Metadata *PublishMetadata `json:"metadata,omitempty"`
 	// Project ID under which the API is to be published
 	ProjectId *string `json:"projectId,omitempty"`
-	Spec      *Spec   `json:"spec,omitempty"`
+	Spec *Spec `json:"spec,omitempty"`
 }
 
 // NewPublishRequest instantiates a new PublishRequest object
@@ -293,3 +293,5 @@ func (v *NullablePublishRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

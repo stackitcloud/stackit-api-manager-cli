@@ -40,7 +40,6 @@ type cmdResponseInterface interface {
 	successMessage() string
 }
 
-//nolint:cyclop // printing
 func printSuccessCLIResponse(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
 		return errNilCmdResponse
@@ -69,7 +68,7 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 	return nil
 }
 
-// prints the CLI response for successful requests in human-readable format
+//nolint:cyclop // printing
 func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdResponseInterface) error {
 	switch r := cmdResponse.(type) {
 	case *publishResponse:

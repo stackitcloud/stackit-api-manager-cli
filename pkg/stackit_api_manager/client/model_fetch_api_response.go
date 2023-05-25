@@ -18,7 +18,7 @@ import (
 type FetchAPIResponse struct {
 	// URL under which fetched API is available
 	ApiUrl *string `json:"apiUrl,omitempty"`
-	Spec   *Spec   `json:"spec,omitempty"`
+	Spec *Spec `json:"spec,omitempty"`
 	// Server stage under which fetched API is published
 	Stage *string `json:"stage,omitempty"`
 	// URL for the upstream server targeted by the fetched API
@@ -222,3 +222,5 @@ func (v *NullableFetchAPIResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+
