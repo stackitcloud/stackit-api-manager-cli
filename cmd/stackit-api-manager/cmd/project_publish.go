@@ -13,10 +13,12 @@ import (
 const messagePublishSuccess = "API published successfully"
 
 type publishResponse struct {
-	Identifier string `json:"identifier"`
-	ProjectID  string `json:"projectId"`
-	Stage      string `json:"stage"`
-	APIURL     string `json:"apiUrl"`
+	Identifier          string   `json:"identifier"`
+	ProjectID           string   `json:"projectId"`
+	Stage               string   `json:"stage"`
+	APIURL              string   `json:"apiUrl"`
+	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
+	LinterWarnings      []string `json:"linter_warnings,omitempty"`
 }
 
 func (r publishResponse) successMessage() string {
@@ -72,10 +74,12 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 	}
 
 	publishResponse := publishResponse{
-		Identifier: identifier,
-		ProjectID:  projectID,
-		Stage:      stage,
-		APIURL:     grpcResp.GetApiUrl(),
+		Identifier:          identifier,
+		ProjectID:           projectID,
+		Stage:               stage,
+		APIURL:              grpcResp.GetApiUrl(),
+		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
+		LinterWarnings:      grpcResp.GetLinterWarnings(),
 	}
 
 	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)

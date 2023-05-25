@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**LinterWarnings** | Pointer to **[]string** |  | [optional] 
-**LinterWarningsCount** | Pointer to **string** |  | [optional] 
+**LinterWarnings** | Pointer to **[]string** | List of specific warnings returned by the API specification linter | [optional] 
+**LinterWarningsCount** | Pointer to **string** | Number of warnings returned by the API specification linter | [optional] 
 
 ## Methods
 

@@ -16,10 +16,12 @@ import (
 
 // PublishValidateRequest struct for PublishValidateRequest
 type PublishValidateRequest struct {
+	// Identifier of API to be validated
 	Identifier *string          `json:"identifier,omitempty"`
 	Metadata   *PublishMetadata `json:"metadata,omitempty"`
-	ProjectId  *string          `json:"projectId,omitempty"`
-	Spec       *Spec            `json:"spec,omitempty"`
+	// Project ID for API to be validated
+	ProjectId *string `json:"projectId,omitempty"`
+	Spec      *Spec   `json:"spec,omitempty"`
 }
 
 // NewPublishValidateRequest instantiates a new PublishValidateRequest object

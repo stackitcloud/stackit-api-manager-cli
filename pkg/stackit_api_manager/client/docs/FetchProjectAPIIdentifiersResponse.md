@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Identifiers** | Pointer to **[]string** |  | [optional] 
+**Identifiers** | Pointer to **[]string** | List of available API identifiers for chosen project ID | [optional] 
 
 ## Methods
 

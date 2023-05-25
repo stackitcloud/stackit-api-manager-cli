@@ -16,8 +16,10 @@ import (
 
 // PublishValidateResponse OpenAPI specification was validated successfully
 type PublishValidateResponse struct {
-	LinterWarnings      []string `json:"linterWarnings,omitempty"`
-	LinterWarningsCount *string  `json:"linterWarningsCount,omitempty"`
+	// List of specific warnings returned by the API specification linter
+	LinterWarnings []string `json:"linterWarnings,omitempty"`
+	// Number of warnings returned by the API specification linter
+	LinterWarningsCount *string `json:"linterWarningsCount,omitempty"`
 }
 
 // NewPublishValidateResponse instantiates a new PublishValidateResponse object

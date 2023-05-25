@@ -73,6 +73,10 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdResponseInterface) error {
 	switch r := cmdResponse.(type) {
 	case *publishResponse:
+		if r.LinterWarningsCount != "0" && r.LinterWarningsCount != "" {
+			cmd.Printf("OpenAPI specification for API with identifier \"%s\", project \"%s\" and stage \"%s\" published successfully\nOAS linting resulted in %s warnings:\n  %+s\n", r.Identifier, r.ProjectID, r.Stage, r.LinterWarningsCount, strings.Join(r.LinterWarnings, "\n  "))
+			break
+		}
 		cmd.Printf("API with identifier \"%s\" published successfully for project \"%s\" and stage \"%s\" (API-URL: \"%s\")\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL)
 	case *retireResponse:
 		cmd.Printf("API with identifier \"%s\" retired successfully for project \"%s\"\n", r.Identifier, r.ProjectID)

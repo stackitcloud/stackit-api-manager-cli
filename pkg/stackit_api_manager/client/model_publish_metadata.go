@@ -16,6 +16,7 @@ import (
 
 // PublishMetadata struct for PublishMetadata
 type PublishMetadata struct {
+	// Server stage to publish under
 	Stage *string `json:"stage,omitempty"`
 }
 

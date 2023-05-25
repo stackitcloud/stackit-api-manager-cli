@@ -16,8 +16,10 @@ import (
 
 // RetireRequest struct for RetireRequest
 type RetireRequest struct {
+	// Identifier of API to be retired
 	Identifier *string `json:"identifier,omitempty"`
-	ProjectId  *string `json:"projectId,omitempty"`
+	// Project ID for API to be retired
+	ProjectId *string `json:"projectId,omitempty"`
 }
 
 // NewRetireRequest instantiates a new RetireRequest object

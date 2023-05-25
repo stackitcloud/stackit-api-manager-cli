@@ -4,7 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ApiUrl** | Pointer to **string** |  | [optional] 
+**ApiUrl** | Pointer to **string** | URL under which published API is available | [optional] 
+**LinterWarnings** | Pointer to **[]string** | List of specific warnings returned by the API specification linter | [optional] 
+**LinterWarningsCount** | Pointer to **string** | Number of warnings returned by the API specification linter | [optional] 
 
 ## Methods
 
@@ -49,6 +51,56 @@ SetApiUrl sets ApiUrl field to given value.
 `func (o *PublishResponse) HasApiUrl() bool`
 
 HasApiUrl returns a boolean if a field has been set.
+
+### GetLinterWarnings
+
+`func (o *PublishResponse) GetLinterWarnings() []string`
+
+GetLinterWarnings returns the LinterWarnings field if non-nil, zero value otherwise.
+
+### GetLinterWarningsOk
+
+`func (o *PublishResponse) GetLinterWarningsOk() (*[]string, bool)`
+
+GetLinterWarningsOk returns a tuple with the LinterWarnings field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLinterWarnings
+
+`func (o *PublishResponse) SetLinterWarnings(v []string)`
+
+SetLinterWarnings sets LinterWarnings field to given value.
+
+### HasLinterWarnings
+
+`func (o *PublishResponse) HasLinterWarnings() bool`
+
+HasLinterWarnings returns a boolean if a field has been set.
+
+### GetLinterWarningsCount
+
+`func (o *PublishResponse) GetLinterWarningsCount() string`
+
+GetLinterWarningsCount returns the LinterWarningsCount field if non-nil, zero value otherwise.
+
+### GetLinterWarningsCountOk
+
+`func (o *PublishResponse) GetLinterWarningsCountOk() (*string, bool)`
+
+GetLinterWarningsCountOk returns a tuple with the LinterWarningsCount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLinterWarningsCount
+
+`func (o *PublishResponse) SetLinterWarningsCount(v string)`
+
+SetLinterWarningsCount sets LinterWarningsCount field to given value.
+
+### HasLinterWarningsCount
+
+`func (o *PublishResponse) HasLinterWarningsCount() bool`
+
+HasLinterWarningsCount returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

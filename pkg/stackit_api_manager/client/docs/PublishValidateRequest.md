@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Identifier** | Pointer to **string** |  | [optional] [readonly] 
+**Identifier** | Pointer to **string** | Identifier of API to be validated | [optional] [readonly] 
 **Metadata** | Pointer to [**PublishMetadata**](PublishMetadata.md) |  | [optional] 
-**ProjectId** | Pointer to **string** |  | [optional] [readonly] 
+**ProjectId** | Pointer to **string** | Project ID for API to be validated | [optional] [readonly] 
 **Spec** | Pointer to [**Spec**](Spec.md) |  | [optional] 
 
 ## Methods

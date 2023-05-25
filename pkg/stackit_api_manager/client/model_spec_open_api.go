@@ -16,7 +16,7 @@ import (
 
 // SpecOpenApi struct for SpecOpenApi
 type SpecOpenApi struct {
-	// now the spec will be base64 string, later we might add a url to a spec file or something else
+	// Base64 encoded OpenAPI specification
 	Base64Encoded *string `json:"base64Encoded,omitempty"`
 }
 
