@@ -17,7 +17,7 @@ var (
 	stage                 string
 	openAPISpecFilePath   string
 	printJSON             bool
-	traceID               bool
+	traceIDEnabled        bool
 	ignoreLintingErrors   bool
 	ignoreBreakingChanges bool
 )
@@ -62,7 +62,7 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().BoolVar(&printJSON, "json", false, "Print JSON instead of human readable response")
 	projectCmd.Flags().MarkHidden("traceid") //nolint:errcheck // cobra flag
-	projectCmd.PersistentFlags().BoolVar(&traceID, "traceid", false, "Prints out the traceID")
+	projectCmd.PersistentFlags().BoolVar(&traceIDEnabled, "traceid", false, "Prints out the traceID")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

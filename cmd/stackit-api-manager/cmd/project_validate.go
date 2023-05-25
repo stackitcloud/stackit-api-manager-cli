@@ -18,7 +18,6 @@ type validateResponse struct {
 	Stage               string   `json:"stage"`
 	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
 	LinterWarnings      []string `json:"linter_warnings,omitempty"`
-	TraceID             int      `json:"trace_id,omitempty"`
 }
 
 func (r validateResponse) successMessage() string {
@@ -80,5 +79,5 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, validateResponse)
+	return printSuccessCLIResponse(cmd, httpResp, validateResponse)
 }

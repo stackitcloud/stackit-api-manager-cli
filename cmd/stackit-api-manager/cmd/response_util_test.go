@@ -103,7 +103,7 @@ func Test_retrieveGatewayErrorMessage(t *testing.T) {
 func Test_printSuccessCLIResponse(t *testing.T) {
 	type args struct {
 		cmd         *cobra.Command
-		statusCode  int
+		resp        *http.Response
 		printJSON   bool
 		cmdResponse cmdResponseInterface
 	}
@@ -116,8 +116,10 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 		{
 			name: "nil cmd response returns error",
 			args: args{
-				cmd:         publishCmd,
-				statusCode:  testStatusCode,
+				cmd: publishCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: nil,
 			},
 			wantErr: errNilCmdResponse,
@@ -125,9 +127,11 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 		{
 			name: "successful request returns no error and prints JSON when printJSON flag is true",
 			args: args{
-				cmd:        retireCmd,
-				statusCode: testStatusCode,
-				printJSON:  true,
+				cmd: retireCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
+				printJSON: true,
 				cmdResponse: &retireResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -139,9 +143,11 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 		{
 			name: "successful request returns no error and prints human-readable response when printJSON flag is false",
 			args: args{
-				cmd:        retireCmd,
-				statusCode: testStatusCode,
-				printJSON:  false,
+				cmd: retireCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
+				printJSON: false,
 				cmdResponse: &retireResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -158,7 +164,7 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 
 			printJSON = tt.args.printJSON
 
-			gotErr := printSuccessCLIResponse(tt.args.cmd, tt.args.statusCode, tt.args.cmdResponse)
+			gotErr := printSuccessCLIResponse(tt.args.cmd, tt.args.resp, tt.args.cmdResponse)
 			if !errors.Is(gotErr, tt.wantErr) {
 				t.Errorf("printSuccessCLIResponse() got error = %v, want %v", gotErr, tt.wantErr)
 			}
@@ -179,7 +185,7 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 func Test_printSuccessCLIResponseJSON(t *testing.T) {
 	type args struct {
 		cmd         *cobra.Command
-		statusCode  int
+		resp        *http.Response
 		cmdResponse cmdResponseInterface
 	}
 	tests := []struct {
@@ -191,8 +197,10 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 		{
 			name: "successful publish returns no error and prints JSON as expected",
 			args: args{
-				cmd:        publishCmd,
-				statusCode: testStatusCode,
+				cmd: publishCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &publishResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -206,8 +214,10 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 		{
 			name: "successful retire returns no error and prints JSON as expected",
 			args: args{
-				cmd:        retireCmd,
-				statusCode: testStatusCode,
+				cmd: retireCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &retireResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -219,8 +229,10 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 		{
 			name: "successful validate returns no error and prints JSON as expected",
 			args: args{
-				cmd:        validateCmd,
-				statusCode: testStatusCode,
+				cmd: validateCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &validateResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -233,8 +245,10 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 		{
 			name: "successful list returns no error and prints JSON as expected",
 			args: args{
-				cmd:        listCmd,
-				statusCode: testStatusCode,
+				cmd: listCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &listResponse{
 					Identifiers: validIdentifiersList,
 					ProjectID:   validProjectID,
@@ -246,8 +260,10 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 		{
 			name: "successful fetch returns no error and prints JSON as expected",
 			args: args{
-				cmd:        fetchCmd,
-				statusCode: testStatusCode,
+				cmd: fetchCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &fetchResponse{
 					Identifier:        validIdentifier,
 					ProjectID:         validProjectID,
@@ -266,7 +282,7 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 			outBuff := bytes.NewBuffer(nil)
 			tt.args.cmd.SetOut(outBuff)
 
-			gotErr := printSuccessCLIResponseJSON(tt.args.cmd, tt.args.statusCode, tt.args.cmdResponse)
+			gotErr := printSuccessCLIResponseJSON(tt.args.cmd, tt.args.resp, tt.args.cmdResponse)
 			if !errors.Is(gotErr, tt.wantErr) {
 				t.Errorf("printSuccessCLIResponseJSON() got error = %v, want %v", gotErr, tt.wantErr)
 			}
@@ -287,7 +303,7 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 	type args struct {
 		cmd         *cobra.Command
-		statusCode  int
+		resp        *http.Response
 		cmdResponse cmdResponseInterface
 	}
 
@@ -300,8 +316,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "unknown cmd response type returns error",
 			args: args{
-				cmd:         publishCmd,
-				statusCode:  testStatusCode,
+				cmd: publishCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &unknownCmdResponse{},
 			},
 			wantErr: true,
@@ -309,8 +327,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "successful publish returns no error and prints expected human-readable message",
 			args: args{
-				cmd:        publishCmd,
-				statusCode: testStatusCode,
+				cmd: publishCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &publishResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -324,8 +344,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "successful retire returns no error and prints expected human-readable message",
 			args: args{
-				cmd:        retireCmd,
-				statusCode: testStatusCode,
+				cmd: retireCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &retireResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -337,8 +359,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "successful validate returns no error and prints expected human-readable message",
 			args: args{
-				cmd:        validateCmd,
-				statusCode: testStatusCode,
+				cmd: validateCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &validateResponse{
 					Identifier: validIdentifier,
 					ProjectID:  validProjectID,
@@ -351,8 +375,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "successful list returns no error and prints expected human-readable message",
 			args: args{
-				cmd:        listCmd,
-				statusCode: testStatusCode,
+				cmd: listCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &listResponse{
 					Identifiers: validIdentifiersList,
 					ProjectID:   validProjectID,
@@ -364,8 +390,10 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 		{
 			name: "successful fetch returns no error and prints expected human-readable message",
 			args: args{
-				cmd:        fetchCmd,
-				statusCode: testStatusCode,
+				cmd: fetchCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
 				cmdResponse: &fetchResponse{
 					Identifier:        validIdentifier,
 					ProjectID:         validProjectID,
@@ -384,7 +412,7 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 			outBuff := bytes.NewBuffer(nil)
 			tt.args.cmd.SetOut(outBuff)
 
-			gotErr := printSuccessCLIResponseHumanReadable(tt.args.cmd, tt.args.cmdResponse)
+			gotErr := printSuccessCLIResponseHumanReadable(tt.args.cmd, tt.args.resp, tt.args.cmdResponse)
 			if (gotErr != nil) != tt.wantErr {
 				t.Errorf("printSuccessCLIResponseHumanReadable() got error = %v, want %v", gotErr, tt.wantErr)
 			}
@@ -545,6 +573,14 @@ func Test_printErrorCLIResponse(t *testing.T) {
 				gatewayResponseBody: invalidGatewayResponseBody,
 			},
 		},
+		{
+			name: "failed fetch with invalid gateway response (string statuscode) returns error",
+			args: args{
+				cmd:                 fetchCmd,
+				statusCode:          testStatusCode,
+				gatewayResponseBody: invalidGatewayResponseBody,
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -577,6 +613,85 @@ func Test_printErrorCLIResponse(t *testing.T) {
 
 			if gotErr == nil && gotPrint != wantPrint {
 				t.Errorf("printErrorCLIResponse() expected message to be\n%v\nbut got\n%v", wantPrint, gotPrint)
+			}
+		})
+	}
+}
+
+func Test_traceID(t *testing.T) {
+	type args struct {
+		cmd          *cobra.Command
+		printFuncion func(cmd *cobra.Command, resp *http.Response) error
+		printJSON    bool
+	}
+
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "printErrorCLIResponse traceid",
+			args: args{
+				cmd:          publishCmd,
+				printJSON:    false,
+				printFuncion: printErrorCLIResponse,
+			},
+		},
+		{
+			name: "printErrorCLIResponse with json traceid",
+			args: args{
+				cmd:          publishCmd,
+				printJSON:    true,
+				printFuncion: printErrorCLIResponse,
+			},
+		},
+		{
+			name: "printSuccessCLIResponseHumanReadable traceid",
+			args: args{
+				cmd:       publishCmd,
+				printJSON: false,
+				printFuncion: func(cmd *cobra.Command, resp *http.Response) error {
+					return printSuccessCLIResponseHumanReadable(cmd, resp, &publishResponse{})
+				},
+			},
+		},
+		{
+			name: "printSuccessCLIResponseHumanReadable with json traceid",
+			args: args{
+				cmd:       publishCmd,
+				printJSON: true,
+				printFuncion: func(cmd *cobra.Command, resp *http.Response) error {
+					return printSuccessCLIResponseHumanReadable(cmd, resp, &publishResponse{})
+				},
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			printJSON = tt.args.printJSON
+			traceIDEnabled = true
+
+			httpResp := &http.Response{
+				Body:       io.NopCloser(bytes.NewBufferString(validGatewayResponseBody)),
+				StatusCode: testStatusCode,
+				Header: http.Header{
+					traceParentHeader: []string{"00-de0ae651ce4c183a3e5d3eb4827c4fc8-43f4db3d9431bc34-01"},
+				},
+			}
+
+			outBuff := bytes.NewBuffer(nil)
+			tt.args.cmd.SetOut(outBuff)
+
+			_ = tt.args.printFuncion(tt.args.cmd, httpResp)
+			gotPrintBytes, err := io.ReadAll(outBuff)
+			if err != nil {
+				t.Error(err)
+			}
+			gotPrint := strings.TrimRight(string(gotPrintBytes), "\n")
+
+			if !strings.Contains(gotPrint, "de0ae651ce4c183a3e5d3eb4827c4fc8") {
+				t.Errorf(`expected message %q to have trace id "de0ae651ce4c183a3e5d3eb4827c4fc8"`, gotPrint)
 			}
 		})
 	}
