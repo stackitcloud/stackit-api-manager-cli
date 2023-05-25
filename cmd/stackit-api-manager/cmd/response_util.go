@@ -27,7 +27,7 @@ type traceIDMessage struct {
 }
 
 func (msg traceIDMessage) Message() string {
-	return fmt.Sprintf("TraceID: %s", msg.traceID)
+	return fmt.Sprintf("TraceID: %s\n", msg.traceID)
 }
 
 // gatewayResponse contains the HTTP status code and error message
