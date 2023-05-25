@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -163,17 +164,15 @@ func getTraceID(resp *http.Response) string {
 		return ""
 	}
 
-	// e.g., of a trace parent: "00-de0ae651ce4c183a3e5d3eb4827c4fc8-43f4db3d9431bc34-01"
-	// de0ae651ce4c183a3e5d3eb4827c4fc8 is the trace ID and 43f4db3d9431bc34 is the parent span ID
-	traceParentComponents := strings.Split(traceParentValue, "-")
-	//nolint:gomnd
-	if len(traceParentComponents) != 4 {
+	pattern := regexp.MustCompile(`^00-([a-f0-9]{32})-`)
+
+	// Extract the trace ID using the regular expression
+	match := pattern.FindStringSubmatch(traceParentValue)
+	if len(match) <= 1 {
 		return ""
 	}
 
-	traceParentValue = traceParentComponents[1]
-
-	return traceParentValue
+	return match[1]
 }
 
 func printTraceID(cmd *cobra.Command, resp *http.Response) {
