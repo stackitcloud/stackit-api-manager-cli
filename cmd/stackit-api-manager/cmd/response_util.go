@@ -40,7 +40,7 @@ type cmdResponseInterface interface {
 	successMessage() string
 }
 
-// prints the CLI response for successful requests
+//nolint:cyclop // printing
 func printSuccessCLIResponse(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
 		return errNilCmdResponse
