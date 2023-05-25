@@ -62,7 +62,7 @@ func init() {
 	projectCmd.MarkPersistentFlagRequired("project") //nolint:errcheck // cobra flag
 	projectCmd.PersistentFlags().BoolVar(&printJSON, "json", false, "Print JSON instead of human readable response")
 	projectCmd.PersistentFlags().BoolVar(&traceIDEnabled, "traceid", false, "Prints out the traceID")
-	projectCmd.PersistentFlags().MarkHidden("traceid")
+	_ = projectCmd.PersistentFlags().MarkHidden("traceid")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:

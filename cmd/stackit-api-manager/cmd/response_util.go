@@ -166,6 +166,7 @@ func getTraceID(resp *http.Response) string {
 	// e.g., of a trace parent: "00-de0ae651ce4c183a3e5d3eb4827c4fc8-43f4db3d9431bc34-01"
 	// de0ae651ce4c183a3e5d3eb4827c4fc8 is the trace ID and 43f4db3d9431bc34 is the parent span ID
 	traceParentComponents := strings.Split(traceParentValue, "-")
+	//nolint:gomnd
 	if len(traceParentComponents) != 4 {
 		return ""
 	}
