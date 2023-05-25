@@ -18,6 +18,7 @@ type validateResponse struct {
 	Stage               string   `json:"stage"`
 	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
 	LinterWarnings      []string `json:"linter_warnings,omitempty"`
+	TraceID             int      `json:"trace_id,omitempty"`
 }
 
 func (r validateResponse) successMessage() string {
