@@ -4,9 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"regexp"
 	"strings"
 
 	"github.com/spf13/cobra"
+)
+
+const (
+	traceParentHeader = "Traceparent"
 )
 
 var (
@@ -17,6 +22,14 @@ var (
 	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
 	errRequestFailed          = fmt.Errorf("request failed")
 )
+
+type traceIDMessage struct {
+	traceID string
+}
+
+func (msg traceIDMessage) Message() string {
+	return fmt.Sprintf("TraceID: %s\n", msg.traceID)
+}
 
 // gatewayResponse contains the HTTP status code and error message
 // which are returned by the gateway in case of an error
@@ -32,6 +45,7 @@ type CLIResponse struct {
 	StatusCode int         `json:"statusCode"`
 	Message    string      `json:"message"`
 	Response   interface{} `json:"response,omitempty"`
+	TraceID    string      `json:"trace_id,omitempty"`
 }
 
 // a response struct (such as publishResponse, retireResponse,..) has
@@ -41,26 +55,31 @@ type cmdResponseInterface interface {
 }
 
 // prints the CLI response for successful requests
-func printSuccessCLIResponse(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
+func printSuccessCLIResponse(cmd *cobra.Command, resp *http.Response, cmdResponse cmdResponseInterface) error {
 	if cmdResponse == nil {
 		return errNilCmdResponse
 	}
 	if printJSON {
-		return printSuccessCLIResponseJSON(cmd, statusCode, cmdResponse)
+		return printSuccessCLIResponseJSON(cmd, resp, cmdResponse)
 	}
 
-	return printSuccessCLIResponseHumanReadable(cmd, cmdResponse)
+	return printSuccessCLIResponseHumanReadable(cmd, resp, cmdResponse)
 }
 
 // prints the CLI response for successful requests in JSON format
-func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse cmdResponseInterface) error {
-	CLIResponse := CLIResponse{
+func printSuccessCLIResponseJSON(cmd *cobra.Command, resp *http.Response, cmdResponse cmdResponseInterface) error {
+	cliResponse := CLIResponse{
 		Success:    true,
-		StatusCode: statusCode,
+		StatusCode: resp.StatusCode,
 		Message:    cmdResponse.successMessage(),
 		Response:   cmdResponse,
 	}
-	jsonCLIResponse, err := json.Marshal(CLIResponse)
+
+	if printTraceID {
+		cliResponse.TraceID = getTraceID(resp)
+	}
+
+	jsonCLIResponse, err := json.Marshal(cliResponse)
 	if err != nil {
 		return fmt.Errorf("%s: %w", errEncodingCLIResponseMessage, err)
 	}
@@ -70,7 +89,7 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, statusCode int, cmdResponse
 }
 
 // prints the CLI response for successful requests in human-readable format
-func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdResponseInterface) error {
+func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Response, cmdResponse cmdResponseInterface) error {
 	switch r := cmdResponse.(type) {
 	case *publishResponse:
 		cmd.Printf("API with identifier \"%s\" published successfully for project \"%s\" and stage \"%s\" (API-URL: \"%s\")\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL)
@@ -90,23 +109,30 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, cmdResponse cmdRes
 		return fmt.Errorf("%w %T", errUnknownCmdResponseType, r)
 	}
 
+	printHumanReadableTraceID(cmd, resp)
+
 	return nil
 }
 
 // prints the CLI response for unsuccessful requests
-func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
-	errorMessage, err := retrieveGatewayErrorMessage(httpResp)
+func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
+	errorMessage, err := retrieveGatewayErrorMessage(resp)
 	if err != nil {
 		return fmt.Errorf("%s: %w", errDecodingGatewayResponseMessage, err)
 	}
 
 	if printJSON {
-		CLIResponse := CLIResponse{
+		cliResponse := CLIResponse{
 			Success:    false,
-			StatusCode: httpResp.StatusCode,
+			StatusCode: resp.StatusCode,
 			Message:    errorMessage,
 		}
-		jsonCLIResponse, err := json.Marshal(CLIResponse)
+
+		if printTraceID {
+			cliResponse.TraceID = getTraceID(resp)
+		}
+
+		jsonCLIResponse, err := json.Marshal(cliResponse)
 		if err != nil {
 			return fmt.Errorf("%s: %w", errEncodingCLIResponseMessage, err)
 		}
@@ -115,17 +141,44 @@ func printErrorCLIResponse(cmd *cobra.Command, httpResp *http.Response) error {
 		return errRequestFailed
 	}
 
-	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, httpResp.StatusCode, errorMessage)
+	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, resp.StatusCode, errorMessage)
+	printHumanReadableTraceID(cmd, resp)
+
 	return errRequestFailed
 }
 
+func printHumanReadableTraceID(cmd *cobra.Command, resp *http.Response) {
+	traceParentValue := getTraceID(resp)
+
+	if printTraceID && traceParentValue != "" {
+		cmd.Printf(traceIDMessage{traceID: traceParentValue}.Message())
+	}
+}
+
 // unmarshals the error message from the gateway HTTP response body
-func retrieveGatewayErrorMessage(httpResp *http.Response) (string, error) {
+func retrieveGatewayErrorMessage(resp *http.Response) (string, error) {
 	var gatewayResp gatewayResponse
-	err := json.NewDecoder(httpResp.Body).Decode(&gatewayResp)
+	err := json.NewDecoder(resp.Body).Decode(&gatewayResp)
 	if err != nil {
 		return "", err
 	}
 
 	return gatewayResp.Message, nil
+}
+
+func getTraceID(resp *http.Response) string {
+	traceParentValue := resp.Header.Get(traceParentHeader)
+	if traceParentValue == "" {
+		return ""
+	}
+
+	pattern := regexp.MustCompile(`^00-([a-f0-9]{32})-`)
+
+	// Extract the trace ID using the regular expression
+	match := pattern.FindStringSubmatch(traceParentValue)
+	if len(match) <= 1 {
+		return ""
+	}
+
+	return match[1]
 }
