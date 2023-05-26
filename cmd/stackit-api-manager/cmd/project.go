@@ -17,6 +17,7 @@ var (
 	stage                 string
 	openAPISpecFilePath   string
 	printJSON             bool
+	printTraceID          bool
 	ignoreLintingErrors   bool
 	ignoreBreakingChanges bool
 )
