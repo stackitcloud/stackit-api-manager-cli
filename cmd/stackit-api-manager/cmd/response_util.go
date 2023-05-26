@@ -75,7 +75,7 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, resp *http.Response, cmdRes
 		Response:   cmdResponse,
 	}
 
-	if traceIDEnabled {
+	if printTraceID {
 		cliResponse.TraceID = getTraceID(resp)
 	}
 
@@ -109,7 +109,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 		return fmt.Errorf("%w %T", errUnknownCmdResponseType, r)
 	}
 
-	printTraceID(cmd, resp)
+	printHumanReadableTraceID(cmd, resp)
 
 	return nil
 }
@@ -128,7 +128,7 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 			Message:    errorMessage,
 		}
 
-		if traceIDEnabled {
+		if printTraceID {
 			cliResponse.TraceID = getTraceID(resp)
 		}
 
@@ -142,9 +142,17 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 	}
 
 	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, resp.StatusCode, errorMessage)
-	printTraceID(cmd, resp)
+	printHumanReadableTraceID(cmd, resp)
 
 	return errRequestFailed
+}
+
+func printHumanReadableTraceID(cmd *cobra.Command, resp *http.Response) {
+	traceParentValue := getTraceID(resp)
+
+	if printTraceID && traceParentValue != "" {
+		cmd.Printf(traceIDMessage{traceID: traceParentValue}.Message())
+	}
 }
 
 // unmarshals the error message from the gateway HTTP response body
@@ -173,12 +181,4 @@ func getTraceID(resp *http.Response) string {
 	}
 
 	return match[1]
-}
-
-func printTraceID(cmd *cobra.Command, resp *http.Response) {
-	traceParentValue := getTraceID(resp)
-
-	if traceIDEnabled && traceParentValue != "" {
-		cmd.Printf(traceIDMessage{traceID: traceParentValue}.Message())
-	}
 }

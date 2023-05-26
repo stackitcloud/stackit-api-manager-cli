@@ -670,7 +670,7 @@ func Test_traceID(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			printJSON = tt.args.printJSON
-			traceIDEnabled = true
+			printTraceID = true
 
 			httpResp := &http.Response{
 				Body:       io.NopCloser(bytes.NewBufferString(validGatewayResponseBody)),
