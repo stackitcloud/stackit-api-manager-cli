@@ -16,8 +16,8 @@ import (
 
 // PublishValidateResponse OpenAPI specification was validated successfully
 type PublishValidateResponse struct {
-	LinterWarnings []string `json:"linterWarnings,omitempty"`
-	LinterWarningsCount *string `json:"linterWarningsCount,omitempty"`
+	LinterWarnings      []string `json:"linterWarnings,omitempty"`
+	LinterWarningsCount *string  `json:"linterWarningsCount,omitempty"`
 }
 
 // NewPublishValidateResponse instantiates a new PublishValidateResponse object
@@ -147,5 +147,3 @@ func (v *NullablePublishValidateResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

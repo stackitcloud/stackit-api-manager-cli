@@ -17,7 +17,7 @@ import (
 // RetireRequest struct for RetireRequest
 type RetireRequest struct {
 	Identifier *string `json:"identifier,omitempty"`
-	ProjectId *string `json:"projectId,omitempty"`
+	ProjectId  *string `json:"projectId,omitempty"`
 }
 
 // NewRetireRequest instantiates a new RetireRequest object
@@ -147,5 +147,3 @@ func (v *NullableRetireRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-

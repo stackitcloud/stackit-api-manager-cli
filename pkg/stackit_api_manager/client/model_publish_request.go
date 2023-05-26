@@ -16,12 +16,12 @@ import (
 
 // PublishRequest struct for PublishRequest
 type PublishRequest struct {
-	Identifier *string `json:"identifier,omitempty"`
-	IgnoreLintingErrors *bool `json:"ignoreLintingErrors,omitempty"`
-	IgnoreBreakingChanges *bool `json:"ignoreBreakingChanges,omitempty"`
-	Metadata *PublishMetadata `json:"metadata,omitempty"`
-	ProjectId *string `json:"projectId,omitempty"`
-	Spec *Spec `json:"spec,omitempty"`
+	Identifier            *string          `json:"identifier,omitempty"`
+	IgnoreLintingErrors   *bool            `json:"ignoreLintingErrors,omitempty"`
+	IgnoreBreakingChanges *bool            `json:"ignoreBreakingChanges,omitempty"`
+	Metadata              *PublishMetadata `json:"metadata,omitempty"`
+	ProjectId             *string          `json:"projectId,omitempty"`
+	Spec                  *Spec            `json:"spec,omitempty"`
 }
 
 // NewPublishRequest instantiates a new PublishRequest object
@@ -291,5 +291,3 @@ func (v *NullablePublishRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
-
-
