@@ -16,9 +16,9 @@ import (
 
 // FetchAPIResponse API was fetched successfully
 type FetchAPIResponse struct {
-	ApiUrl      *string `json:"apiUrl,omitempty"`
-	Spec        *Spec   `json:"spec,omitempty"`
-	Stage       *string `json:"stage,omitempty"`
+	ApiUrl *string `json:"apiUrl,omitempty"`
+	Spec *Spec `json:"spec,omitempty"`
+	Stage *string `json:"stage,omitempty"`
 	UpstreamUrl *string `json:"upstreamUrl,omitempty"`
 }
 
@@ -219,3 +219,5 @@ func (v *NullableFetchAPIResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+
