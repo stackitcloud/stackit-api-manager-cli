@@ -55,5 +55,5 @@ func listCmdRunE(cmd *cobra.Command, args []string) error {
 		ProjectID:   projectID,
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &listResponse)
+	return printSuccessCLIResponse(cmd, httpResp, &listResponse)
 }

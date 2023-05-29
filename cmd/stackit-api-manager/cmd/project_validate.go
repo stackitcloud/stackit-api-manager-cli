@@ -79,5 +79,5 @@ func validateCmdRunE(cmd *cobra.Command, args []string) error {
 		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, validateResponse)
+	return printSuccessCLIResponse(cmd, httpResp, validateResponse)
 }

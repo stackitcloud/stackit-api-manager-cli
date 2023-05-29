@@ -82,5 +82,5 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		LinterWarnings:      grpcResp.GetLinterWarnings(),
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &publishResponse)
+	return printSuccessCLIResponse(cmd, httpResp, &publishResponse)
 }
