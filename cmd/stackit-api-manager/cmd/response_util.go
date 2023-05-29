@@ -89,6 +89,8 @@ func printSuccessCLIResponseJSON(cmd *cobra.Command, resp *http.Response, cmdRes
 }
 
 // prints the CLI response for successful requests in human-readable format
+//
+//nolint:cyclop // barely above max. complexity, will be refactored soon
 func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Response, cmdResponse cmdResponseInterface) error {
 	switch r := cmdResponse.(type) {
 	case *publishResponse:
