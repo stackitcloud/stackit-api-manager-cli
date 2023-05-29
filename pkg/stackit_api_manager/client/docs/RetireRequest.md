@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Identifier** | Pointer to **string** |  | [optional] [readonly] 
-**ProjectId** | Pointer to **string** |  | [optional] [readonly] 
+**Identifier** | Pointer to **string** | Identifier of API to be retired | [optional] [readonly] 
+**ProjectId** | Pointer to **string** | Project ID for API to be retired | [optional] [readonly] 
 
 ## Methods
 

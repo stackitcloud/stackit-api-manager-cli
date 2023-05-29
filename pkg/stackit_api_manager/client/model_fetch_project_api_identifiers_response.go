@@ -16,6 +16,7 @@ import (
 
 // FetchProjectAPIIdentifiersResponse API identifiers were fetched successfully
 type FetchProjectAPIIdentifiersResponse struct {
+	// List of available API identifiers for chosen project ID
 	Identifiers []string `json:"identifiers,omitempty"`
 }
 

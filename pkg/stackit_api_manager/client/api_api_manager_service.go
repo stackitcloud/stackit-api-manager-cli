@@ -39,8 +39,8 @@ APIManagerServiceFetchAPI Fetch API Endpoint
 Fetches an already existing API for a dedicated service by providing its identifier
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param projectId
-	@param identifier
+	@param projectId Project ID for API to be fetched
+	@param identifier Identifier of API to be fetched
 	@return ApiAPIManagerServiceFetchAPIRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceFetchAPI(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceFetchAPIRequest {
@@ -146,7 +146,7 @@ APIManagerServiceFetchProjectAPIIdentifiers Fetch Project APIIdentifiers Endpoin
 Fetches all API identifiers which belong to a project by providing its projectId
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param projectId
+	@param projectId Project ID for which APIs are to be fetched
 	@return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiers(ctx context.Context, projectId string) ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest {
@@ -242,6 +242,7 @@ type ApiAPIManagerServicePublishRequest struct {
 	publishRequest *PublishRequest
 }
 
+// Request body for the Publish request containing the resources to publish an API
 func (r ApiAPIManagerServicePublishRequest) PublishRequest(publishRequest PublishRequest) ApiAPIManagerServicePublishRequest {
 	r.publishRequest = &publishRequest
 	return r
@@ -257,8 +258,8 @@ APIManagerServicePublish Publish API Endpoint
 Publish a new API for a dedicated service by providing the OpenApiSpec for it
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param projectId
-	@param identifier
+	@param projectId Project ID for API to be published
+	@param identifier Identifier of API to be published
 	@return ApiAPIManagerServicePublishRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
@@ -361,6 +362,7 @@ type ApiAPIManagerServicePublishValidateRequest struct {
 	publishValidateRequest *PublishValidateRequest
 }
 
+// Request body for the PublishValidate request containing the resources to publish an API
 func (r ApiAPIManagerServicePublishValidateRequest) PublishValidateRequest(publishValidateRequest PublishValidateRequest) ApiAPIManagerServicePublishValidateRequest {
 	r.publishValidateRequest = &publishValidateRequest
 	return r
@@ -376,8 +378,8 @@ APIManagerServicePublishValidate Validate API Endpoint
 Validate the OpenApiSpec for an API by providing the OAS for it
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param projectId
-	@param identifier
+	@param projectId Project ID for API to be validated
+	@param identifier Identifier of API to be validated
 	@return ApiAPIManagerServicePublishValidateRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishValidateRequest {
@@ -480,6 +482,7 @@ type ApiAPIManagerServiceRetireRequest struct {
 	retireRequest *RetireRequest
 }
 
+// Request body for the Retire request containing the resources to retire an API
 func (r ApiAPIManagerServiceRetireRequest) RetireRequest(retireRequest RetireRequest) ApiAPIManagerServiceRetireRequest {
 	r.retireRequest = &retireRequest
 	return r
@@ -495,8 +498,8 @@ APIManagerServiceRetire Retire API Endpoint
 Retire an already existing API for a dedicated service by providing its Identifier
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
-	@param projectId
-	@param identifier
+	@param projectId Project ID for API to be retired
+	@param identifier Identifier of API to be retired
 	@return ApiAPIManagerServiceRetireRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {

@@ -16,9 +16,12 @@ import (
 
 // FetchAPIResponse API was fetched successfully
 type FetchAPIResponse struct {
-	ApiUrl      *string `json:"apiUrl,omitempty"`
-	Spec        *Spec   `json:"spec,omitempty"`
-	Stage       *string `json:"stage,omitempty"`
+	// URL under which fetched API is available
+	ApiUrl *string `json:"apiUrl,omitempty"`
+	Spec   *Spec   `json:"spec,omitempty"`
+	// Server stage under which fetched API is published
+	Stage *string `json:"stage,omitempty"`
+	// URL for the upstream server targeted by the fetched API
 	UpstreamUrl *string `json:"upstreamUrl,omitempty"`
 }
 
