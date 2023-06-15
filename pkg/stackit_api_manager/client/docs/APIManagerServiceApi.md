@@ -1,6 +1,6 @@
 # \APIManagerServiceApi
 
-All URIs are relative to *https://api-manager.api.stackit.cloud*
+All URIs are relative to *https://api-manager.localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## APIManagerServiceFetchAPI
 
-> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).Execute()
+> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).ApiVersion(apiVersion).Execute()
 
 Fetch API Endpoint
 
@@ -33,12 +33,13 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be fetched
+    identifier := "api-identifier" // string | Identifier of API to be fetched
+    apiVersion := "apiVersion_example" // string |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).Execute()
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).ApiVersion(apiVersion).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServiceFetchAPI``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -54,8 +55,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**projectId** | **string** | Project ID for API to be fetched | 
+**identifier** | **string** | Identifier of API to be fetched | 
 
 ### Other Parameters
 
@@ -66,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **apiVersion** | **string** |  | 
 
 ### Return type
 
@@ -106,7 +108,7 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for which APIs are to be fetched
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -126,7 +128,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
+**projectId** | **string** | Project ID for which APIs are to be fetched | 
 
 ### Other Parameters
 
@@ -176,9 +178,9 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
-    publishRequest := *openapiclient.NewPublishRequest() // PublishRequest | 
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be published
+    identifier := "api-identifier" // string | Identifier of API to be published
+    publishRequest := *openapiclient.NewPublishRequest() // PublishRequest | Request body for the Publish request containing the resources to publish an API
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -198,8 +200,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**projectId** | **string** | Project ID for API to be published | 
+**identifier** | **string** | Identifier of API to be published | 
 
 ### Other Parameters
 
@@ -210,7 +212,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **publishRequest** | [**PublishRequest**](PublishRequest.md) |  | 
+ **publishRequest** | [**PublishRequest**](PublishRequest.md) | Request body for the Publish request containing the resources to publish an API | 
 
 ### Return type
 
@@ -251,9 +253,9 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
-    publishValidateRequest := *openapiclient.NewPublishValidateRequest() // PublishValidateRequest | 
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be validated
+    identifier := "api-identifier" // string | Identifier of API to be validated
+    publishValidateRequest := *openapiclient.NewPublishValidateRequest() // PublishValidateRequest | Request body for the PublishValidate request containing the resources to publish an API
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -273,8 +275,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**projectId** | **string** | Project ID for API to be validated | 
+**identifier** | **string** | Identifier of API to be validated | 
 
 ### Other Parameters
 
@@ -285,7 +287,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **publishValidateRequest** | [**PublishValidateRequest**](PublishValidateRequest.md) |  | 
+ **publishValidateRequest** | [**PublishValidateRequest**](PublishValidateRequest.md) | Request body for the PublishValidate request containing the resources to publish an API | 
 
 ### Return type
 
@@ -326,9 +328,9 @@ import (
 )
 
 func main() {
-    projectId := "projectId_example" // string | 
-    identifier := "identifier_example" // string | 
-    retireRequest := *openapiclient.NewRetireRequest() // RetireRequest | 
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be retired
+    identifier := "api-identifier" // string | Identifier of API to be retired
+    retireRequest := *openapiclient.NewRetireRequest() // RetireRequest | Request body for the Retire request containing the resources to retire an API
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
@@ -348,8 +350,8 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**projectId** | **string** |  | 
-**identifier** | **string** |  | 
+**projectId** | **string** | Project ID for API to be retired | 
+**identifier** | **string** | Identifier of API to be retired | 
 
 ### Other Parameters
 
@@ -360,7 +362,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
- **retireRequest** | [**RetireRequest**](RetireRequest.md) |  | 
+ **retireRequest** | [**RetireRequest**](RetireRequest.md) | Request body for the Retire request containing the resources to retire an API | 
 
 ### Return type
 

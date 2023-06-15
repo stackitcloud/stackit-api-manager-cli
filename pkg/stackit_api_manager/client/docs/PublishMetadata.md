@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Stage** | Pointer to **string** |  | [optional] 
+**Stage** | Pointer to **string** | Server stage to publish under | [optional] 
 
 ## Methods
 

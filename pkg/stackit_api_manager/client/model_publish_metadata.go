@@ -16,6 +16,7 @@ import (
 
 // PublishMetadata struct for PublishMetadata
 type PublishMetadata struct {
+	// Server stage to publish under
 	Stage *string `json:"stage,omitempty"`
 }
 
@@ -111,3 +112,5 @@ func (v *NullablePublishMetadata) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

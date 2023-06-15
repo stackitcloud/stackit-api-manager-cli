@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Base64Encoded** | Pointer to **string** | now the spec will be base64 string, later we might add a url to a spec file or something else | [optional] 
+**Base64Encoded** | Pointer to **string** | Base64 encoded OpenAPI specification | [optional] 
 
 ## Methods
 

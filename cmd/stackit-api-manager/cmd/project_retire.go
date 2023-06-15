@@ -30,7 +30,9 @@ var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 func retireCmdRunE(cmd *cobra.Command, args []string) error {
 	c := newAPIClient()
 
-	req := apiManager.RetireRequest{}
+	req := apiManager.RetireRequest{
+		ApiVersion: &apiVersion,
+	}
 
 	if strings.HasPrefix(authToken, "Bearer ") {
 		cmd.Print("Authorization token should have no Bearer prefix")

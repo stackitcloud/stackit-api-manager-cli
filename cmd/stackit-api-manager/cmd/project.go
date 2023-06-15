@@ -14,6 +14,7 @@ var (
 	authToken             string
 	projectID             string
 	identifier            string
+	apiVersion            string
 	stage                 string
 	openAPISpecFilePath   string
 	printJSON             bool
@@ -66,6 +67,7 @@ func init() {
 
 	// retireCmd flags
 	retireCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
+	retireCmd.Flags().StringVarP(&apiVersion, "api_version", "v", "", "API Version")
 	retireCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
 
 	// fetchAPICmd flags

@@ -16,7 +16,12 @@ import (
 
 // PublishResponse OpenAPI specification was published successfully
 type PublishResponse struct {
+	// URL under which published API is available
 	ApiUrl *string `json:"apiUrl,omitempty"`
+	// List of specific warnings returned by the API specification linter
+	LinterWarnings []string `json:"linterWarnings,omitempty"`
+	// Number of warnings returned by the API specification linter
+	LinterWarningsCount *string `json:"linterWarningsCount,omitempty"`
 }
 
 // NewPublishResponse instantiates a new PublishResponse object
@@ -68,10 +73,80 @@ func (o *PublishResponse) SetApiUrl(v string) {
 	o.ApiUrl = &v
 }
 
+// GetLinterWarnings returns the LinterWarnings field value if set, zero value otherwise.
+func (o *PublishResponse) GetLinterWarnings() []string {
+	if o == nil || o.LinterWarnings == nil {
+		var ret []string
+		return ret
+	}
+	return o.LinterWarnings
+}
+
+// GetLinterWarningsOk returns a tuple with the LinterWarnings field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishResponse) GetLinterWarningsOk() ([]string, bool) {
+	if o == nil || o.LinterWarnings == nil {
+		return nil, false
+	}
+	return o.LinterWarnings, true
+}
+
+// HasLinterWarnings returns a boolean if a field has been set.
+func (o *PublishResponse) HasLinterWarnings() bool {
+	if o != nil && o.LinterWarnings != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLinterWarnings gets a reference to the given []string and assigns it to the LinterWarnings field.
+func (o *PublishResponse) SetLinterWarnings(v []string) {
+	o.LinterWarnings = v
+}
+
+// GetLinterWarningsCount returns the LinterWarningsCount field value if set, zero value otherwise.
+func (o *PublishResponse) GetLinterWarningsCount() string {
+	if o == nil || o.LinterWarningsCount == nil {
+		var ret string
+		return ret
+	}
+	return *o.LinterWarningsCount
+}
+
+// GetLinterWarningsCountOk returns a tuple with the LinterWarningsCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishResponse) GetLinterWarningsCountOk() (*string, bool) {
+	if o == nil || o.LinterWarningsCount == nil {
+		return nil, false
+	}
+	return o.LinterWarningsCount, true
+}
+
+// HasLinterWarningsCount returns a boolean if a field has been set.
+func (o *PublishResponse) HasLinterWarningsCount() bool {
+	if o != nil && o.LinterWarningsCount != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetLinterWarningsCount gets a reference to the given string and assigns it to the LinterWarningsCount field.
+func (o *PublishResponse) SetLinterWarningsCount(v string) {
+	o.LinterWarningsCount = &v
+}
+
 func (o PublishResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ApiUrl != nil {
 		toSerialize["apiUrl"] = o.ApiUrl
+	}
+	if o.LinterWarnings != nil {
+		toSerialize["linterWarnings"] = o.LinterWarnings
+	}
+	if o.LinterWarningsCount != nil {
+		toSerialize["linterWarningsCount"] = o.LinterWarningsCount
 	}
 	return json.Marshal(toSerialize)
 }
@@ -111,3 +186,5 @@ func (v *NullablePublishResponse) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+

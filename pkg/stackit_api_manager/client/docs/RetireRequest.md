@@ -4,8 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Identifier** | Pointer to **string** |  | [optional] [readonly] 
-**ProjectId** | Pointer to **string** |  | [optional] [readonly] 
+**ApiVersion** | Pointer to **string** |  | [optional] 
+**Identifier** | Pointer to **string** | Identifier of API to be retired | [optional] [readonly] 
+**ProjectId** | Pointer to **string** | Project ID for API to be retired | [optional] [readonly] 
 
 ## Methods
 
@@ -25,6 +26,31 @@ will change when the set of required properties is changed
 NewRetireRequestWithDefaults instantiates a new RetireRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetApiVersion
+
+`func (o *RetireRequest) GetApiVersion() string`
+
+GetApiVersion returns the ApiVersion field if non-nil, zero value otherwise.
+
+### GetApiVersionOk
+
+`func (o *RetireRequest) GetApiVersionOk() (*string, bool)`
+
+GetApiVersionOk returns a tuple with the ApiVersion field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetApiVersion
+
+`func (o *RetireRequest) SetApiVersion(v string)`
+
+SetApiVersion sets ApiVersion field to given value.
+
+### HasApiVersion
+
+`func (o *RetireRequest) HasApiVersion() bool`
+
+HasApiVersion returns a boolean if a field has been set.
 
 ### GetIdentifier
 

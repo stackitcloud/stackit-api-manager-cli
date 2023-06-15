@@ -5,15 +5,21 @@
         "description": "API was fetched successfully",
         "properties": {
           "apiUrl": {
+            "description": "URL under which fetched API is available",
+            "example": "https://testapi.stackit.cloud",
             "type": "string"
           },
           "spec": {
             "$ref": "#/components/schemas/Spec"
           },
           "stage": {
+            "description": "Server stage under which fetched API is published",
+            "example": "dev",
             "type": "string"
           },
           "upstreamUrl": {
+            "description": "URL for the upstream server targeted by the fetched API",
+            "example": "https://some.url.com",
             "type": "string"
           }
         },
@@ -22,8 +28,15 @@
       },
       "FetchProjectAPIIdentifiersResponse": {
         "description": "API identifiers were fetched successfully",
+        "example": {
+          "identifiers": [
+            "customer-api",
+            "costs-api"
+          ]
+        },
         "properties": {
           "identifiers": {
+            "description": "List of available API identifiers for chosen project ID",
             "items": {
               "type": "string"
             },
@@ -36,6 +49,8 @@
       "PublishMetadata": {
         "properties": {
           "stage": {
+            "description": "Server stage to publish under",
+            "example": "dev",
             "type": "string"
           }
         },
@@ -44,19 +59,23 @@
       "PublishRequest": {
         "properties": {
           "identifier": {
+            "description": "Identifier of API to be published",
+            "example": "api-identifier",
             "readOnly": true,
             "type": "string"
           },
-          "ignoreLintingErrors": {
+          "ignoreBreakingChanges": {
             "type": "boolean"
           },
-          "ignoreBreakingChanges": {
+          "ignoreLintingErrors": {
             "type": "boolean"
           },
           "metadata": {
             "$ref": "#/components/schemas/PublishMetadata"
           },
           "projectId": {
+            "description": "Project ID under which the API is to be published",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "readOnly": true,
             "type": "string"
           },
@@ -68,8 +87,28 @@
       },
       "PublishResponse": {
         "description": "OpenAPI specification was published successfully",
+        "example": {
+          "linterWarningsCount": "5",
+          "linter_warnings": [
+            "(warning at line 17, col 5) Tags for `get` operation at path `/v1/path/{parameter}` are missing",
+            "(warning at line 19, col 11) the parameter `customer` does not contain a description"
+          ]
+        },
         "properties": {
           "apiUrl": {
+            "description": "URL under which published API is available",
+            "example": "https://someapi.api.stackit.cloud",
+            "type": "string"
+          },
+          "linterWarnings": {
+            "description": "List of specific warnings returned by the API specification linter",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "linterWarningsCount": {
+            "description": "Number of warnings returned by the API specification linter",
             "type": "string"
           }
         },
@@ -79,6 +118,8 @@
       "PublishValidateRequest": {
         "properties": {
           "identifier": {
+            "description": "Identifier of API to be validated",
+            "example": "api-identifier",
             "readOnly": true,
             "type": "string"
           },
@@ -86,6 +127,8 @@
             "$ref": "#/components/schemas/PublishMetadata"
           },
           "projectId": {
+            "description": "Project ID for API to be validated",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "readOnly": true,
             "type": "string"
           },
@@ -97,14 +140,23 @@
       },
       "PublishValidateResponse": {
         "description": "OpenAPI specification was validated successfully",
+        "example": {
+          "linterWarningsCount": "5",
+          "linter_warnings": [
+            "(warning at line 17, col 5) Tags for `get` operation at path `/v1/path/{parameter}` are missing",
+            "(warning at line 19, col 11) the parameter `customer` does not contain a description"
+          ]
+        },
         "properties": {
           "linterWarnings": {
+            "description": "List of specific warnings returned by the API specification linter",
             "items": {
               "type": "string"
             },
             "type": "array"
           },
           "linterWarningsCount": {
+            "description": "Number of warnings returned by the API specification linter",
             "type": "string"
           }
         },
@@ -113,11 +165,18 @@
       },
       "RetireRequest": {
         "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
           "identifier": {
+            "description": "Identifier of API to be retired",
+            "example": "api-identifier",
             "readOnly": true,
             "type": "string"
           },
           "projectId": {
+            "description": "Project ID for API to be retired",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "readOnly": true,
             "type": "string"
           }
@@ -140,7 +199,8 @@
       "Spec_OpenApi": {
         "properties": {
           "base64Encoded": {
-            "description": "now the spec will be base64 string, later we might add a url to a spec file or something else",
+            "description": "Base64 encoded OpenAPI specification",
+            "example": "b3BlbmFwaTogMy4wLjEKaW5mbzoKICB2ZXJzaW9uOiAxLjAuMAogIHRpdGxlOiBBUEkKICBkZXNjcmlwdGlvbjogQVBJCnBhdGhzOgogIC9hOgogICAgZ2V0OgogICAgICByZXNwb25zZXM6CiAgICAgICAgJzIwMCc6CiAgICAgICAgICBkZXNjcmlwdGlvbjogU3VjY2VzcwoK",
             "type": "string"
           }
         },
@@ -161,6 +221,8 @@
         "operationId": "APIManagerService_FetchProjectAPIIdentifiers",
         "parameters": [
           {
+            "description": "Project ID for which APIs are to be fetched",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "in": "path",
             "name": "projectId",
             "required": true,
@@ -196,6 +258,8 @@
         "operationId": "APIManagerService_Retire",
         "parameters": [
           {
+            "description": "Project ID for API to be retired",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "in": "path",
             "name": "projectId",
             "required": true,
@@ -204,6 +268,8 @@
             }
           },
           {
+            "description": "Identifier of API to be retired",
+            "example": "api-identifier",
             "in": "path",
             "name": "identifier",
             "required": true,
@@ -220,6 +286,7 @@
               }
             }
           },
+          "description": "Request body for the Retire request containing the resources to retire an API",
           "required": true
         },
         "responses": {
@@ -247,6 +314,15 @@
         "operationId": "APIManagerService_FetchAPI",
         "parameters": [
           {
+            "in": "query",
+            "name": "apiVersion",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Project ID for API to be fetched",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "in": "path",
             "name": "projectId",
             "required": true,
@@ -255,6 +331,8 @@
             }
           },
           {
+            "description": "Identifier of API to be fetched",
+            "example": "api-identifier",
             "in": "path",
             "name": "identifier",
             "required": true,
@@ -288,6 +366,8 @@
         "operationId": "APIManagerService_Publish",
         "parameters": [
           {
+            "description": "Project ID for API to be published",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "in": "path",
             "name": "projectId",
             "required": true,
@@ -296,6 +376,8 @@
             }
           },
           {
+            "description": "Identifier of API to be published",
+            "example": "api-identifier",
             "in": "path",
             "name": "identifier",
             "required": true,
@@ -312,6 +394,7 @@
               }
             }
           },
+          "description": "Request body for the Publish request containing the resources to publish an API",
           "required": true
         },
         "responses": {
@@ -341,6 +424,8 @@
         "operationId": "APIManagerService_PublishValidate",
         "parameters": [
           {
+            "description": "Project ID for API to be validated",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
             "in": "path",
             "name": "projectId",
             "required": true,
@@ -349,6 +434,8 @@
             }
           },
           {
+            "description": "Identifier of API to be validated",
+            "example": "api-identifier",
             "in": "path",
             "name": "identifier",
             "required": true,
@@ -365,6 +452,7 @@
               }
             }
           },
+          "description": "Request body for the PublishValidate request containing the resources to publish an API",
           "required": true
         },
         "responses": {
@@ -392,7 +480,7 @@
   "servers": [
     {
       "description": "STACKIT API Manager",
-      "url": "https://api-manager.api.stackit.cloud"
+      "url": "https://api-manager.localhost"
     }
   ],
   "tags": [

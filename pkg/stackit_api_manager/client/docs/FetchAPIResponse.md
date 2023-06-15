@@ -4,10 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ApiUrl** | Pointer to **string** |  | [optional] 
+**ApiUrl** | Pointer to **string** | URL under which fetched API is available | [optional] 
 **Spec** | Pointer to [**Spec**](Spec.md) |  | [optional] 
-**Stage** | Pointer to **string** |  | [optional] 
-**UpstreamUrl** | Pointer to **string** |  | [optional] 
+**Stage** | Pointer to **string** | Server stage under which fetched API is published | [optional] 
+**UpstreamUrl** | Pointer to **string** | URL for the upstream server targeted by the fetched API | [optional] 
 
 ## Methods
 

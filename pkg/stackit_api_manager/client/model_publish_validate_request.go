@@ -16,10 +16,12 @@ import (
 
 // PublishValidateRequest struct for PublishValidateRequest
 type PublishValidateRequest struct {
-	Identifier *string          `json:"identifier,omitempty"`
-	Metadata   *PublishMetadata `json:"metadata,omitempty"`
-	ProjectId  *string          `json:"projectId,omitempty"`
-	Spec       *Spec            `json:"spec,omitempty"`
+	// Identifier of API to be validated
+	Identifier *string `json:"identifier,omitempty"`
+	Metadata *PublishMetadata `json:"metadata,omitempty"`
+	// Project ID for API to be validated
+	ProjectId *string `json:"projectId,omitempty"`
+	Spec *Spec `json:"spec,omitempty"`
 }
 
 // NewPublishValidateRequest instantiates a new PublishValidateRequest object
@@ -219,3 +221,5 @@ func (v *NullablePublishValidateRequest) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }
+
+
