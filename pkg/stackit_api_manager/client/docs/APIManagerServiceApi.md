@@ -1,6 +1,6 @@
 # \APIManagerServiceApi
 
-All URIs are relative to *https://api-manager.api.stackit.cloud*
+All URIs are relative to *https://api-manager.localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## APIManagerServiceFetchAPI
 
-> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).Execute()
+> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).ApiVersion(apiVersion).Execute()
 
 Fetch API Endpoint
 
@@ -35,10 +35,11 @@ import (
 func main() {
     projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be fetched
     identifier := "api-identifier" // string | Identifier of API to be fetched
+    apiVersion := "apiVersion_example" // string |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).Execute()
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).ApiVersion(apiVersion).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServiceFetchAPI``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,6 +67,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **apiVersion** | **string** |  | 
 
 ### Return type
 
