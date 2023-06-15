@@ -60,5 +60,5 @@ func retireCmdRunE(cmd *cobra.Command, args []string) error {
 		ProjectID:  projectID,
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &retireResponse)
+	return printSuccessCLIResponse(cmd, httpResp, &retireResponse)
 }

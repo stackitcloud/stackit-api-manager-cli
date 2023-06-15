@@ -63,5 +63,5 @@ func fetchCmdRunE(cmd *cobra.Command, args []string) error {
 		Base64EncodedSpec: grpcResp.Spec.OpenApi.GetBase64Encoded(),
 	}
 
-	return printSuccessCLIResponse(cmd, httpResp.StatusCode, &fetchResponse)
+	return printSuccessCLIResponse(cmd, httpResp, &fetchResponse)
 }

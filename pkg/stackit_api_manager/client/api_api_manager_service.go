@@ -28,12 +28,6 @@ type ApiAPIManagerServiceFetchAPIRequest struct {
 	ApiService *APIManagerServiceApiService
 	projectId string
 	identifier string
-	apiVersion *string
-}
-
-func (r ApiAPIManagerServiceFetchAPIRequest) ApiVersion(apiVersion string) ApiAPIManagerServiceFetchAPIRequest {
-	r.apiVersion = &apiVersion
-	return r
 }
 
 func (r ApiAPIManagerServiceFetchAPIRequest) Execute() (*FetchAPIResponse, *http.Response, error) {
@@ -82,9 +76,6 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIM
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
-	if r.apiVersion != nil {
-		localVarQueryParams.Add("apiVersion", parameterToString(*r.apiVersion, ""))
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

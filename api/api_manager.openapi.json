@@ -165,9 +165,6 @@
       },
       "RetireRequest": {
         "properties": {
-          "apiVersion": {
-            "type": "string"
-          },
           "identifier": {
             "description": "Identifier of API to be retired",
             "example": "api-identifier",
@@ -313,13 +310,6 @@
         "description": "Fetches an already existing API for a dedicated service by providing its identifier",
         "operationId": "APIManagerService_FetchAPI",
         "parameters": [
-          {
-            "in": "query",
-            "name": "apiVersion",
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "description": "Project ID for API to be fetched",
             "example": "5s239152-24ky-5924-1077-m29ad542f6s",
@@ -480,7 +470,7 @@
   "servers": [
     {
       "description": "STACKIT API Manager",
-      "url": "https://api-manager.localhost"
+      "url": "https://api-manager.api.stackit.cloud"
     }
   ],
   "tags": [
