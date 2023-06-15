@@ -19,14 +19,13 @@ import (
 	"strings"
 )
 
-
 // APIManagerServiceApiService APIManagerServiceApi service
 type APIManagerServiceApiService service
 
 type ApiAPIManagerServiceFetchAPIRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *APIManagerServiceApiService
-	projectId string
+	projectId  string
 	identifier string
 	apiVersion *string
 }
@@ -45,28 +44,29 @@ APIManagerServiceFetchAPI Fetch API Endpoint
 
 Fetches an already existing API for a dedicated service by providing its identifier
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId Project ID for API to be fetched
- @param identifier Identifier of API to be fetched
- @return ApiAPIManagerServiceFetchAPIRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for API to be fetched
+	@param identifier Identifier of API to be fetched
+	@return ApiAPIManagerServiceFetchAPIRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceFetchAPI(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceFetchAPIRequest {
 	return ApiAPIManagerServiceFetchAPIRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
 
 // Execute executes the request
-//  @return FetchAPIResponse
+//
+//	@return FetchAPIResponse
 func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIManagerServiceFetchAPIRequest) (*FetchAPIResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *FetchAPIResponse
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FetchAPIResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchAPI")
@@ -140,9 +140,9 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIM
 }
 
 type ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest struct {
-	ctx context.Context
+	ctx        context.Context
 	ApiService *APIManagerServiceApiService
-	projectId string
+	projectId  string
 }
 
 func (r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) Execute() (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
@@ -154,26 +154,27 @@ APIManagerServiceFetchProjectAPIIdentifiers Fetch Project APIIdentifiers Endpoin
 
 Fetches all API identifiers which belong to a project by providing its projectId
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId Project ID for which APIs are to be fetched
- @return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for which APIs are to be fetched
+	@return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiers(ctx context.Context, projectId string) ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest {
 	return ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 	}
 }
 
 // Execute executes the request
-//  @return FetchProjectAPIIdentifiersResponse
+//
+//	@return FetchProjectAPIIdentifiersResponse
 func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifiersExecute(r ApiAPIManagerServiceFetchProjectAPIIdentifiersRequest) (*FetchProjectAPIIdentifiersResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodGet
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *FetchProjectAPIIdentifiersResponse
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *FetchProjectAPIIdentifiersResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceFetchProjectAPIIdentifiers")
@@ -243,10 +244,10 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchProjectAPIIdentifier
 }
 
 type ApiAPIManagerServicePublishRequest struct {
-	ctx context.Context
-	ApiService *APIManagerServiceApiService
-	projectId string
-	identifier string
+	ctx            context.Context
+	ApiService     *APIManagerServiceApiService
+	projectId      string
+	identifier     string
 	publishRequest *PublishRequest
 }
 
@@ -265,28 +266,29 @@ APIManagerServicePublish Publish API Endpoint
 
 Publish a new API for a dedicated service by providing the OpenApiSpec for it
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId Project ID for API to be published
- @param identifier Identifier of API to be published
- @return ApiAPIManagerServicePublishRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for API to be published
+	@param identifier Identifier of API to be published
+	@return ApiAPIManagerServicePublishRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServicePublish(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishRequest {
 	return ApiAPIManagerServicePublishRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
 
 // Execute executes the request
-//  @return PublishResponse
+//
+//	@return PublishResponse
 func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIManagerServicePublishRequest) (*PublishResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PublishResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PublishResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublish")
@@ -362,10 +364,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishExecute(r ApiAPIMa
 }
 
 type ApiAPIManagerServicePublishValidateRequest struct {
-	ctx context.Context
-	ApiService *APIManagerServiceApiService
-	projectId string
-	identifier string
+	ctx                    context.Context
+	ApiService             *APIManagerServiceApiService
+	projectId              string
+	identifier             string
 	publishValidateRequest *PublishValidateRequest
 }
 
@@ -384,28 +386,29 @@ APIManagerServicePublishValidate Validate API Endpoint
 
 Validate the OpenApiSpec for an API by providing the OAS for it
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId Project ID for API to be validated
- @param identifier Identifier of API to be validated
- @return ApiAPIManagerServicePublishValidateRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for API to be validated
+	@param identifier Identifier of API to be validated
+	@return ApiAPIManagerServicePublishValidateRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServicePublishValidate(ctx context.Context, projectId string, identifier string) ApiAPIManagerServicePublishValidateRequest {
 	return ApiAPIManagerServicePublishValidateRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
 
 // Execute executes the request
-//  @return PublishValidateResponse
+//
+//	@return PublishValidateResponse
 func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r ApiAPIManagerServicePublishValidateRequest) (*PublishValidateResponse, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodPost
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  *PublishValidateResponse
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *PublishValidateResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServicePublishValidate")
@@ -481,10 +484,10 @@ func (a *APIManagerServiceApiService) APIManagerServicePublishValidateExecute(r 
 }
 
 type ApiAPIManagerServiceRetireRequest struct {
-	ctx context.Context
-	ApiService *APIManagerServiceApiService
-	projectId string
-	identifier string
+	ctx           context.Context
+	ApiService    *APIManagerServiceApiService
+	projectId     string
+	identifier    string
 	retireRequest *RetireRequest
 }
 
@@ -503,28 +506,29 @@ APIManagerServiceRetire Retire API Endpoint
 
 Retire an already existing API for a dedicated service by providing its Identifier
 
- @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- @param projectId Project ID for API to be retired
- @param identifier Identifier of API to be retired
- @return ApiAPIManagerServiceRetireRequest
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for API to be retired
+	@param identifier Identifier of API to be retired
+	@return ApiAPIManagerServiceRetireRequest
 */
 func (a *APIManagerServiceApiService) APIManagerServiceRetire(ctx context.Context, projectId string, identifier string) ApiAPIManagerServiceRetireRequest {
 	return ApiAPIManagerServiceRetireRequest{
 		ApiService: a,
-		ctx: ctx,
-		projectId: projectId,
+		ctx:        ctx,
+		projectId:  projectId,
 		identifier: identifier,
 	}
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
+//
+//	@return map[string]interface{}
 func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIManagerServiceRetireRequest) (map[string]interface{}, *http.Response, error) {
 	var (
-		localVarHTTPMethod   = http.MethodDelete
-		localVarPostBody     interface{}
-		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarHTTPMethod  = http.MethodDelete
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceRetire")
