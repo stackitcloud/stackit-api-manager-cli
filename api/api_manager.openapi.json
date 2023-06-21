@@ -480,7 +480,7 @@
   "servers": [
     {
       "description": "STACKIT API Manager",
-      "url": "https://api-manager.localhost"
+      "url": "https://api-manager.api.stackit.cloud"
     }
   ],
   "tags": [
