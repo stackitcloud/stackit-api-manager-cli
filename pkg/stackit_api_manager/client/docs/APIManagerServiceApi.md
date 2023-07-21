@@ -9,12 +9,13 @@ Method | HTTP request | Description
 [**APIManagerServicePublish**](APIManagerServiceApi.md#APIManagerServicePublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
 [**APIManagerServicePublishValidate**](APIManagerServiceApi.md#APIManagerServicePublishValidate) | **Post** /v1/projects/{projectId}/api/{identifier}/validate | Validate API Endpoint
 [**APIManagerServiceRetire**](APIManagerServiceApi.md#APIManagerServiceRetire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
+[**APIManagerServiceRetireVersion**](APIManagerServiceApi.md#APIManagerServiceRetireVersion) | **Delete** /v1/projects/{projectId}/api/{identifier}/version/{version} | Retire a specific API Version
 
 
 
 ## APIManagerServiceFetchAPI
 
-> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).Execute()
+> FetchAPIResponse APIManagerServiceFetchAPI(ctx, projectId, identifier).ApiVersion(apiVersion).Execute()
 
 Fetch API Endpoint
 
@@ -35,10 +36,11 @@ import (
 func main() {
     projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be fetched
     identifier := "api-identifier" // string | Identifier of API to be fetched
+    apiVersion := "apiVersion_example" // string |  (optional)
 
     configuration := openapiclient.NewConfiguration()
     apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).Execute()
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceFetchAPI(context.Background(), projectId, identifier).ApiVersion(apiVersion).Execute()
     if err != nil {
         fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServiceFetchAPI``: %v\n", err)
         fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -66,6 +68,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
 
+ **apiVersion** | **string** |  | 
 
 ### Return type
 
@@ -361,6 +364,84 @@ Name | Type | Description  | Notes
 
 
  **retireRequest** | [**RetireRequest**](RetireRequest.md) | Request body for the Retire request containing the resources to retire an API | 
+
+### Return type
+
+**map[string]interface{}**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## APIManagerServiceRetireVersion
+
+> map[string]interface{} APIManagerServiceRetireVersion(ctx, projectId, identifier, version).RetireVersionRequest(retireVersionRequest).Execute()
+
+Retire a specific API Version
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    projectId := "5s239152-24ky-5924-1077-m29ad542f6s" // string | Project ID for API to be retired
+    identifier := "api-identifier" // string | Identifier of API to be retired
+    version := "v1" // string | version of the API to be retired
+    retireVersionRequest := *openapiclient.NewRetireVersionRequest() // RetireVersionRequest | Request body for the Retire Version request containing the resources to retire an API Version
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.APIManagerServiceApi.APIManagerServiceRetireVersion(context.Background(), projectId, identifier, version).RetireVersionRequest(retireVersionRequest).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `APIManagerServiceApi.APIManagerServiceRetireVersion``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `APIManagerServiceRetireVersion`: map[string]interface{}
+    fmt.Fprintf(os.Stdout, "Response from `APIManagerServiceApi.APIManagerServiceRetireVersion`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**projectId** | **string** | Project ID for API to be retired | 
+**identifier** | **string** | Identifier of API to be retired | 
+**version** | **string** | version of the API to be retired | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiAPIManagerServiceRetireVersionRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+
+
+ **retireVersionRequest** | [**RetireVersionRequest**](RetireVersionRequest.md) | Request body for the Retire Version request containing the resources to retire an API Version | 
 
 ### Return type
 

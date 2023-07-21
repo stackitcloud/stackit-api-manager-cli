@@ -147,7 +147,22 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 		return errRequestFailed
 	}
 
-	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, resp.StatusCode, errorMessage)
+	currentTarget := cmd
+	var targets []string = []string{currentTarget.Use}
+	for {
+		if currentTarget.Parent() == nil {
+			break
+		}
+		currentTarget = currentTarget.Parent()
+		targets = append([]string{currentTarget.Use}, targets...)
+	}
+
+	if len(targets) > 2 {
+		cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", strings.Join(targets[2:], " "), resp.StatusCode, errorMessage)
+	} else {
+		cmd.Printf("An error occurred with statuscode %d: %s\n", resp.StatusCode, errorMessage)
+	}
+
 	printHumanReadableTraceID(cmd, resp)
 
 	return errRequestFailed

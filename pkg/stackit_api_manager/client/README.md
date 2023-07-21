@@ -83,6 +83,7 @@ Class | Method | HTTP request | Description
 *APIManagerServiceApi* | [**APIManagerServicePublish**](docs/APIManagerServiceApi.md#apimanagerservicepublish) | **Post** /v1/projects/{projectId}/api/{identifier} | Publish API Endpoint
 *APIManagerServiceApi* | [**APIManagerServicePublishValidate**](docs/APIManagerServiceApi.md#apimanagerservicepublishvalidate) | **Post** /v1/projects/{projectId}/api/{identifier}/validate | Validate API Endpoint
 *APIManagerServiceApi* | [**APIManagerServiceRetire**](docs/APIManagerServiceApi.md#apimanagerserviceretire) | **Delete** /v1/projects/{projectId}/api/{identifier} | Retire API Endpoint
+*APIManagerServiceApi* | [**APIManagerServiceRetireVersion**](docs/APIManagerServiceApi.md#apimanagerserviceretireversion) | **Delete** /v1/projects/{projectId}/api/{identifier}/version/{version} | Retire a specific API Version
 
 
 ## Documentation For Models
@@ -95,6 +96,7 @@ Class | Method | HTTP request | Description
  - [PublishValidateRequest](docs/PublishValidateRequest.md)
  - [PublishValidateResponse](docs/PublishValidateResponse.md)
  - [RetireRequest](docs/RetireRequest.md)
+ - [RetireVersionRequest](docs/RetireVersionRequest.md)
  - [Spec](docs/Spec.md)
  - [SpecOpenApi](docs/SpecOpenApi.md)
 

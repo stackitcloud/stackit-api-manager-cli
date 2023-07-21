@@ -11,6 +11,7 @@ docs/PublishResponse.md
 docs/PublishValidateRequest.md
 docs/PublishValidateResponse.md
 docs/RetireRequest.md
+docs/RetireVersionRequest.md
 docs/Spec.md
 docs/SpecOpenApi.md
 model_fetch_api_response.go
@@ -21,6 +22,7 @@ model_publish_response.go
 model_publish_validate_request.go
 model_publish_validate_response.go
 model_retire_request.go
+model_retire_version_request.go
 model_spec.go
 model_spec_open_api.go
 response.go

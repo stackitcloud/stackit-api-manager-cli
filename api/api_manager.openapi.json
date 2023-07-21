@@ -165,6 +165,9 @@
       },
       "RetireRequest": {
         "properties": {
+          "apiVersion": {
+            "type": "string"
+          },
           "identifier": {
             "description": "Identifier of API to be retired",
             "example": "api-identifier",
@@ -183,6 +186,34 @@
       "RetireResponse": {
         "description": "OpenAPI specification was retired successfully",
         "title": "Retire response",
+        "type": "object"
+      },
+      "RetireVersionRequest": {
+        "properties": {
+          "identifier": {
+            "description": "Identifier of API to be retired",
+            "example": "api-identifier",
+            "readOnly": true,
+            "type": "string"
+          },
+          "projectId": {
+            "description": "Project ID for API to be retired",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
+            "readOnly": true,
+            "type": "string"
+          },
+          "version": {
+            "description": "API version to be retired",
+            "example": "v1",
+            "readOnly": true,
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RetireVersionResponse": {
+        "description": "API Version was retired successfully",
+        "title": "Retire API response",
         "type": "object"
       },
       "Spec": {
@@ -310,6 +341,13 @@
         "description": "Fetches an already existing API for a dedicated service by providing its identifier",
         "operationId": "APIManagerService_FetchAPI",
         "parameters": [
+          {
+            "in": "query",
+            "name": "apiVersion",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "description": "Project ID for API to be fetched",
             "example": "5s239152-24ky-5924-1077-m29ad542f6s",
@@ -461,6 +499,74 @@
           }
         },
         "summary": "Validate API Endpoint",
+        "tags": [
+          "APIManagerService"
+        ]
+      }
+    },
+    "/v1/projects/{projectId}/api/{identifier}/version/{version}": {
+      "delete": {
+        "description": "Retire an already existing API Version for a dedicated service by providing its Identifier and version",
+        "operationId": "APIManagerService_RetireVersion",
+        "parameters": [
+          {
+            "description": "Project ID for API to be retired",
+            "example": "5s239152-24ky-5924-1077-m29ad542f6s",
+            "in": "path",
+            "name": "projectId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Identifier of API to be retired",
+            "example": "api-identifier",
+            "in": "path",
+            "name": "identifier",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "version of the API to be retired",
+            "example": "v1",
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RetireVersionRequest"
+              }
+            }
+          },
+          "description": "Request body for the Retire Version request containing the resources to retire an API Version",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RetireVersionResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "description": "Could not find the API."
+          }
+        },
+        "summary": "Retire a specific API Version",
         "tags": [
           "APIManagerService"
         ]
