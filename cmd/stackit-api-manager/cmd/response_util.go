@@ -21,6 +21,7 @@ var (
 	errNilCmdResponse         = fmt.Errorf("invalid nil cmdResponse")
 	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
 	errRequestFailed          = fmt.Errorf("request failed")
+	numberOfRootCMDsToIgnore  = 2
 )
 
 type traceIDMessage struct {
@@ -157,7 +158,7 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 		targets = append([]string{currentTarget.Use}, targets...)
 	}
 
-	if len(targets) > 2 {
+	if len(targets) > numberOfRootCMDsToIgnore {
 		cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", strings.Join(targets[2:], " "), resp.StatusCode, errorMessage)
 	} else {
 		cmd.Printf("An error occurred with statuscode %d: %s\n", resp.StatusCode, errorMessage)

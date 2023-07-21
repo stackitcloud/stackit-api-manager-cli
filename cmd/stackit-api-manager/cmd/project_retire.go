@@ -9,7 +9,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-//nolint:gochecknoglobals // CLI command
 var (
 	version string
 )
