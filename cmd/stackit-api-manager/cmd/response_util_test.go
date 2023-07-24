@@ -25,6 +25,7 @@ const (
 )
 
 var (
+	validVersion             = "v1"
 	validIdentifiersList     = []string{validIdentifier, validIdentifierOther}
 	validIdentifiersListJSON = `["` + strings.Join(validIdentifiersList, `","`) + `"]`
 
@@ -34,8 +35,11 @@ var (
 	publishSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier "%s" published successfully for project "%s" and stage "%s" (API-URL: "%s")`, validIdentifier, validProjectID, validStage, validAPIURL)
 	publishSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API published successfully","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL)
 
-	retireSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier "%s" retired successfully for project "%s"`, validIdentifier, validProjectID)
-	retireSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API retired successfully","response":{"identifier":"%s","projectId":"%s"}}`, testStatusCode, validIdentifier, validProjectID)
+	retireSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier: "%s" retired successfully for project: "%s"`, validIdentifier, validProjectID)
+	retireSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API %s retired successfully","response":{"identifier":"%s","projectId":"%s"}}`, testStatusCode, validIdentifier, validIdentifier, validProjectID)
+
+	retireVersionSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier "%s" version: "%s" retired successfully for project: "%s"`, validIdentifier, validVersion, validProjectID)
+	retireVersionSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API version %s of %s retired successfully","response":{"identifier":"%s","projectId":"%s","version":"%s"}}`, testStatusCode, validVersion, validIdentifier, validIdentifier, validProjectID, "v1")
 
 	validateSuccessMessageHumanReadable = fmt.Sprintf(`OpenAPI specification for API with identifier "%s", project "%s" and stage "%s" validated successfully`, validIdentifier, validProjectID, validStage)
 	validateSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"OpenAPI specification validated successfully","response":{"identifier":"%s","projectId":"%s","stage":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage)
@@ -141,6 +145,23 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 			wantErr:   nil,
 		},
 		{
+			name: "retire version - successful request returns no error and prints JSON when printJSON flag is true",
+			args: args{
+				cmd: retireVersionCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
+				printJSON: true,
+				cmdResponse: &retireResponse{
+					Identifier: validIdentifier,
+					ProjectID:  validProjectID,
+					Version:    &validVersion,
+				},
+			},
+			wantPrint: retireVersionSuccessMessageJSON,
+			wantErr:   nil,
+		},
+		{
 			name: "successful request returns no error and prints human-readable response when printJSON flag is false",
 			args: args{
 				cmd: retireCmd,
@@ -154,6 +175,23 @@ func Test_printSuccessCLIResponse(t *testing.T) {
 				},
 			},
 			wantPrint: retireSuccessMessageHumanReadable,
+			wantErr:   nil,
+		},
+		{
+			name: "retire version - successful request returns no error and prints human-readable response when printJSON flag is false",
+			args: args{
+				cmd: retireVersionCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
+				printJSON: false,
+				cmdResponse: &retireResponse{
+					Identifier: validIdentifier,
+					ProjectID:  validProjectID,
+					Version:    &validVersion,
+				},
+			},
+			wantPrint: retireVersionSuccessMessageHumanReadable,
 			wantErr:   nil,
 		},
 	}

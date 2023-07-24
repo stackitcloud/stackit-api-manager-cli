@@ -101,7 +101,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 		}
 		cmd.Printf("API with identifier \"%s\" published successfully for project \"%s\" and stage \"%s\" (API-URL: \"%s\")\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL)
 	case *retireResponse:
-		cmd.Printf("API with identifier \"%s\" retired successfully for project \"%s\"\n", r.Identifier, r.ProjectID)
+		cmd.Printf(r.HumanReadableMessage())
 	case *validateResponse:
 		if r.LinterWarningsCount != "0" && r.LinterWarningsCount != "" {
 			cmd.Printf("OpenAPI specification for API with identifier \"%s\", project \"%s\" and stage \"%s\" validated successfully\nOAS linting resulted in %s warnings:\n  %+s\n", r.Identifier, r.ProjectID, r.Stage, r.LinterWarningsCount, strings.Join(r.LinterWarnings, "\n  "))

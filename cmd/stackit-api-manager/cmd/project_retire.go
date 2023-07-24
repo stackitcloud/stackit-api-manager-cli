@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	apiManager "github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/client"
@@ -13,7 +14,11 @@ var (
 	version string
 )
 
-const messageRetireSuccess = "API retired successfully"
+const messageRetireSuccess = "API %s retired successfully"
+const messageRetireVersionSuccess = "API version %s of %s retired successfully"
+
+const messageHumanReadableRetireSuccess = "API with identifier: %q retired successfully for project: %q\n"
+const messageHumanReadableRetireVersionSuccess = "API with identifier %q version: %q retired successfully for project: %q\n"
 
 type retireResponse struct {
 	Identifier string  `json:"identifier"`
@@ -21,8 +26,18 @@ type retireResponse struct {
 	Version    *string `json:"version,omitempty"`
 }
 
+func (r retireResponse) HumanReadableMessage() string {
+	if r.Version != nil {
+		return fmt.Sprintf(messageHumanReadableRetireVersionSuccess, r.Identifier, *r.Version, r.ProjectID)
+	}
+	return fmt.Sprintf(messageHumanReadableRetireSuccess, r.Identifier, r.ProjectID)
+}
+
 func (r retireResponse) successMessage() string {
-	return messageRetireSuccess
+	if r.Version != nil {
+		return fmt.Sprintf(messageRetireVersionSuccess, *r.Version, r.Identifier)
+	}
+	return fmt.Sprintf(messageRetireSuccess, r.Identifier)
 }
 
 func init() {
