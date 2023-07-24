@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	traceParentHeader = "Traceparent"
+	traceParentHeader        = "Traceparent"
+	numberOfRootCMDsToIgnore = 2
 )
 
 var (
@@ -21,7 +22,6 @@ var (
 	errNilCmdResponse         = fmt.Errorf("invalid nil cmdResponse")
 	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
 	errRequestFailed          = fmt.Errorf("request failed")
-	numberOfRootCMDsToIgnore  = 2
 )
 
 type traceIDMessage struct {
