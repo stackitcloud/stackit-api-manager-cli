@@ -50,7 +50,6 @@ func init() {
 	retireVersionCmd.MarkFlagRequired("v") //nolint:errcheck // cobra flag
 	retireVersionCmd.Flags().StringVarP(&identifier, "identifier", "i", "", "API Identifier")
 	retireVersionCmd.MarkFlagRequired("identifier") //nolint:errcheck // cobra flag
-
 }
 
 var retireCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
