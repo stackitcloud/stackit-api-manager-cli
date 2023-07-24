@@ -14,7 +14,6 @@ var (
 	authToken             string
 	projectID             string
 	identifier            string
-	apiVersion            string
 	stage                 string
 	openAPISpecFilePath   string
 	printJSON             bool
