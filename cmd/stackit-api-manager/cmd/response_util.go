@@ -148,6 +148,15 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 		return errRequestFailed
 	}
 
+	// CMD commands are nested entities
+	// the first command starts with api-cli, then fools the project
+	// the project is the root for all real targets (e.g.: retire, publish, ...)
+	// here we transverse the nested tree of commands to get the Usage of each target
+	// in order to construct a readable message
+	//
+	// e.g.: api-cli project retire version ...
+	// would return the Use() values for each of them
+	// we then strip the first two which are redudant and print the "retire version ..." message
 	currentTarget := cmd
 	var targets []string = []string{currentTarget.Use}
 	for {

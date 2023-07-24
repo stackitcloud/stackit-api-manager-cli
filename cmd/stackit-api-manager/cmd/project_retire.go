@@ -14,8 +14,8 @@ var (
 	version string
 )
 
-const messageRetireSuccess = "API %s retired successfully"
-const messageRetireVersionSuccess = "API version %s of %s retired successfully"
+const messageRetireSuccess = "API with identifier %s retired successfully"
+const messageRetireVersionSuccess = "API with identifier version %s of %s retired successfully"
 
 const messageHumanReadableRetireSuccess = "API with identifier: %q retired successfully for project: %q\n"
 const messageHumanReadableRetireVersionSuccess = "API with identifier %q version: %q retired successfully for project: %q\n"
