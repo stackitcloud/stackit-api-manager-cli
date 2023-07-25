@@ -16,6 +16,7 @@ import (
 
 // RetireRequest struct for RetireRequest
 type RetireRequest struct {
+	ApiVersion *string `json:"apiVersion,omitempty"`
 	// Identifier of API to be retired
 	Identifier *string `json:"identifier,omitempty"`
 	// Project ID for API to be retired
@@ -37,6 +38,38 @@ func NewRetireRequest() *RetireRequest {
 func NewRetireRequestWithDefaults() *RetireRequest {
 	this := RetireRequest{}
 	return &this
+}
+
+// GetApiVersion returns the ApiVersion field value if set, zero value otherwise.
+func (o *RetireRequest) GetApiVersion() string {
+	if o == nil || o.ApiVersion == nil {
+		var ret string
+		return ret
+	}
+	return *o.ApiVersion
+}
+
+// GetApiVersionOk returns a tuple with the ApiVersion field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RetireRequest) GetApiVersionOk() (*string, bool) {
+	if o == nil || o.ApiVersion == nil {
+		return nil, false
+	}
+	return o.ApiVersion, true
+}
+
+// HasApiVersion returns a boolean if a field has been set.
+func (o *RetireRequest) HasApiVersion() bool {
+	if o != nil && o.ApiVersion != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetApiVersion gets a reference to the given string and assigns it to the ApiVersion field.
+func (o *RetireRequest) SetApiVersion(v string) {
+	o.ApiVersion = &v
 }
 
 // GetIdentifier returns the Identifier field value if set, zero value otherwise.
@@ -105,6 +138,9 @@ func (o *RetireRequest) SetProjectId(v string) {
 
 func (o RetireRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.ApiVersion != nil {
+		toSerialize["apiVersion"] = o.ApiVersion
+	}
 	if o.Identifier != nil {
 		toSerialize["identifier"] = o.Identifier
 	}

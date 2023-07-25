@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	traceParentHeader = "Traceparent"
+	traceParentHeader        = "Traceparent"
+	numberOfRootCMDsToIgnore = 2
 )
 
 var (
@@ -100,7 +101,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 		}
 		cmd.Printf("API with identifier \"%s\" published successfully for project \"%s\" and stage \"%s\" (API-URL: \"%s\")\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL)
 	case *retireResponse:
-		cmd.Printf("API with identifier \"%s\" retired successfully for project \"%s\"\n", r.Identifier, r.ProjectID)
+		cmd.Printf(r.HumanReadableMessage())
 	case *validateResponse:
 		if r.LinterWarningsCount != "0" && r.LinterWarningsCount != "" {
 			cmd.Printf("OpenAPI specification for API with identifier \"%s\", project \"%s\" and stage \"%s\" validated successfully\nOAS linting resulted in %s warnings:\n  %+s\n", r.Identifier, r.ProjectID, r.Stage, r.LinterWarningsCount, strings.Join(r.LinterWarnings, "\n  "))
@@ -147,7 +148,31 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 		return errRequestFailed
 	}
 
-	cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", cmd.Use, resp.StatusCode, errorMessage)
+	// CMD commands are nested entities
+	// the first command starts with api-cli, then fools the project
+	// the project is the root for all real targets (e.g.: retire, publish, ...)
+	// here we transverse the nested tree of commands to get the Usage of each target
+	// in order to construct a readable message
+	//
+	// e.g.: api-cli project retire version ...
+	// would return the Use() values for each of them
+	// we then strip the first two which are redudant and print the "retire version ..." message
+	currentTarget := cmd
+	var targets []string = []string{currentTarget.Use}
+	for {
+		if currentTarget.Parent() == nil {
+			break
+		}
+		currentTarget = currentTarget.Parent()
+		targets = append([]string{currentTarget.Use}, targets...)
+	}
+
+	if len(targets) > numberOfRootCMDsToIgnore {
+		cmd.Printf("Failed to %s! An error occurred with statuscode %d: %s\n", strings.Join(targets[2:], " "), resp.StatusCode, errorMessage)
+	} else {
+		cmd.Printf("An error occurred with statuscode %d: %s\n", resp.StatusCode, errorMessage)
+	}
+
 	printHumanReadableTraceID(cmd, resp)
 
 	return errRequestFailed

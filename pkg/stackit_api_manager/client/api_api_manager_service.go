@@ -27,6 +27,12 @@ type ApiAPIManagerServiceFetchAPIRequest struct {
 	ApiService *APIManagerServiceApiService
 	projectId  string
 	identifier string
+	apiVersion *string
+}
+
+func (r ApiAPIManagerServiceFetchAPIRequest) ApiVersion(apiVersion string) ApiAPIManagerServiceFetchAPIRequest {
+	r.apiVersion = &apiVersion
+	return r
 }
 
 func (r ApiAPIManagerServiceFetchAPIRequest) Execute() (*FetchAPIResponse, *http.Response, error) {
@@ -76,6 +82,9 @@ func (a *APIManagerServiceApiService) APIManagerServiceFetchAPIExecute(r ApiAPIM
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.apiVersion != nil {
+		localVarQueryParams.Add("apiVersion", parameterToString(*r.apiVersion, ""))
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -557,6 +566,130 @@ func (a *APIManagerServiceApiService) APIManagerServiceRetireExecute(r ApiAPIMan
 	}
 	// body params
 	localVarPostBody = r.retireRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiAPIManagerServiceRetireVersionRequest struct {
+	ctx                  context.Context
+	ApiService           *APIManagerServiceApiService
+	projectId            string
+	identifier           string
+	version              string
+	retireVersionRequest *RetireVersionRequest
+}
+
+// Request body for the Retire Version request containing the resources to retire an API Version
+func (r ApiAPIManagerServiceRetireVersionRequest) RetireVersionRequest(retireVersionRequest RetireVersionRequest) ApiAPIManagerServiceRetireVersionRequest {
+	r.retireVersionRequest = &retireVersionRequest
+	return r
+}
+
+func (r ApiAPIManagerServiceRetireVersionRequest) Execute() (map[string]interface{}, *http.Response, error) {
+	return r.ApiService.APIManagerServiceRetireVersionExecute(r)
+}
+
+/*
+APIManagerServiceRetireVersion Retire a specific API Version
+
+Retire an already existing API Version for a dedicated service by providing its Identifier and version
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@param projectId Project ID for API to be retired
+	@param identifier Identifier of API to be retired
+	@param version version of the API to be retired
+	@return ApiAPIManagerServiceRetireVersionRequest
+*/
+func (a *APIManagerServiceApiService) APIManagerServiceRetireVersion(ctx context.Context, projectId string, identifier string, version string) ApiAPIManagerServiceRetireVersionRequest {
+	return ApiAPIManagerServiceRetireVersionRequest{
+		ApiService: a,
+		ctx:        ctx,
+		projectId:  projectId,
+		identifier: identifier,
+		version:    version,
+	}
+}
+
+// Execute executes the request
+//
+//	@return map[string]interface{}
+func (a *APIManagerServiceApiService) APIManagerServiceRetireVersionExecute(r ApiAPIManagerServiceRetireVersionRequest) (map[string]interface{}, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodDelete
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue map[string]interface{}
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "APIManagerServiceApiService.APIManagerServiceRetireVersion")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v1/projects/{projectId}/api/{identifier}/version/{version}"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterToString(r.projectId, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"identifier"+"}", url.PathEscape(parameterToString(r.identifier, "")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"version"+"}", url.PathEscape(parameterToString(r.version, "")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.retireVersionRequest == nil {
+		return localVarReturnValue, nil, reportError("retireVersionRequest is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.retireVersionRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
