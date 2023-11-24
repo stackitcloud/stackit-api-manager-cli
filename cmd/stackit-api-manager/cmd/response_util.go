@@ -132,8 +132,8 @@ func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
 	resp.Body = io.NopCloser(bytes.NewBuffer(bodyContent))
 	errorMessage, err := retrieveGatewayErrorMessage(resp)
 	if err != nil {
-		// Print the body directly, if failed to parse to a gateway response
 		cmd.Println(string(bodyContent))
+		//nolint:nilerr // ignore error, print body directly to the output if failed to parse to a gateway response
 		return nil
 	}
 
