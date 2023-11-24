@@ -83,7 +83,7 @@ generate-client-code: ## generate API client code
 		-o /local/pkg/stackit_api_manager/client
 
 .PHONY: generate-client
-generate-client: generate-client-code fmt tidy ## genarte API client & run go mod tidy
+generate-client: generate-client-code fmt tidy ## generate API client & run go mod tidy
 
 ci: lint-reports test-reports ## Executes lint and test and generates reports
 

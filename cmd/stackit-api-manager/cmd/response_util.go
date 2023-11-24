@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"regexp"
 	"strings"
@@ -16,8 +18,7 @@ const (
 )
 
 var (
-	errEncodingCLIResponseMessage     = "failed to encode CLI response"
-	errDecodingGatewayResponseMessage = "failed to decode gateway response"
+	errEncodingCLIResponseMessage = "failed to encode CLI response"
 
 	errNilCmdResponse         = fmt.Errorf("invalid nil cmdResponse")
 	errUnknownCmdResponseType = fmt.Errorf("unknown cmdResponse type")
@@ -123,9 +124,17 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 
 // prints the CLI response for unsuccessful requests
 func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
+	bodyContent, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	resp.Body = io.NopCloser(bytes.NewBuffer(bodyContent))
 	errorMessage, err := retrieveGatewayErrorMessage(resp)
 	if err != nil {
-		return fmt.Errorf("%s: %w", errDecodingGatewayResponseMessage, err)
+		// Print the body directly, if failed to parse to a gateway response
+		cmd.Println(string(bodyContent))
+		return nil
 	}
 
 	if printJSON {
