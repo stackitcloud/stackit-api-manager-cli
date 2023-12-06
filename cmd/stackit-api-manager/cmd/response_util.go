@@ -1,8 +1,10 @@
 package cmd
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"regexp"
 	"strings"
@@ -123,8 +125,16 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 
 // prints the CLI response for unsuccessful requests
 func printErrorCLIResponse(cmd *cobra.Command, resp *http.Response) error {
+	bodyContent, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	resp.Body = io.NopCloser(bytes.NewBuffer(bodyContent))
 	errorMessage, err := retrieveGatewayErrorMessage(resp)
 	if err != nil {
+		//  print body directly to the output if failed to parse to a gateway response
+		cmd.Println(string(bodyContent))
 		return fmt.Errorf("%s: %w", errDecodingGatewayResponseMessage, err)
 	}
 
