@@ -19,6 +19,7 @@ const (
 	validStage           = "stage"
 	validAPIURL          = "test.url/fun"
 	validUpstreamURL     = "upstream.url/fun"
+	validPullRequestURL  = "az.dev.ops/pr/123"
 	validBase64Spec      = "e2FiY30="
 	testErrorMessage     = "error message"
 	testStatusCode       = 322
@@ -32,8 +33,8 @@ var (
 	validGatewayResponseBody   = fmt.Sprintf(`{"Status": %d, "Message": "%s"}`, testStatusCode, testErrorMessage)
 	invalidGatewayResponseBody = fmt.Sprintf(`{"Status": "%d", "Message": "%s"}`, testStatusCode, testErrorMessage)
 
-	publishSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier "%s" published successfully for project "%s" and stage "%s" (API-URL: "%s")`, validIdentifier, validProjectID, validStage, validAPIURL)
-	publishSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API published successfully","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL)
+	publishSuccessMessageHumanReadable = fmt.Sprintf(`Created PR on API repo with provided API specification for identifier '%s' and stage '%s' successfully└─ PR URL: %s`, validIdentifier, validStage, validPullRequestURL)
+	publishSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"successfully created PR for API specification on the API repo","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s","pull_request_url":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL, validPullRequestURL)
 
 	retireSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier: "%s" retired successfully for project: "%s"`, validIdentifier, validProjectID)
 	retireSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API with identifier %s retired successfully","response":{"identifier":"%s","projectId":"%s"}}`, testStatusCode, validIdentifier, validIdentifier, validProjectID)
@@ -240,10 +241,11 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 					StatusCode: int(testStatusCode),
 				},
 				cmdResponse: &publishResponse{
-					Identifier: validIdentifier,
-					ProjectID:  validProjectID,
-					Stage:      validStage,
-					APIURL:     validAPIURL,
+					Identifier:     validIdentifier,
+					ProjectID:      validProjectID,
+					Stage:          validStage,
+					APIURL:         validAPIURL,
+					PullRequestURL: validPullRequestURL,
 				},
 			},
 			wantPrint: publishSuccessMessageJSON,
@@ -370,10 +372,11 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 					StatusCode: int(testStatusCode),
 				},
 				cmdResponse: &publishResponse{
-					Identifier: validIdentifier,
-					ProjectID:  validProjectID,
-					Stage:      validStage,
-					APIURL:     validAPIURL,
+					Identifier:     validIdentifier,
+					ProjectID:      validProjectID,
+					Stage:          validStage,
+					APIURL:         validAPIURL,
+					PullRequestURL: validPullRequestURL,
 				},
 			},
 			wantPrint: publishSuccessMessageHumanReadable,
@@ -459,7 +462,7 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 			if err != nil {
 				t.Error(err)
 			}
-			gotPrint := strings.TrimRight(string(gotPrintBytes), "\n")
+			gotPrint := strings.ReplaceAll(string(gotPrintBytes), "\n", "")
 
 			if gotErr == nil && gotPrint != tt.wantPrint {
 				t.Errorf("printSuccessCLIResponseHumanReadable() expected message to be\n%v\nbut got\n%v", tt.wantPrint, gotPrint)
