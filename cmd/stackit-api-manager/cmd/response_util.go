@@ -101,7 +101,7 @@ func printSuccessCLIResponseHumanReadable(cmd *cobra.Command, resp *http.Respons
 			cmd.Printf("OpenAPI specification for API with identifier \"%s\", project \"%s\" and stage \"%s\" published successfully\nOAS linting resulted in %s warnings:\n  %+s\n", r.Identifier, r.ProjectID, r.Stage, r.LinterWarningsCount, strings.Join(r.LinterWarnings, "\n  "))
 			break
 		}
-		cmd.Printf("API with identifier \"%s\" published successfully for project \"%s\" and stage \"%s\" (API-URL: \"%s\")\n", r.Identifier, r.ProjectID, r.Stage, r.APIURL)
+		cmd.Printf("Created PR on API repo with provided API specification for identifier '%s' and stage '%s' successfully\n└─ PR URL: %s\n", r.Identifier, r.Stage, r.PullRequestURL)
 	case *retireResponse:
 		cmd.Printf(r.HumanReadableMessage())
 	case *validateResponse:

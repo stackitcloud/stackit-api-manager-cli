@@ -22,6 +22,8 @@ type PublishResponse struct {
 	LinterWarnings []string `json:"linterWarnings,omitempty"`
 	// Number of warnings returned by the API specification linter
 	LinterWarningsCount *string `json:"linterWarningsCount,omitempty"`
+	// URL of the PR which is created with the published specification
+	PullRequestUrl *string `json:"pullRequestUrl,omitempty"`
 }
 
 // NewPublishResponse instantiates a new PublishResponse object
@@ -137,6 +139,38 @@ func (o *PublishResponse) SetLinterWarningsCount(v string) {
 	o.LinterWarningsCount = &v
 }
 
+// GetPullRequestUrl returns the PullRequestUrl field value if set, zero value otherwise.
+func (o *PublishResponse) GetPullRequestUrl() string {
+	if o == nil || o.PullRequestUrl == nil {
+		var ret string
+		return ret
+	}
+	return *o.PullRequestUrl
+}
+
+// GetPullRequestUrlOk returns a tuple with the PullRequestUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishResponse) GetPullRequestUrlOk() (*string, bool) {
+	if o == nil || o.PullRequestUrl == nil {
+		return nil, false
+	}
+	return o.PullRequestUrl, true
+}
+
+// HasPullRequestUrl returns a boolean if a field has been set.
+func (o *PublishResponse) HasPullRequestUrl() bool {
+	if o != nil && o.PullRequestUrl != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPullRequestUrl gets a reference to the given string and assigns it to the PullRequestUrl field.
+func (o *PublishResponse) SetPullRequestUrl(v string) {
+	o.PullRequestUrl = &v
+}
+
 func (o PublishResponse) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ApiUrl != nil {
@@ -147,6 +181,9 @@ func (o PublishResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.LinterWarningsCount != nil {
 		toSerialize["linterWarningsCount"] = o.LinterWarningsCount
+	}
+	if o.PullRequestUrl != nil {
+		toSerialize["pullRequestUrl"] = o.PullRequestUrl
 	}
 	return json.Marshal(toSerialize)
 }

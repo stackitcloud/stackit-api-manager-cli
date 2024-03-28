@@ -10,7 +10,7 @@ import (
 	"github.com/stackitcloud/stackit-api-manager-cli/pkg/stackit_api_manager/util"
 )
 
-const messagePublishSuccess = "API published successfully"
+const messagePublishSuccess = "successfully created PR for API specification on the API repo"
 
 type publishResponse struct {
 	Identifier          string   `json:"identifier"`
@@ -19,6 +19,7 @@ type publishResponse struct {
 	APIURL              string   `json:"apiUrl"`
 	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
 	LinterWarnings      []string `json:"linter_warnings,omitempty"`
+	PullRequestURL      string   `json:"pull_request_url"`
 }
 
 func (r publishResponse) successMessage() string {
@@ -27,7 +28,7 @@ func (r publishResponse) successMessage() string {
 
 var publishCmd = &cobra.Command{ //nolint:gochecknoglobals // CLI command
 	Use:          "publish",
-	Short:        "Publish a OpenAPI Spec to a Stackit API Gateway project",
+	Short:        "Create a PR with an OpenAPI Spec on the API repository",
 	RunE:         publishCmdRunE,
 	SilenceUsage: true,
 }
@@ -80,6 +81,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		APIURL:              grpcResp.GetApiUrl(),
 		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
 		LinterWarnings:      grpcResp.GetLinterWarnings(),
+		PullRequestURL:      grpcResp.GetPullRequestUrl(),
 	}
 
 	return printSuccessCLIResponse(cmd, httpResp, &publishResponse)

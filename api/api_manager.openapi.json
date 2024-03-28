@@ -110,6 +110,10 @@
           "linterWarningsCount": {
             "description": "Number of warnings returned by the API specification linter",
             "type": "string"
+          },
+          "pullRequestUrl": {
+            "description": "URL of the PR which is created with the published specification",
+            "type": "string"
           }
         },
         "title": "Publish response",
