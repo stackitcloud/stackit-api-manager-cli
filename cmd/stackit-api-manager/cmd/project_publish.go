@@ -19,6 +19,7 @@ type publishResponse struct {
 	APIURL              string   `json:"apiUrl"`
 	LinterWarningsCount string   `json:"linter_warnings_count,omitempty"`
 	LinterWarnings      []string `json:"linter_warnings,omitempty"`
+	PullRequestCreated  bool     `json:"pull_request_created"`
 	PullRequestURL      string   `json:"pull_request_url"`
 }
 
@@ -81,6 +82,7 @@ func publishCmdRunE(cmd *cobra.Command, args []string) error {
 		APIURL:              grpcResp.GetApiUrl(),
 		LinterWarningsCount: grpcResp.GetLinterWarningsCount(),
 		LinterWarnings:      grpcResp.GetLinterWarnings(),
+		PullRequestCreated:  grpcResp.GetPullRequestCreated(),
 		PullRequestURL:      grpcResp.GetPullRequestUrl(),
 	}
 

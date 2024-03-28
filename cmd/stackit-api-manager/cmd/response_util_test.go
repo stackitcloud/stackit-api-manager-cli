@@ -33,8 +33,9 @@ var (
 	validGatewayResponseBody   = fmt.Sprintf(`{"Status": %d, "Message": "%s"}`, testStatusCode, testErrorMessage)
 	invalidGatewayResponseBody = fmt.Sprintf(`{"Status": "%d", "Message": "%s"}`, testStatusCode, testErrorMessage)
 
-	publishSuccessMessageHumanReadable = fmt.Sprintf(`Created PR on API repo with provided API specification for identifier '%s' and stage '%s' successfully└─ PR URL: %s`, validIdentifier, validStage, validPullRequestURL)
-	publishSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"successfully created PR for API specification on the API repo","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s","pull_request_url":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL, validPullRequestURL)
+	publishSuccessMessageHumanReadable            = fmt.Sprintf(`Successfully generated a pull request on the API repository with the provided API specification for API '%s'.└─ PR URL: %s`, validIdentifier, validPullRequestURL)
+	publishSuccessMessageNoPRCreatedHumanReadable = "No pull request was generated as the API specification matches the one in the main branch of the API repository."
+	publishSuccessMessageJSON                     = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"successfully created PR for API specification on the API repo","response":{"identifier":"%s","projectId":"%s","stage":"%s","apiUrl":"%s","pull_request_created":true,"pull_request_url":"%s"}}`, testStatusCode, validIdentifier, validProjectID, validStage, validAPIURL, validPullRequestURL)
 
 	retireSuccessMessageHumanReadable = fmt.Sprintf(`API with identifier: "%s" retired successfully for project: "%s"`, validIdentifier, validProjectID)
 	retireSuccessMessageJSON          = fmt.Sprintf(`{"success":true,"statusCode":%d,"message":"API with identifier %s retired successfully","response":{"identifier":"%s","projectId":"%s"}}`, testStatusCode, validIdentifier, validIdentifier, validProjectID)
@@ -241,11 +242,12 @@ func Test_printSuccessCLIResponseJSON(t *testing.T) {
 					StatusCode: int(testStatusCode),
 				},
 				cmdResponse: &publishResponse{
-					Identifier:     validIdentifier,
-					ProjectID:      validProjectID,
-					Stage:          validStage,
-					APIURL:         validAPIURL,
-					PullRequestURL: validPullRequestURL,
+					Identifier:         validIdentifier,
+					ProjectID:          validProjectID,
+					Stage:              validStage,
+					APIURL:             validAPIURL,
+					PullRequestCreated: true,
+					PullRequestURL:     validPullRequestURL,
 				},
 			},
 			wantPrint: publishSuccessMessageJSON,
@@ -365,21 +367,40 @@ func Test_printSuccessCLIResponseHumanReadable(t *testing.T) {
 			wantErr: true,
 		},
 		{
-			name: "successful publish returns no error and prints expected human-readable message",
+			name: "successful publish (PR created) returns no error and prints expected human-readable message",
 			args: args{
 				cmd: publishCmd,
 				resp: &http.Response{
 					StatusCode: int(testStatusCode),
 				},
 				cmdResponse: &publishResponse{
-					Identifier:     validIdentifier,
-					ProjectID:      validProjectID,
-					Stage:          validStage,
-					APIURL:         validAPIURL,
-					PullRequestURL: validPullRequestURL,
+					Identifier:         validIdentifier,
+					ProjectID:          validProjectID,
+					Stage:              validStage,
+					APIURL:             validAPIURL,
+					PullRequestCreated: true,
+					PullRequestURL:     validPullRequestURL,
 				},
 			},
 			wantPrint: publishSuccessMessageHumanReadable,
+			wantErr:   false,
+		},
+		{
+			name: "successful publish (no PR created) returns no error and prints expected human-readable message",
+			args: args{
+				cmd: publishCmd,
+				resp: &http.Response{
+					StatusCode: int(testStatusCode),
+				},
+				cmdResponse: &publishResponse{
+					Identifier:         validIdentifier,
+					ProjectID:          validProjectID,
+					Stage:              validStage,
+					APIURL:             validAPIURL,
+					PullRequestCreated: false,
+				},
+			},
+			wantPrint: publishSuccessMessageNoPRCreatedHumanReadable,
 			wantErr:   false,
 		},
 		{

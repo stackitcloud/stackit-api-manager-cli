@@ -22,6 +22,8 @@ type PublishResponse struct {
 	LinterWarnings []string `json:"linterWarnings,omitempty"`
 	// Number of warnings returned by the API specification linter
 	LinterWarningsCount *string `json:"linterWarningsCount,omitempty"`
+	// Indicates whether the PR was created
+	PullRequestCreated *bool `json:"pullRequestCreated,omitempty"`
 	// URL of the PR which is created with the published specification
 	PullRequestUrl *string `json:"pullRequestUrl,omitempty"`
 }
@@ -139,6 +141,38 @@ func (o *PublishResponse) SetLinterWarningsCount(v string) {
 	o.LinterWarningsCount = &v
 }
 
+// GetPullRequestCreated returns the PullRequestCreated field value if set, zero value otherwise.
+func (o *PublishResponse) GetPullRequestCreated() bool {
+	if o == nil || o.PullRequestCreated == nil {
+		var ret bool
+		return ret
+	}
+	return *o.PullRequestCreated
+}
+
+// GetPullRequestCreatedOk returns a tuple with the PullRequestCreated field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PublishResponse) GetPullRequestCreatedOk() (*bool, bool) {
+	if o == nil || o.PullRequestCreated == nil {
+		return nil, false
+	}
+	return o.PullRequestCreated, true
+}
+
+// HasPullRequestCreated returns a boolean if a field has been set.
+func (o *PublishResponse) HasPullRequestCreated() bool {
+	if o != nil && o.PullRequestCreated != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPullRequestCreated gets a reference to the given bool and assigns it to the PullRequestCreated field.
+func (o *PublishResponse) SetPullRequestCreated(v bool) {
+	o.PullRequestCreated = &v
+}
+
 // GetPullRequestUrl returns the PullRequestUrl field value if set, zero value otherwise.
 func (o *PublishResponse) GetPullRequestUrl() string {
 	if o == nil || o.PullRequestUrl == nil {
@@ -181,6 +215,9 @@ func (o PublishResponse) MarshalJSON() ([]byte, error) {
 	}
 	if o.LinterWarningsCount != nil {
 		toSerialize["linterWarningsCount"] = o.LinterWarningsCount
+	}
+	if o.PullRequestCreated != nil {
+		toSerialize["pullRequestCreated"] = o.PullRequestCreated
 	}
 	if o.PullRequestUrl != nil {
 		toSerialize["pullRequestUrl"] = o.PullRequestUrl

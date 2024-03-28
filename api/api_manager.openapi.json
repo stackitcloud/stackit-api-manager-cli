@@ -111,6 +111,10 @@
             "description": "Number of warnings returned by the API specification linter",
             "type": "string"
           },
+          "pullRequestCreated": {
+            "description": "Indicates whether the PR was created",
+            "type": "boolean"
+          },
           "pullRequestUrl": {
             "description": "URL of the PR which is created with the published specification",
             "type": "string"
