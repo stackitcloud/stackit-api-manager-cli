@@ -151,9 +151,3 @@ To update the API client:
 ```bash
 make generate-client
 ```
-
-## Maintainers
-
-| Name                                               | Email                        |
-| :------------------------------------------------- | :--------------------------- |
-| [@fabiolamicela](https://github.com/fabiolamicela) | fabio.la_micela@mail.schwarz |
